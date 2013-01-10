@@ -4,7 +4,6 @@
 
 a
 s
-<body>
 <pre>sfsafsafa</pre>
 
 <table>
@@ -24,4 +23,3 @@ s
 <td>sadfasf</td>
 </tr>
 </table>
-</body>
