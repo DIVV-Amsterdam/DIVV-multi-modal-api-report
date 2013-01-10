@@ -4,7 +4,6 @@
 
 a
 s
-<head></head>
 <body>
 <pre>sfsafsafa</pre>
 
