@@ -28,7 +28,57 @@ Details of the model can be found at http://www.opentripplanner.org/apidoc/model
 
 In simple form we are using :
 
+Journey 
+  - from
+  - to
+  - options
+  - Leg(s) (one segment by one mode of transport and route)
+    - Step(s) (Breakdown of Leg into smaller parts)
 
+If I give some illustative examples :
+
+Walking and driving legs will most likely involve many steps e.g. 100m turn left, 300m turn right etc...
+Public Stransport leg will most likely involve one step e.g. Tram 5 from tram stop A to tram stop B
+
+The data model used by opentripplanner is very handy for this and has the following usefull elements which we will use :
+
+- A stop with an ID with an agency e.g. 
+    Name : "Nieuwmarkt", 
+    Agency : "GVB", 
+    ID : "GVB|09503", 
+    lon 4.90124, 
+    lat : 52.37194
+
+- A Leg with many usefull elements e.g.
+    routeLongName : "Westwijk - Centraal Station"
+    routeShortName : "51"
+    tripId : "36|GVB|51|W|WE|51|18689"
+    agencyId : "GVB" 
+    headsign : "Westwijk" 
+    tripShortName : "18689" 
+    routeId : "GVB|51" 
+    agencyTimeZoneOffset : "0" 
+    agencyUrl : "http://www.gvb.nl/" 
+    agencyName : "GVB" 
+    route : "51" 
+    mode : "SUBWAY"
+
+- A step with a type and many usefull elements e.g.
+    walkSteps
+      distance : 2.018264866091147
+      streetName : Rapenburg
+      absoluteDirection : SOUTHEAST
+      stayOn : false
+      area : false
+			bogusName : false
+			lon : 4.907750131937921
+			lat : 52.371710127572086
+			elevation : 0
+
+
+
+- A set of modes e.g.
+    SUBWAY
 
 
 
