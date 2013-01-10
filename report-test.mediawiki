@@ -6,3 +6,9 @@ a
 s
 
 <pre>sfsafsafa</pre>
+
+<table>
+<tr>
+<td>sadfasf</td>
+</tr>
+</table>
