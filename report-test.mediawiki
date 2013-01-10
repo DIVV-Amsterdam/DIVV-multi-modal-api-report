@@ -4,7 +4,9 @@
 
 a
 s
-
+<html>
+<head></head>
+<body>
 <pre>sfsafsafa</pre>
 
 <table>
@@ -24,3 +26,5 @@ s
 <td>sadfasf</td>
 </tr>
 </table>
+</body>
+</html>
