@@ -70,11 +70,11 @@ The data model used by opentripplanner is very handy for this and has the follow
       absoluteDirection : SOUTHEAST
       stayOn : false
       area : false
-			bogusName : false
-			lon : 4.907750131937921
-			lat : 52.371710127572086
-			elevation : 0
-
+      bogusName : false
+      lon : 4.907750131937921
+      lat : 52.371710127572086
+      elevation : 0
+      tooSloped : false
 
 
 - A set of modes e.g.
