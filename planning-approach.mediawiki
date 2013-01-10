@@ -1,0 +1,5 @@
+==Planning Approach==
+
+During our experiment we found that there are several formats for representing a single journey in the field.  for instance when querying google maps it will return a ROUTE which consists of a set of LEGS each with STEPS whereas other systems represent the same journey differently.  However The basic contruction of breaking the journey down into smaller parts is common accross all systems.
+
+the
