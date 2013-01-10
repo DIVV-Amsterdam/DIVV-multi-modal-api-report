@@ -2,4 +2,4 @@
 
 During our experiment we found that there are several formats for representing a single journey in the field.  for instance when querying google maps it will return a ROUTE which consists of a set of LEGS each with STEPS whereas other systems represent the same journey differently.  However The basic contruction of breaking the journey down into smaller parts is common accross all systems.
 
-the
+In the scenarios that we created for this project we defined 2 additional types of data format.  One representing a STOPOVER and one representing a MULTIMODALHUB.  Since one of the use cases we defined for our study was a person undertaking multiple journeys but with some sort of appointment to be held between each journey we invented the STOPOVER which has a ''location'' and an ''duration'' but acts as a sort of 'glue' to indicate that several journeys are connected as opposed to independent.  The MULTIMODALHUB was created because we came to the conclusion that it would be necessary to have a reccommended set of points where switching between modes of transport should be performed.
