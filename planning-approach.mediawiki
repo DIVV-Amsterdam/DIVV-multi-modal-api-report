@@ -14,3 +14,25 @@ MULTIMODALHUB
 # Has one geo location
 # Has many references to nodes (bus stops, train stations, parking garages, bike storage, Tram stops, Ferry terminals etc..)
 
+For the purposes of the project we were tasked with attempting to make a multi-modal travel API using all available technical resources and documenting our findings.  Therefore our goal was not to make a final working API.  Bearing this in mind we decided to set up Park and Ride (P+R) locations as MILTIMODAL hubs.  The whole reason for creating this node type was to reflect the reality that although you could use almost any location to switch from car to public transport by using on street parking, that it is not desirable for the city of Amsterdam to have people planning to leave their cars all over the city and then switching on to the tram or bus network.  The facts are quite different and there are a number of specially created places for people to switch from one mode of transport to another including but not exclusively P+R.  Schiphol is also an example from Train to Bus, and Buijmer Arena.
+
+MULTI STAGE PLANNING
+In the use cases used in this project there are two distinct phases of planning which we seperated.
+# Phase 1 - reccommendation of routes, also called route planning.<br> This takes as its input your starting and ending dstination and variables such as departure or arrival time and desired methods of transport, and caclulates one or multiple travel options.
+# Phase 2 - realtime monitoring<br>In this phase a specified journey is augmented with real time updates in order to see whether the journey is still viable or whether analternative route needs to be planned.
+It is possible that when planning a journey with an immeduate departure that Phase1 and Phase2 are some simutaniuosly but in many cases it is necessary to have the two phases seperated.  Both Phase1 and Phase2 need to hold journeys with segments accros multiple modes of transport and in this case both the planning phase and the real time phase will need to hold segments from different planning real time datasets.  For instance segment 1 Car from Utrecht to P+R, segment 2 tram from P+R to central station, segment 3 tram from central station to westerpark, segment 4 walking from westerpark to a street address.  In this case it is impossible to use one planning system for all 4 segments and therefore in this example segment 1 may be planned using google maps , segment 2 and 3 by OV9292, and segment 4 by open street maps.
+
+In order for this to work we need our own data format to represent a journey, coming from the result of the planning phase.  We did not want to 're-invent the wheel' and therefore for the project we adopted a model form opentripplanner.org which caters for this type of multi stage, multi modal journey.  In this case we have added to it the additional node types we needed.
+
+Details of the model can be found at http://www.opentripplanner.org/apidoc/model.html.  At the moment it seems comprehensive enough for our needs and also has the possiblilty to identify a different agency which is synonimous with for instance GVB for each stage and therefore we can adapt this concept.
+
+In simple form we are using :
+
+
+
+
+
+THE NEED FOR AN INDEPENDENT FORMAT
+
+
+
