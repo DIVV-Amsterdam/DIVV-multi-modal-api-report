@@ -10,11 +10,17 @@ s
 <table>
 <tr>
 <th>sadfasf</th>
+<th>sadfasf</th>
+<th>sadfasf</th>
 </tr>
 <tr>
 <td>sadfasf</td>
+<td>sadfasf</td>
+<td>sadfasf</td>
 </tr>
 <tr>
+<td>sadfasf</td>
+<td>sadfasf</td>
 <td>sadfasf</td>
 </tr>
 </table>
