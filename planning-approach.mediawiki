@@ -126,7 +126,7 @@ Journey from address in Utrecht to address in Amsterdam may look like this :
         leg 3
           from : Amstel Train Station
           to : Tramstop weteringcircuit
-          mode : TRAM
+          mode : TRAM / TRAM 24
           plannedby : OV9292
           planningData : (data from ov9292)
           departure : 10:25, tue 10 feb
@@ -134,14 +134,42 @@ Journey from address in Utrecht to address in Amsterdam may look like this :
           realtimedata : ov9292-rt-system
         leg 4
           from : Tramstop weteringcircuit
+          to : Tramstop Leidseplein
+          mode : TRAM / TRAM 7
+          plannedby : OV9292
+          planningData : (data from ov9292)
+          departure : 10:55, tue 10 feb
+          arrival : 11:00 , tue 10 feb
+          realtimedata : ov9292-rt-system
+        leg 5
+          from : Tramstop weteringcircuit
           to : address in Amsterdam
           mode : WALKING
-          departure : 10:40, tue 10 feb
-          arrival : 10:50 , tue 10 feb
+          departure : 11:00, tue 10 feb
+          arrival : 11:10 , tue 10 feb
           realtimedata : not possible
 
+In the above example leg 3 and leg 4 probably came from one request to OV9292 but in order for real time updates to work they have been saved seperately.  Therefore the results coming back from any planning system will need to be interpreted and split out into steps which conform to the data model we have defined.  I want to emphasize this because treating the output from each planning system as a complete 'black box' is not sufficient.
 
-        
+Therefore I will explain how each of the planning system gives its results and how, in theory , we will interpret and convert these.
+
+<table>
+<tr>
+<th>Planning system</th>
+</tr>
+<tr>
+<td>Google Maps</td>
+</tr>
+<tr>
+<td>OpenTripPlanner</td>
+</tr>
+<tr>
+<td>OV9292</td>
+</tr>
+<tr>
+<td>NS</td>
+</tr>
+</table>
 
 
 
