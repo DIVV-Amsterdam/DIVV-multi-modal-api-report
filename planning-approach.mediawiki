@@ -229,4 +229,11 @@ TRANSIT
 
 
 
+Same Journey, 3 results
 
+<table>
+<tr><td>Google</td><td>Walk 33 mins (2.7km)</td><td>Tram 9 (17 mins)</td><td>Tram 10 (9 mins)</td><td>Walk 6 mins</td></tr>
+<tr><td>9292</td><td>Walk 19 mins</td><td>Bus 66</td><td>Walk 3 mins</td><td>NS to Buimer Arena</td><td>Walk 3 mins</td><td>Metro 50</td><td>Walk 3 mins</td><td>Bus 170</td><td>Walk 1 min</td></tr>
+<tr><td>Opentripplanner</td><td>Walk 28 mins</td><td>Bus 44</td><td>Sprinter to CS</td><td>Tram 7</td><td>Walk 7 mins</td></tr>
+</table>
+Google :
