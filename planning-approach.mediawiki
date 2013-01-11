@@ -238,8 +238,9 @@ Same Journey, 3 results
 </table>
 SOme notes about the shocking amount of variation in the results
 # OpenTripPlanner has a default walking speed of 3km/h, when I get the OV9292 to walk to the bus 44 it reported 19mins walking instead of the 28 reported by OTP.  When I increased the walking speed to 4km/h it got to 22 mins, and when I increased the speed in OTP to 5km/h it chose a different route.
-# Google seems never to pick metros
+# Google report the same walk to the 44 bus at 17 mins
 # OV9292 and OTP chose the same route when I asked OTP to report not eh quickest bu the Minium transfers.  However it was the 2nd choice on OV9292.  The route chosen by OV9292 was never displayed by google maps or by OTP.
+# Google never chose the sprinter to tram 7 but instead sent you to CS and then on tram 5
 
 
 
