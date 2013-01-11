@@ -188,26 +188,32 @@ Therefore I will explain how each of the planning system gives its results and h
   from 52.339633,4.998495
   to Hobbemastraat 16, 1071 ZB Amsterdam, The Netherlands
   to 52.359798,4.884206
+
+WALKING
+
   http://maps.googleapis.com/maps/api/directions/json?mode=walking&origin=52.339633,4.998495&destination=52.359798,4.884206&sensor=true
-
-This returns directions in the following format
-
+  
+  This returns directions in the following format
+  
   ONE LEG
   MANY STEPS
 
+DRIVING
 
   http://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=52.339633,4.998495&destination=52.359798,4.884206&sensor=true
-
-This returns directions in the following format
-
+  
+  This returns directions in the following format
+  
   ONE LEG
   MANY STEPS
+
+TRANSIT
 
   http://maps.googleapis.com/maps/api/directions/json?mode=transit&origin=52.339633,4.998495&destination=52.359798,4.884206&departure_time=1357901162&sensor=true
   (note use http://www.epochconverter.com to get the departute_time
-
-This returns the following
-
+  
+  This returns the following
+  
   ONE LEG
   STEP 1 (walking)
   - MANY STEPS within STEP 1
@@ -221,10 +227,6 @@ This returns the following
   - MANY STEPS withing STEP 5
 
 
-
-
-  MANY STEPS
-  MANY STEPS (within) A STEP
 
 
 
