@@ -158,7 +158,7 @@ Therefore I will explain how each of the planning system gives its results and h
 <tr>
 <th>Planning system</th>
 <th>Based on data</th>
-<th>Covers</td>
+<th>Covers</th>
 </tr>
 <tr>
 <td>Google Maps</td>
