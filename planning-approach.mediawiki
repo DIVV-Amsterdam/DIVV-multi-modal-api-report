@@ -153,21 +153,32 @@ In the above example leg 3 and leg 4 probably came from one request to OV9292 bu
 
 Therefore I will explain how each of the planning system gives its results and how, in theory , we will interpret and convert these.
 
+
 <table>
 <tr>
 <th>Planning system</th>
+<th>Based on data</th>
+<th>Covers</td>
 </tr>
 <tr>
 <td>Google Maps</td>
+<td>Googe Map Data</td>
+<td>Driving, Walking</td>
 </tr>
 <tr>
 <td>OpenTripPlanner</td>
+<td>OpenStreetMap</td>
+<td>Driving, Walking, Tram , Bus, Metro</td>
 </tr>
 <tr>
 <td>OV9292</td>
+<td>Combination of feeds</td>
+<td>Walking, Train, Tram , Bus, Metro</td>
 </tr>
 <tr>
 <td>NS</td>
+<td>Own NS Data</td>
+<td>Train</td>
 </tr>
 </table>
 
