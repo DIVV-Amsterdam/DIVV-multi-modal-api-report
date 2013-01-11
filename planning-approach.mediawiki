@@ -163,7 +163,7 @@ Therefore I will explain how each of the planning system gives its results and h
 <tr>
 <td>Google Maps</td>
 <td>Googe Map Data</td>
-<td>Driving, Walking</td>
+<td>Driving, Walking, Bike, Transit</td>
 </tr>
 <tr>
 <td>OpenTripPlanner</td>
@@ -188,10 +188,20 @@ Therefore I will explain how each of the planning system gives its results and h
   from 52.339633,4.998495
   to Hobbemastraat 16, 1071 ZB Amsterdam, The Netherlands
   to 52.359798,4.884206
-  http://maps.googleapis.com/maps/api/directions/json?mode=walking,tram,bus&origin=52.339633,4.998495&destination=52.359798,4.884206&sensor=true
+  http://maps.googleapis.com/maps/api/directions/json?mode=walking&origin=52.339633,4.998495&destination=52.359798,4.884206&sensor=true
 
 This returns directions in the following format
 
+  ONE LEG
+  MANY STEPS
+
+
+  http://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=52.339633,4.998495&destination=52.359798,4.884206&sensor=true
+
+This returns directions in the following format
+
+  ONE LEG
+  MANY STEPS
 
 
 
