@@ -182,6 +182,15 @@ Therefore I will explain how each of the planning system gives its results and h
 </tr>
 </table>
 
+==Google maps==
+  example
+  from Overdiemerweg 12-13, 1111 Diemen, The Netherlands
+  from 52.339633,4.998495
+  to Hobbemastraat 16, 1071 ZB Amsterdam, The Netherlands
+  to 52.359798,4.884206
+  http://maps.googleapis.com/maps/api/directions/json?mode=walking,tram,bus&origin=52.339633,4.998495&destination=52.359798,4.884206&sensor=true
+
+This returns directions in the following format
 
 
 
