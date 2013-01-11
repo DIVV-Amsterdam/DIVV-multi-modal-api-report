@@ -203,5 +203,28 @@ This returns directions in the following format
   ONE LEG
   MANY STEPS
 
+  http://maps.googleapis.com/maps/api/directions/json?mode=transit&origin=52.339633,4.998495&destination=52.359798,4.884206&departure_time=1357901162&sensor=true
+  (note use http://www.epochconverter.com to get the departute_time
+
+This returns the following
+
+  ONE LEG
+  STEP 1 (walking)
+  - MANY STEPS within STEP 1
+  STEP 2 (transit - tram to Central Station)
+  - TRANSIT DETAILS within STEP 2 (including the agency GVB and tram line number)
+  STEP 3 (walking)
+  - MANY STEPS withing STEP 3
+  STEP 4 (transit - Tram towards Van Hallstraat)
+  - TRANSIT DETAILS within STEP 4 (including the agency GVB and tram line number)
+  STEP 5 (walking)
+  - MANY STEPS withing STEP 5
+
+
+
+
+  MANY STEPS
+  MANY STEPS (within) A STEP
+
 
 
