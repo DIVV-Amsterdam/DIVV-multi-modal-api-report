@@ -98,7 +98,8 @@ The data model used by opentripplanner is very handy for this and has the follow
     STL	
 
 
-PLANNING WITH MULTIPLE SYSTEMS
+==PLANNING WITH MULTIPLE SYSTEMS==
+
 For Amsterdam there is no one system that can plan all methods of transport that we want and with the addition of MULTIMODALTRANSITHUB(s) and STOPOVER(s).  Therefore the multi modal travel API would have to take a journey and request the parts from several external planning engines and then hold these like a sort of super planner.  Therefore a planning system may look a little like :
 
 Journey from address in Utrecht to address in Amsterdam may look like this :
