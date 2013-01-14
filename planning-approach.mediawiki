@@ -292,9 +292,14 @@ We made several experiments and found that for TRANSIT in particular the mapping
 
 and this results in a model that needs the following components
 
-	GetRealTimeLinkFromJourney
+  GetRealTimeLinkFromJourney
+  
+  Parameters : 
+    Company
+    Line_number
+	head_sign
+	asfdafds
 	
-	Parameters : 
 
 
 
