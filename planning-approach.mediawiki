@@ -227,9 +227,44 @@ TRANSIT
   - MANY STEPS withing STEP 5
 
 
+==OpenTripPlanner OTP==
+
+WALKING
+
+  http://opentripplanner.nl/opentripplanner-api-webapp/ws/plan?maxTransfers=12&_dc=1358180011179&from=52.339633%2C4.998495&to=52.359798%2C4.884206&arriveBy=false&time=15%3A02&ui_date=14%2F01%2F13&mode=WALK&optimize=QUICK&maxWalkDistance=1000&walkSpeed=0.833&hst=true&date=2013-01-14&toPlace=52.359798%2C4.884206&fromPlace=52.339633%2C4.998495
+
+  This returns directions in the following format
+  
+  ONE LEG
+  MANY STEPS
+
+TRANSIT
+
+  http://opentripplanner.nl/opentripplanner-api-webapp/ws/plan?maxTransfers=12&_dc=1358180119870&from=52.339633%2C4.998495&to=52.359798%2C4.884206&arriveBy=false&time=15%3A02&ui_date=14%2F01%2F13&mode=TRANSIT%2CWALK&optimize=QUICK&maxWalkDistance=1000&walkSpeed=0.833&hst=true&date=2013-01-14&toPlace=52.359798%2C4.884206&fromPlace=52.339633%2C4.998495
+  (note use http://www.epochconverter.com to get the departute_time
+  
+  This returns the following
+  
+  MANY LEGS
+  LEG 1 (walking)
+  - MANY STEPS within LEG 1
+  LEG 2 (bus)
+  - TRANSIT DETAILS WITHIN LEG 2
+  LEG 3 (subway)
+  - TRANSIT DETAILS WITHIN LEG 3
+  LEG 4 (tram)
+  - TRANSIT DETAILS WITHIN LEG 4
+  LEG 5 (walking)
+  - MANY STEPS within LEG 5
 
 
-Same Journey, 3 results
+==OV9292==
+
+There is no API for the ov9292 so it is not comparable
+
+=Overall Planning comparison - Same Journey, 3 results==
+
+In general the different planning systems do not give the same results , this is due to the algorithms they use and also variables like walking speed.  Here is a comparison of the results for the same trip at the same time of day.
 
 <table>
 <tr><td>Google</td><td>Walk 33 mins (2.7km)</td><td>Tram 9 (17 mins)</td><td>Tram 10 (9 mins)</td><td>Walk 6 mins</td></tr>
