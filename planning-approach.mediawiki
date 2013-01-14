@@ -290,7 +290,12 @@ We made several experiments and found that for TRANSIT in particular the mapping
 # stop id / or stop index
 # scheduled time of departure / arrival
 
-and this is 
+and this results in a model that needs the following components
+
+	GetRealTimeLinkFromJourney
+	
+	Parameters : 
+
 
 
 
