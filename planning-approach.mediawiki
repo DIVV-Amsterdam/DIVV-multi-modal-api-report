@@ -284,11 +284,11 @@ SOme notes about the shocking amount of variation in the results
 
 We made several experiments and found that for TRANSIT in particular the mapping of data coming from OTP to the data coming from the 'KV78 turbo' datafeed was not immediately obvious but after some experimentation was possible. There is a general lack of 'unique identifiers' for specific trams and busses and paritcular bus and tram stops.  There is also a lack of unique identification on the direction of a journey coming from OTP.   However we can find the Realtime information in most cases using a combination of:
 
-@ company
-@ line / route number
-@ headsign
-@ stop id / or stop index
-@ scheduled time of departure / arrival
+# company
+# line / route number
+# headsign
+# stop id / or stop index
+# scheduled time of departure / arrival
 
 and this is 
 
