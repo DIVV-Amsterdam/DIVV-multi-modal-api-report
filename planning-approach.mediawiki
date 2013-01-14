@@ -280,6 +280,17 @@ SOme notes about the shocking amount of variation in the results
 # OV9292 and OTP chose the same route when I asked OTP to report not eh quickest bu the Minium transfers.  However it was the 2nd choice on OV9292.  The route chosen by OV9292 was never displayed by google maps or by OTP.
 # Google never chose the sprinter to tram 7 but instead sent you to CS and then on tram 5
 
+=Mapping Of Data from planning system to realtime=
+
+We made several experiments and found that for TRANSIT in particular the mapping of data coming from OTP to the data coming from the 'KV78 turbo' datafeed was not immediately obvious but after some experimentation was possible. There is a general lack of 'unique identifiers' for specific trams and busses and paritcular bus and tram stops.  There is also a lack of unique identification on the direction of a journey coming from OTP.   However we can find the Realtime information in most cases using a combination of:
+
+@ company
+@ line / route number
+@ headsign
+@ stop id / or stop index
+@ scheduled time of departure / arrival
+
+and this is 
 
 
 
