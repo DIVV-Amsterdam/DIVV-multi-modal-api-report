@@ -51,6 +51,7 @@ class stop_name {
 class rtrequest_kv78 {
 	public $type = "rtrequest_kv78";
 	public $company = "";	// gvb, cxx etc..
+	public $mode = "";
 	public $line_num = "";	// 4
 	public $headsign = "";	// sloterdijk
 	public $from, $to;
@@ -65,6 +66,7 @@ class rtrequest_kv78 {
 class rtrequest_ns {
 	public $type = "rtrequest_ns";
 	public $company = "ns";	// ns
+	public $mode = "TRAIN";
 	public $tripShortname = "";	// 5848
 	public $from, $to;
 	
@@ -101,6 +103,7 @@ class RtUtils {
     	if ($request->type == "rtrequest_kv78") {
     		$rv = "";
     		$rv = $rv . "company [".$request->company."]";
+    		$rv = $rv . "mode [".$request->mode."]";
     		$rv = $rv . "line_num [".$request->line_num."]";
     		$rv = $rv . "headsign [".$request->headsign."]";
     		$rv = $rv . "depart [".$request->from->toString()."]";
@@ -110,6 +113,7 @@ class RtUtils {
     	if ($request->type == "rtrequest_ns") {
     		$rv = "";
     		$rv = $rv . "company [".$request->company."]";
+    		$rv = $rv . "mode [".$request->mode."]";
     		$rv = $rv . "tripShortname [".$request->tripShortname."]";
     		$rv = $rv . "depart [".$request->from->toString()."]";
     		$rv = $rv . "arrive [".$request->to->toString()."]";
