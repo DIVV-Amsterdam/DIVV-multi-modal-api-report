@@ -57,8 +57,8 @@ class rtrequest_kv78 {
 	public $from, $to;
 	
 	function __construct() {
-		$this->from = $from = new stop_index();
-		$this->to = $from = new stop_index();
+		$this->from = new stop_index();
+		$this->to = new stop_index();
 	}
 }
 
@@ -71,8 +71,8 @@ class rtrequest_ns {
 	public $from, $to;
 	
 	function __construct() {
-		$this->from = $from = new stop_name();
-		$this->to = $from = new stop_name();
+		$this->from = new stop_name();
+		$this->to = new stop_name();
 	}
 	
 	
