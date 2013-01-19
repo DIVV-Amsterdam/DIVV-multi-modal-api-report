@@ -24,14 +24,14 @@ class TransitInfoBase {
 class TransitInfoBus extends TransitInfoBase {
 	
 	function __construct() {
-		$this->from = new stop_index();
-		$this->to = new stop_index();
+		$this->from = new TransitLineStop();
+		$this->to = new TransitLineStop();
 	}
 }
 class TransitInfoTram extends TransitInfoBase {
 	function __construct() {
-		$this->from = new stop_index();
-		$this->to = new stop_index();
+		$this->from = new TransitLineStop();
+		$this->to = new TransitLineStop();
 	}
 	
 }
@@ -51,8 +51,8 @@ class TransitInfoCar extends TransitInfoBase {
 class TransitInfoSubway extends TransitInfoBase {
 
 	function __construct() {
-		$this->from = new stop_index();
-		$this->to = new stop_index();
+		$this->from = new TransitLineStop();
+		$this->to = new TransitLineStop();
 	}
 	
 }

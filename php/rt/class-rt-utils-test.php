@@ -64,17 +64,19 @@ $req->company = "gvb";
 $req->line_num = "17";
 $req->mode = "TRAM";
 $req->headsign = "Osdorp Dijkgraafplein";
+$req->from->name = "Centraal Station";
 $req->from->stopindex = 0;
-$req->from->scheduled_time_at_stop = new DateTime("2013-01-20 16:32", new DateTimeZone("UTC"));
-$req->to->stopindex = 13;
-$req->to->scheduled_time_at_stop = new DateTime("2013-01-19 21:15:58", new DateTimeZone("UTC"));
+$req->from->target_departure_time = new DateTime("2013-01-20 16:32", new DateTimeZone("UTC"));
+$req->to->name = "Bilderdijkstraat";
+$req->to->stopindex = 6;
+$req->to->target_arrival_time = new DateTime("2013-01-19 21:15:58", new DateTimeZone("UTC"));
 
 $response = $rtu->get_rt_details_from_leg_kv78($req);
 echo "\n\n";
-echo "\nrequest" . $rtu->request_as_string($req);
-echo "\nresponse";
-echo "\nstatus : " . $response->status;
-echo "\nrealtime_reference : " . $response->realtime_reference;
+echo "\nrequest " . $rtu->request_as_string($req);
+echo "\nresponse ";
+echo "\nstatus: " . $response->status;
+echo "\nrealtime_reference: " . $response->realtime_reference;
 
 // train
 

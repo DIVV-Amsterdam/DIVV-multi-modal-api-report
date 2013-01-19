@@ -16,8 +16,8 @@ class rtrequest_kv78 {
 	public $from, $to;
 	
 	function __construct() {
-		$this->from = new stop_index();
-		$this->to = new stop_index();
+		$this->from = new TransitLineStop();
+		$this->to = new TransitLineStop();
 	}
 }
 
@@ -51,21 +51,21 @@ class RtUtils {
     public function request_as_string($request) {
     	if ($request->type == "rtrequest_kv78") {
     		$rv = "";
-    		$rv = $rv . "company [".$request->company."]";
-    		$rv = $rv . "mode [".$request->mode."]";
-    		$rv = $rv . "line_num [".$request->line_num."]";
-    		$rv = $rv . "headsign [".$request->headsign."]";
-    		$rv = $rv . "depart [".$request->from->toString()."]";
-    		$rv = $rv . "arrive [".$request->to->toString()."]";
+    		$rv = $rv . "company[".$request->company."] ";
+    		$rv = $rv . "mode[".$request->mode."] ";
+    		$rv = $rv . "line_num[".$request->line_num."] ";
+    		$rv = $rv . "headsign[".$request->headsign."]\n";
+    		$rv = $rv . "    depart [".$request->from->toString()."\n    ]\n";
+    		$rv = $rv . "    arrive [".$request->to->toString()."\n    ]";
     		return $rv;
     	}
     	if ($request->type == "rtrequest_ns") {
     		$rv = "";
-    		$rv = $rv . "company [".$request->company."]";
-    		$rv = $rv . "mode [".$request->mode."]";
-    		$rv = $rv . "tripShortname [".$request->tripShortname."]";
-    		$rv = $rv . "depart [".$request->from->toString()."]";
-    		$rv = $rv . "arrive [".$request->to->toString()."]";
+    		$rv = $rv . "company [".$request->company."] ";
+    		$rv = $rv . "mode [".$request->mode."] ";
+    		$rv = $rv . "tripShortname [".$request->tripShortname."]\n";
+    		$rv = $rv . "    depart [".$request->from->toString()."\n    ]\n";
+    		$rv = $rv . "    arrive [".$request->to->toString()."\n    ]";
     		return $rv;
     	}
     	return "Unknown request type";
@@ -128,10 +128,10 @@ class RtUtils {
         $openov_date_format = 'Y-m-d*H:i:s';
         foreach ($response as $journey_id => $journey_data) {
             foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
-                if ($stop_index == $request->to->stopindex) {
+                if ($stop_index == ($request->to->stopindex+1)) { // OpenOV stopindex is 1-indexed, $request is 0-indexed
                     $tta = DateTime::createFromFormat($openov_date_format, $stop_data['TargetArrivalTime'], new DateTimeZone("UTC"));
-                    print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." to ".$stop_data['DestinationName50']."\n";
-                    if ($tta == $request->to->scheduled_time_at_stop) {
+                    print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." at ".$stop_data['TimingPointName']."\n";
+                    if ($tta == $request->to->target_arrival_time) {
                         print "MATCH\n";
                 		$retval->realtime_reference = $journey_id;
                         return $retval;
