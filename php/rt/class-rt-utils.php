@@ -125,7 +125,7 @@ class RtUtils {
         // {'$JOURNEY_ID': {'Stops': {'$STOP_INDEX': {'ExpectedArrivalTime': <ISO stamp>, ...}, <more stops>}}, <more journeys>}
 		$retval = new rtresponse();
 
-        $openov_date_format = 'Y-m-d*H:i:+';
+        $openov_date_format = 'Y-m-d*H:i:s';
         foreach ($response as $journey_id => $journey_data) {
             foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
                 if ($stop_index == $request->to->stopindex) {
