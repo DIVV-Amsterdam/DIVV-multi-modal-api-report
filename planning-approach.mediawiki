@@ -265,7 +265,7 @@ TRANSIT
 
 There is no API for the ov9292 so it is not comparable
 
-=Overall Planning comparison - Same Journey, 3 results==
+==Overall Planning comparison - Same Journey, 3 results==
 
 In general the different planning systems do not give the same results , this is due to the algorithms they use and also variables like walking speed.  Here is a comparison of the results for the same trip at the same time of day.
 

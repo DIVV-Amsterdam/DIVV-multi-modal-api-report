@@ -16,37 +16,6 @@ class rt_datetime {
 		return $this->year . "-" . $this->month ."-". $this->day ." ". $this->hour .":". $this->minute;
 	}
 }
-class stop_index {
-
-	/* one of stopid or stopindex, stopindex for gvb, stopid (matched to timingpointcode) for CXX and others */
-	public $stopindex = 0;
-	public $stopid = "";
-
-	public $scheduled_time_at_stop;
-	
-	function __construct() {
-		$this->scheduled_time_at_stop = new rt_datetime();
-	}
-	
-	public function toString() {
-		return "stopindex (" . $this->stopindex .") , stopid (".$this->stopid.") , datetime (". $this->scheduled_time_at_stop->toString().")";
-	}
-}
-
-class stop_name {
-	public $stopname = "wp | 5";
-	public $scheduled_time_at_stop;
-	
-	function __construct() {
-		$this->scheduled_time_at_stop = new rt_datetime();
-	}
-
-	public function toString() {
-		return "stopname (" . $this->stopname .") , datetime (". $this->scheduled_time_at_stop->toString().")";
-	}
-
-
-}
 
 class rtrequest_kv78 {
 	public $type = "rtrequest_kv78";
