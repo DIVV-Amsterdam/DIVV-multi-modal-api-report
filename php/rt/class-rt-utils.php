@@ -6,27 +6,6 @@ require_once '../etc/config.php';
 class obj {
 }
 
-class rt_datetime {
-    // TODO: we really need to use proper datetime objects
-	public $day = 0;
-	public $month = 0;
-	public $year = 0;
-	public $hour = 0;
-	public $minute = 0;
-	public function toString() {
-		return $this->year . "-" . $this->month ."-". $this->day ." ". $this->hour .":". $this->minute;
-	}
-	
-	public static function createFromDateTime($DT) {
-		$dt = new rt_datetime();
-		$dt->year = $DT->format('Y');
-		$dt->month = $DT->format('m');
-		$dt->day = $DT->format('d');
-		$dt->hour = $DT->format('H');
-		$dt->minute = $DT->format('i');
-		return $dt;
-	}
-}
 
 class rtrequest_kv78 {
 	public $type = "rtrequest_kv78";
@@ -68,19 +47,7 @@ class RtUtils {
 
     function __construct() {
     }
-    
-    public function newdate($Y, $MO, $D, $H, $M) {
-    	$rt_datetime = new rt_datetime();
-    	$rt_datetime->day = $D;
-    	$rt_datetime->month = $MO;
-    	$rt_datetime->year = $Y;
-    	$rt_datetime->hour = $H;
-    	$rt_datetime->minute = $M;
-    	return $rt_datetime;
-    }
-    
-    
-    
+
     public function request_as_string($request) {
     	if ($request->type == "rtrequest_kv78") {
     		$rv = "";
@@ -163,9 +130,9 @@ class RtUtils {
             foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
                 if ($stop_index == $request->to->stopindex) {
                     $tta = DateTime::createFromFormat($openov_date_format, $stop_data['TargetArrivalTime'], new DateTimeZone("UTC"));
-                    // print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." to ".$stop_data['DestinationName50']."\n";
-                    if (rt_datetime::createFromDateTime($tta) == $request->to->scheduled_time_at_stop) {
-                        // print "MATCH\n";
+                    print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." to ".$stop_data['DestinationName50']."\n";
+                    if ($tta == $request->to->scheduled_time_at_stop) {
+                        print "MATCH\n";
                 		$retval->realtime_reference = $journey_id;
                         return $retval;
                     }

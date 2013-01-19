@@ -20,9 +20,9 @@ echo "\n\ntest 1";
 // $req->mode = "BUS";
 // $req->headsign = "Station Bijlmer ArenA";
 // $req->from->stopindex = 0;
-// $req->from->scheduled_time_at_stop = $rtu->newdate(2013,01,20,15,45);
+// $req->from->scheduled_time_at_stop = new DateTime("2013-01-20 15:45", new DateTimeZone("UTC"));
 // $req->to->stopindex = 12;
-// $req->to->scheduled_time_at_stop = $rtu->newdate(2013,01,20,16,8);
+// $req->to->scheduled_time_at_stop = new DateTime("2013-01-20 16:8", new DateTimeZone("UTC"));
 // 
 // $response = $rtu->get_rt_details_from_leg_kv78($req);
 // echo "\n\n";
@@ -42,9 +42,9 @@ echo "\n\ntest 1";
 // $req->mode = "SUBWAY";
 // $req->headsign = "Centraal Station";
 // $req->from->stopid = "Station Diemen-Zuid";
-// $req->from->scheduled_time_at_stop = $rtu->newdate(2013,01,20,16,10);
+// $req->from->scheduled_time_at_stop = new DateTime("2013-01-20 16:10", new DateTimeZone("UTC"));
 // $req->to->stopid = "Weesperplein";
-// $req->to->scheduled_time_at_stop = $rtu->newdate(2013,01,20,16,21);
+// $req->to->scheduled_time_at_stop = new DateTime("2013-01-20 16:21", new DateTimeZone("UTC"));
 // 
 // $response = $rtu->get_rt_details_from_leg_kv78($req);
 // echo "\n\n";
@@ -65,9 +65,9 @@ $req->line_num = "17";
 $req->mode = "TRAM";
 $req->headsign = "Osdorp Dijkgraafplein";
 $req->from->stopindex = 0;
-$req->from->scheduled_time_at_stop = $rtu->newdate(2013,01,20,16,32);
+$req->from->scheduled_time_at_stop = new DateTime("2013-01-20 16:32", new DateTimeZone("UTC"));
 $req->to->stopindex = 13;
-$req->to->scheduled_time_at_stop = $rtu->newdate(2013,01,19,15,13); // UTC
+$req->to->scheduled_time_at_stop = new DateTime("2013-01-19 21:15:58", new DateTimeZone("UTC"));
 
 $response = $rtu->get_rt_details_from_leg_kv78($req);
 echo "\n\n";
@@ -84,9 +84,9 @@ echo "\nrealtime_reference : " . $response->realtime_reference;
 // $req->tripShortname = "5848";
 // $req->mode = "TRAIN";
 // $req->from->stopname = "wp | 5";
-// $req->from->scheduled_time_at_stop = $rtu->newdate(2013,01,20,11,44);
+// $req->from->scheduled_time_at_stop = new DateTime("2013-01-20 11:44", new DateTimeZone("UTC"));
 // $req->to->stopname = "asd | 14a";
-// $req->to->scheduled_time_at_stop = $rtu->newdate(2013,01,20,12,8);
+// $req->to->scheduled_time_at_stop = new DateTime("2013-01-20 12:8", new DateTimeZone("UTC"));
 // 
 // $response = $rtu->get_rt_details_from_leg_ns($req);
 // echo "\n\n";
@@ -102,9 +102,9 @@ echo "\nrealtime_reference : " . $response->realtime_reference;
 // $req->line_num = "71";
 // $req->headsign = "Slotermeerweg";
 // $req->from->stopid = "CXX|57135182";
-// $req->from->scheduled_time_at_stop = $rtu->newdate(2013,01,20,11,44);
+// $req->from->scheduled_time_at_stop = new DateTime("2013-01-20 11:44", new DateTimeZone("UTC"));
 // $req->to->stopid = "CXX|57135182";
-// $req->to->scheduled_time_at_stop = $rtu->newdate(2013,01,20,12,8);
+// $req->to->scheduled_time_at_stop = new DateTime("2013-01-20 12:8", new DateTimeZone("UTC"));
 // 
 // $response = $rtu->get_rt_details_from_leg_kv78($req);
 // echo "\n\n";

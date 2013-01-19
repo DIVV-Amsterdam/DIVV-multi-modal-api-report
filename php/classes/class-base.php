@@ -160,7 +160,7 @@ class stop_index {
 	
 	public function toString() {
 //		return "stopindex (" . $this->stopindex .") , stopid (".$this->stopid.") , name (".$this->name."), datetime (". $this->scheduled_time_at_stop->toString().")";
-		return "\n\tstopindex (" . $this->stopindex .") , \n\tstopid (".$this->stopid.") , \n\tname (".$this->name."), \n\tdatetime (". $this->scheduled_time_at_stop->toString().")";
+		return "\n\tstopindex (" . $this->stopindex .") , \n\tstopid (".$this->stopid.") , \n\tname (".$this->name."), \n\tdatetime (". $this->scheduled_time_at_stop->format(DateTime::ISO8601).")";
 
 	}
     public function __toString() {
@@ -180,7 +180,7 @@ class stop_name {
 	}
 
 	public function toString() {
-		return "stopname (" . $this->stopname .") , datetime (". $this->scheduled_time_at_stop->toString().")";
+		return "stopname (" . $this->stopname .") , datetime (". $this->scheduled_time_at_stop->format(DateTime::ISO8601).")";
 	}
 
     public function __toString() {
