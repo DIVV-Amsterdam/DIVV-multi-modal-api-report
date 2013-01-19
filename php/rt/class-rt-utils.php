@@ -128,8 +128,8 @@ class RtUtils {
         $openov_date_format = 'Y-m-d*H:i:s';
         foreach ($response as $journey_id => $journey_data) {
             foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
-                if ($stop_index == ($request->to->stopindex+1)) { // OpenOV stopindex is 1-indexed, $request is 0-indexed
-                    $tta = DateTime::createFromFormat($openov_date_format, $stop_data['TargetArrivalTime'], new DateTimeZone("UTC"));
+                if ($stop_data['TimingPointCode'] == $request->to->timingPointCodeFromStopId()) {
+                    $tta = DateTime::createFromFormat($openov_date_format, $stop_data['TargetArrivalTime'], new DateTimeZone("Europe/Amsterdam"));
                     print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." at ".$stop_data['TimingPointName']."\n";
                     if ($tta == $request->to->target_arrival_time) {
                         print "MATCH\n";

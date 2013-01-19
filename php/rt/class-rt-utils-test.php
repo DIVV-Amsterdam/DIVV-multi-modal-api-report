@@ -65,11 +65,11 @@ $req->line_num = "17";
 $req->mode = "TRAM";
 $req->headsign = "Osdorp Dijkgraafplein";
 $req->from->name = "Centraal Station";
-$req->from->stopindex = 0;
-$req->from->target_departure_time = new DateTime("2013-01-20 16:32", new DateTimeZone("UTC"));
+$req->from->stopid = "GVB|050111";
+$req->from->target_departure_time = new DateTime("2013-01-20 16:32", new DateTimeZone("Europe/Amsterdam"));
 $req->to->name = "Bilderdijkstraat";
-$req->to->stopindex = 6;
-$req->to->target_arrival_time = new DateTime("2013-01-19 21:15:58", new DateTimeZone("UTC"));
+$req->to->stopid = "GVB|060231";
+$req->to->target_arrival_time = new DateTime("2013-01-19 22:20:22", new DateTimeZone("Europe/Amsterdam"));
 
 $response = $rtu->get_rt_details_from_leg_kv78($req);
 echo "\n\n";
