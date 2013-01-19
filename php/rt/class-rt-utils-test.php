@@ -67,7 +67,7 @@ $req->headsign = "Osdorp Dijkgraafplein";
 $req->from->stopindex = 0;
 $req->from->scheduled_time_at_stop = new DateTime("2013-01-20 16:32", new DateTimeZone("UTC"));
 $req->to->stopindex = 13;
-$req->to->scheduled_time_at_stop = new DateTime("2013-01-19 21:15:58", new DateTimeZone("UTC"));
+$req->to->scheduled_time_at_stop = new DateTime("2013-01-19 21:15", new DateTimeZone("UTC"));
 
 $response = $rtu->get_rt_details_from_leg_kv78($req);
 echo "\n\n";
