@@ -7,6 +7,7 @@ class obj {
 }
 
 class rt_datetime {
+    // TODO: we really need to use proper datetime objects
 	public $day = 0;
 	public $month = 0;
 	public $year = 0;
@@ -15,13 +16,23 @@ class rt_datetime {
 	public function toString() {
 		return $this->year . "-" . $this->month ."-". $this->day ." ". $this->hour .":". $this->minute;
 	}
+	
+	public static function createFromDateTime($DT) {
+		$dt = new rt_datetime();
+		$dt->year = $DT->format('Y');
+		$dt->month = $DT->format('m');
+		$dt->day = $DT->format('d');
+		$dt->hour = $DT->format('H');
+		$dt->minute = $DT->format('i');
+		return $dt;
+	}
 }
 
 class rtrequest_kv78 {
 	public $type = "rtrequest_kv78";
-	public $company = "";	// gvb, cxx etc..
+	public $company = "";	// GVB, CXX, ARR, QBUZZ, HTM, RET, EBS, GVU
 	public $mode = "";
-	public $line_num = "";	// 4
+	public $line_num = "";	// TODO: figure out whether this should be public or internal line number (82 vs N082)
 	public $headsign = "";	// sloterdijk
 	public $from, $to;
 	
@@ -58,15 +69,17 @@ class RtUtils {
     function __construct() {
     }
     
-    public function newdate($Y, $M, $D, $H, $M) {
+    public function newdate($Y, $MO, $D, $H, $M) {
     	$rt_datetime = new rt_datetime();
     	$rt_datetime->day = $D;
-    	$rt_datetime->month = $M;
+    	$rt_datetime->month = $MO;
     	$rt_datetime->year = $Y;
     	$rt_datetime->hour = $H;
     	$rt_datetime->minute = $M;
     	return $rt_datetime;
     }
+    
+    
     
     public function request_as_string($request) {
     	if ($request->type == "rtrequest_kv78") {
@@ -119,19 +132,49 @@ class RtUtils {
 			$retval->realtime_reference = "invalid request type, please use a class of rtrequest_kv78";
 			return $retval;
     	}
-		
-		// your stuff here
+    	
+    	///////////////////////////////////////////////////
+    	// Retrieve the IDs of all currently known journeys
+		$journey_ids = array();
+        $url = "http://v0.ovapi.nl/line/GVB_17_1,GVB_17_2"; // TODO: generate URL dynamically
+        $response = json_decode(file_get_contents($url), true);
+        
+        // Data structure: (relevant parts only)
+        // { '$LINE_ID': 'Actuals': {'$JOURNEY_ID': { <journey data> }, <more journeys> }, <other lines>}
+        foreach ($response as $line_id => $line_data) {
+            foreach ($line_data['Actuals'] as $journey_id => $journey_data) {
+                if ($journey_data['DestinationName50'] == $request->headsign and $journey_data['LinePublicNumber'] == $request->line_num) {
+                    $journey_ids[] = $journey_id;
+                }
+            }
+        }
 
-
-	
-
+    	///////////////////////////////////////////////
+    	// Retrieve the real-time data of all journeys
+		$url = "http://v0.ovapi.nl/journey/".implode(",", $journey_ids);
+        $response = json_decode(file_get_contents($url), true);
+        
+        // Data structure:
+        // {'$JOURNEY_ID': {'Stops': {'$STOP_INDEX': {'ExpectedArrivalTime': <ISO stamp>, ...}, <more stops>}}, <more journeys>}
 		$retval = new rtresponse();
-		$retval->status = 0;
-		$retval->realtime_reference = "Journey ID in KV78 turbo format";
+
+        $openov_date_format = 'Y-m-d*H:i:s';
+        foreach ($response as $journey_id => $journey_data) {
+            foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
+                if ($stop_index == $request->to->stopindex) {
+                    $tta = DateTime::createFromFormat($openov_date_format, $stop_data['TargetArrivalTime'], new DateTimeZone("UTC"));
+                    // print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." to ".$stop_data['DestinationName50']."\n";
+                    if (rt_datetime::createFromDateTime($tta) == $request->to->scheduled_time_at_stop) {
+                        // print "MATCH\n";
+                		$retval->realtime_reference = $journey_id;
+                        return $retval;
+                    }
+                }
+            }
+        }
 		
+		$retval->status = -1;
 		return $retval;
-   
-    
     }
     
     public function get_rt_details_from_leg_ns($request) {

@@ -151,6 +151,7 @@ class stop_index {
 	public $stopid = "";
 	public $name,$lat,$lon;
 
+    // TODO: this is incomplete: there is a separate arrival and departure time for a stop
 	public $scheduled_time_at_stop;
 	
 	function __construct() {
