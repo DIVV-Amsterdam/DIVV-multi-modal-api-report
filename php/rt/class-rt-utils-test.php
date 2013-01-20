@@ -14,7 +14,7 @@ echo "\n\ntest 1";
 // 
 // 
 // // bus 44 diemen noord to Buimer arena
-// $req = new rtrequest_kv78();
+// $req = new RtRequestKv78();
 // $req->company = "gvb";
 // $req->line_num = "44";
 // $req->mode = "BUS";
@@ -36,7 +36,7 @@ echo "\n\ntest 1";
 // // metro to Gaasperplas
 // 
 // 
-// $req = new rtrequest_kv78();
+// $req = new RtRequestKv78();
 // $req->company = "gvb";
 // $req->line_num = "53";
 // $req->mode = "SUBWAY";
@@ -59,17 +59,15 @@ echo "\n\ntest 1";
 
 // Tram
 
-$req = new rtrequest_kv78();
-$req->company = "gvb";
-$req->line_num = "17";
-$req->mode = "TRAM";
+$req = new RtRequestKv78();
+$req->route_id = "GVB|17";
 $req->headsign = "Osdorp Dijkgraafplein";
 $req->from->name = "Centraal Station";
 $req->from->stopid = "GVB|050111";
 $req->from->target_departure_time = new DateTime("2013-01-20 16:32", new DateTimeZone("Europe/Amsterdam"));
 $req->to->name = "Bilderdijkstraat";
 $req->to->stopid = "GVB|060231";
-$req->to->target_arrival_time = new DateTime("2013-01-19 22:20:22", new DateTimeZone("Europe/Amsterdam"));
+$req->to->target_arrival_time = new DateTime("2013-01-20 10:43:22", new DateTimeZone("Europe/Amsterdam"));
 
 $response = $rtu->get_rt_details_from_leg_kv78($req);
 echo "\n\n";
@@ -99,7 +97,7 @@ echo "\nrealtime_reference: " . $response->realtime_reference;
 // 
 // 
 // 
-// $req = new rtrequest_kv78();
+// $req = new RtRequestKv78();
 // $req->company = "cxx";
 // $req->line_num = "71";
 // $req->headsign = "Slotermeerweg";
