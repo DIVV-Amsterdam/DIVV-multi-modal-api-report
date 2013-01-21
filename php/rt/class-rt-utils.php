@@ -96,10 +96,7 @@ class RtUtils {
         // { '$LINE_ID': 'Actuals': {'$JOURNEY_ID': { <journey data> }, <more journeys> }, <other lines>}
         foreach ($response as $line_id => $line_data) {
             foreach ($line_data['Actuals'] as $journey_id => $journey_data) {
-                // print "line ".$journey_data['LinePublicNumber']." dest ".$journey_data['DestinationName50']."\n";
-                 // if ($journey_data['DestinationName50'] == $request->headsign) {
-                     $journey_ids[] = $journey_id;
-                 // }
+                 $journey_ids[] = $journey_id;
              }
         }
         // print_r($response);
@@ -122,7 +119,7 @@ class RtUtils {
                 if ($stop_data['TimingPointCode'] == $request->to->timingPointCodeFromStopId()) {
                     $tta = DateTime::createFromFormat($openov_date_format, $stop_data['TargetArrivalTime'], new DateTimeZone("Europe/Amsterdam"));
                     print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." at ".$stop_data['TimingPointName']."\n";
-                    if ($tta == $request->to->target_arrival_time) {
+                    if (abs($tta->getTimestamp() - $request->to->target_arrival_time->getTimestamp()) <= 90) {
                         print "MATCH\n";
                         $retval->realtime_reference = $journey_id;
                         return $retval;
@@ -134,6 +131,7 @@ class RtUtils {
 		$retval->status = -1;
 		return $retval;
     }
+    
     
     public function get_rt_details_from_leg_ns($request) {
     	/*

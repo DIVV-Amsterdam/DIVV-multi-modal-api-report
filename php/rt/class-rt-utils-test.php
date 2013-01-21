@@ -67,7 +67,7 @@ $req->from->stopid = "GVB|050111";
 $req->from->target_departure_time = new DateTime("2013-01-20 16:32", new DateTimeZone("Europe/Amsterdam"));
 $req->to->name = "Bilderdijkstraat";
 $req->to->stopid = "CXX|57002640";
-$req->to->target_arrival_time = new DateTime("2013-01-21 09:54:00", new DateTimeZone("Europe/Amsterdam"));
+$req->to->target_arrival_time = new DateTime("2013-01-21 22:22:30", new DateTimeZone("Europe/Amsterdam"));
 
 $response = $rtu->get_rt_details_from_leg_kv78($req);
 echo "\n\n";
