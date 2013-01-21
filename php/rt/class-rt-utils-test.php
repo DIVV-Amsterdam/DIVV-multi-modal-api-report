@@ -60,14 +60,14 @@ echo "\n\ntest 1";
 // Tram
 
 $req = new RtRequestKv78();
-$req->route_id = "GVB|17";
-$req->headsign = "Osdorp Dijkgraafplein";
+$req->route_id = "CXX|M172";
+$req->headsign = "Amsterdam CS via Amstelveen";
 $req->from->name = "Centraal Station";
 $req->from->stopid = "GVB|050111";
 $req->from->target_departure_time = new DateTime("2013-01-20 16:32", new DateTimeZone("Europe/Amsterdam"));
 $req->to->name = "Bilderdijkstraat";
-$req->to->stopid = "GVB|060231";
-$req->to->target_arrival_time = new DateTime("2013-01-20 10:43:22", new DateTimeZone("Europe/Amsterdam"));
+$req->to->stopid = "CXX|57002640";
+$req->to->target_arrival_time = new DateTime("2013-01-21 09:54:00", new DateTimeZone("Europe/Amsterdam"));
 
 $response = $rtu->get_rt_details_from_leg_kv78($req);
 echo "\n\n";

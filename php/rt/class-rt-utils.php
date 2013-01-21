@@ -89,15 +89,22 @@ class RtUtils {
 		$url = "http://v0.ovapi.nl/line/".$route_id."_1,".$route_id."_2"; // Generate the URL like http://v0.ovapi.nl/line/GVB_17_1,GVB_17_2
         $response = json_decode(file_get_contents($url), true);
         
+#        print "response: ".print_r($response)."\n\n----\n";
+#        return;
+        
         // Data structure: (relevant parts only)
         // { '$LINE_ID': 'Actuals': {'$JOURNEY_ID': { <journey data> }, <more journeys> }, <other lines>}
         foreach ($response as $line_id => $line_data) {
             foreach ($line_data['Actuals'] as $journey_id => $journey_data) {
-                if ($journey_data['DestinationName50'] == $request->headsign) {
-                    $journey_ids[] = $journey_id;
-                }
-            }
+                // print "line ".$journey_data['LinePublicNumber']." dest ".$journey_data['DestinationName50']."\n";
+                 // if ($journey_data['DestinationName50'] == $request->headsign) {
+                     $journey_ids[] = $journey_id;
+                 // }
+             }
         }
+        // print_r($response);
+        // return;
+        
 
     	////////////////////////////////////////////////////////////////////
     	// Retrieve the real-time data of all journeys to find a matching ID
