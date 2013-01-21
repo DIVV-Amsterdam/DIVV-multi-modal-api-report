@@ -144,24 +144,38 @@ class mm_datetime {
 	}
 }
 
-class stop_index {
+class TransitLineStop {
 
-	/* one of stopid or stopindex, stopindex for gvb, stopid (matched to timingpointcode) for CXX and others */
-	public $stopindex = 0;
+	// The ID of the stop, taken from stopId->id, e.g. CXX|57225182 - this maps to a TimingPointCode
 	public $stopid = "";
-	public $name,$lat,$lon;
+	// Canonical name of the stop, e.g. "Centraal Station"
+	public $name;
+	public $lat,$lon;
 
-	public $scheduled_time_at_stop;
-	
-	function __construct() {
-		$this->scheduled_time_at_stop = new mm_datetime();
-	}
-	
+	public $target_arrival_time;
+	public $target_departure_time;
+		
 	public function toString() {
 //		return "stopindex (" . $this->stopindex .") , stopid (".$this->stopid.") , name (".$this->name."), datetime (". $this->scheduled_time_at_stop->toString().")";
-		return "\n\tstopindex (" . $this->stopindex .") , \n\tstopid (".$this->stopid.") , \n\tname (".$this->name."), \n\tdatetime (". $this->scheduled_time_at_stop->toString().")";
-
+		return "\n\tstopid (".$this->stopid.") , \n\tname (".$this->name."), \n\tdatetime (".$this->timeString().")";
 	}
+	
+	public function timeString() {
+	    $result = "";
+	    if ($this->target_arrival_time) {
+	        $result .= "A ".$this->target_arrival_time->format(DateTime::ISO8601)." ";
+	    }
+	    if ($this->target_departure_time) {
+	        $result .= "D ".$this->target_departure_time->format(DateTime::ISO8601)." ";
+	    }
+	    return $result;
+	}
+	
+	public function timingPointCodeFromStopId() {
+	    $parts = preg_split("/\|/", $this->stopid);
+	    return $parts[1];
+	}
+	
     public function __toString() {
     	return $this->toString();
     }
@@ -179,7 +193,7 @@ class stop_name {
 	}
 
 	public function toString() {
-		return "stopname (" . $this->stopname .") , datetime (". $this->scheduled_time_at_stop->toString().")";
+		return "stopname (" . $this->stopname .") , datetime (". $this->scheduled_time_at_stop->format(DateTime::ISO8601).")";
 	}
 
     public function __toString() {
