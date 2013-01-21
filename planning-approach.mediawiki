@@ -305,4 +305,77 @@ and this results in a model that needs the following components
 
 
 
+=Code for setting up the multimodal hubs=
 Google :
+
+=Code for planning a journey using GM and OTP=
+sdfasf
+asf
+asf
+=Code for tracking RT information on a journey=
+safd
+asf
+=Code for re-routing in case of disaster=
+asf
+safd
+
+=Example - from (a) to (b) using P+R v TRANSIT v DRIVE=
+
+=Include Parking grages=
+
+=Including taxi=
+
+=Including connectcar=
+
+=Including bike rental at cs=
+
+=Table of resources needed and service implications=
+
+
+==Planning==
+<table>
+<tr>
+<th>Method</th>
+<th>System</th>
+<th>Implication</th>
+</tr>
+<tr>
+<td>Driving</td>
+<td>GM</td>
+<td>Not free, not open source</td>
+</tr>
+<tr>
+<td>Bus,Tram,Metro,Train</td>
+<td>OTP</td>
+<td>open but is it guaranteed and is there a service level</td>
+</tr>
+<tr>
+<td>Bike</td>
+<td>GM, OTP</td>
+<td>are they reliable</td>
+</tr>
+</table>
+
+==Multi modal transfer==
+<table>
+<tr>
+<th>Method</th>
+<th>System</th>
+<th>Implication</th>
+</tr>
+<tr>
+<td>P+R space availability</td>
+<td>??</td>
+<td>??</td>
+</tr>
+<tr>
+<td>??</td>
+<td>??</td>
+<td>??</td>
+</tr>
+</table>
+
+
+
+
+

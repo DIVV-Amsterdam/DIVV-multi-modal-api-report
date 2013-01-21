@@ -106,8 +106,26 @@ class mmhubs {
 		array_push($this->hubs , $hub);
 
 
+		$hub = new mmhub(52.344254,4.853961,"P+R Olympisch Stadion","Olympisch+Stadion+44,+1076+DE+Amsterdam");
+		$hub->location->type = "CARPARK";
+		$hub->type = "CARPARK-TO-TRANSIT";
+		
+		$con = new mmhub_connection();
+		$con->type = "TRANSIT";
+		$con->location = new location(52.34379,4.85696,"Amsterdam, Stadionplein","no address");
+		$con->timetochange = 120;
+		$con->howtochange = "Walking directions from P+R to bus stop";
+		$hub->addConnection($con);
+
+		array_push($this->hubs , $hub);
+
+
 	
 	}
+
+
+
+
 
 }
 

@@ -98,7 +98,7 @@ class PlanUtils {
     	$h = $h . "&from=";
     	$h = $h . "&to=";
     	$h = $h . "&arriveBy=".$request->options->arriveBy;
-    	$h = $h . "&ui_date=".$request->options->ui_date;
+//    	$h = $h . "&ui_date=".$request->options->ui_date;
     	$h = $h . "&mode=".$request->options->mode;
     	$h = $h . "&optimize=".$request->options->optimize;
     	$h = $h . "&maxWalkDistance=".$request->options->maxWalkDistance;

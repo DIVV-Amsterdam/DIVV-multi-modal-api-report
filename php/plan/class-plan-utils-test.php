@@ -79,7 +79,7 @@ echo sprintf(" begining start date : %s \n",$_datetime->toString());
 
 for ($j=0; $j < count($mmh->hubs); $j++) {
 
-	echo sprintf("\n\nREQ3 / HUB %s \n\n", $j);
+	echo sprintf("\n\nREQ3 / HUB %s (%S) \n\n", $j,$mmh->hubs[$j]);
 	
 	$req = new plan_request();
 	$req->from = $from;
@@ -105,7 +105,7 @@ for ($j=0; $j < count($mmh->hubs); $j++) {
 	$req->options->_time = $_datetime->asTime();
 
 	$response = $pu->plan_otp($req);
-	echo sprintf("url : %s \n\n",$response->url);
+//	echo sprintf("url : %s \n\n",$response->url);
 	
 	
 	for ($i=0; $i < count($response->legs); $i++) {
@@ -114,6 +114,40 @@ for ($j=0; $j < count($mmh->hubs); $j++) {
 
 
 }
+
+// driving only
+
+	echo sprintf("\n\nREQ3 / DRIVING ALL THE WAY \n\n");
+
+	$req = new plan_request();
+	$req->from = $from;
+	$req->to = $to;
+	$req->options->_date = $_datetime->asDate();
+	$req->options->_time = $_datetime->asTime();
+	$req->options->_datetime->setDate(2013,1,18);
+	$req->options->_datetime->setTime(9,30);
+
+	$response = $pu->plan_car($req);
+
+	echo "DRIVING ALL THE WAY :: " . $response->legs[0] . " dist : " .$response->distancetxt.", duration : " .$response->durationtxt."\n";
+
+
+// transit all the way
+	echo sprintf("\n\nREQ3 / TRANSIT ALL THE WAY \n\n");
+	$req = new plan_request();
+	$req->from = $from;
+	$req->to = $to;
+	$req->options->_date = $_datetime->asDate();
+	$req->options->_time = $_datetime->asTime();
+
+	$response = $pu->plan_otp($req);
+//	echo sprintf("url : %s \n\n",$response->url);
+	
+	
+	for ($i=0; $i < count($response->legs); $i++) {
+		echo "Leg $i :: " . $response->legs[$i] . "\n";
+	}
+
 
 
 $st = "2013-01-17T23:51:00+01:00";
