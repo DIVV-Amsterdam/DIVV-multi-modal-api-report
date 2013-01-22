@@ -73,7 +73,7 @@ $from = new place(52.083266,4.878896 , "Anjerstraat 3, Woerden");
 
 $to = new place(52.359798 , 4.884206 , "");
 
-$_datetime = new mm_datetime(2013,1,21,7,45);
+$_datetime = new mm_datetime(2013,1,22,15,00);
 echo sprintf(" begining start date : %s \n",$_datetime->toString());
 
 
