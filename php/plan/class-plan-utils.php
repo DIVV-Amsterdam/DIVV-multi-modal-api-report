@@ -140,6 +140,7 @@ class PlanUtils {
 					$lg->transitinfo = new TransitInfoBus();
 					$lg->transitinfo->agency = $leg->agencyName;
 					$lg->transitinfo->line = $leg->route;
+					$lg->transitinfo->lineId = $leg->routeId;
 					$lg->transitinfo->headsign = $leg->headsign;
 					$lg->transitinfo->from->stopindex = $leg->from->stopIndex;
 					$lg->transitinfo->from->stopid = $leg->from->stopId->id;

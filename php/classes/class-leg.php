@@ -5,6 +5,7 @@ require_once 'class-base.php';
 class TransitInfoBase {
 	public $agency = "";
 	public $line = "";
+	public $lineId = "";
 	public $headsign = "";
 	public $from, $to;
 	
@@ -16,7 +17,7 @@ class TransitInfoBase {
 
     public function __toString()
     {
-        return "" . $this->from->toString() . "\n-->" . $this->to->toString() ."\n\t(ag: ". $this->agency . " /li: ".$this->line." /hs: ".$this->headsign.")";
+        return "" . $this->from->toString() . "\n-->" . $this->to->toString() ."\n\t(ag: ". $this->agency . " /li: ".$this->line." /li(id): ".$this->lineId." /hs: ".$this->headsign.")";
     }
 
 }

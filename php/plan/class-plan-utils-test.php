@@ -73,7 +73,7 @@ $from = new place(52.083266,4.878896 , "Anjerstraat 3, Woerden");
 
 $to = new place(52.359798 , 4.884206 , "");
 
-$_datetime = new mm_datetime(2013,1,19,9,30);
+$_datetime = new mm_datetime(2013,1,21,7,45);
 echo sprintf(" begining start date : %s \n",$_datetime->toString());
 
 
@@ -105,7 +105,7 @@ for ($j=0; $j < count($mmh->hubs); $j++) {
 	$req->options->_time = $_datetime->asTime();
 
 	$response = $pu->plan_otp($req);
-//	echo sprintf("url : %s \n\n",$response->url);
+	echo sprintf("url : %s \n\n",$response->url);
 	
 	
 	for ($i=0; $i < count($response->legs); $i++) {

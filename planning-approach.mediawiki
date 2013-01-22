@@ -376,6 +376,28 @@ safd
 </table>
 
 
+CXX/N172
+Stadionplein - > Hobbemastraat
+arrive 09:55 , 21/jan/2012
+
+OTP dep 	09:43		arrive 	09:55
+9292		09:42		arrive	09:54		(says stop is being worked on, not in use)
+openov		09:42:57	arrive	09:54:00
+cxx(web)	09:42		arrive	09:54		(rt display says that stop IS in use)
+GM			09:42		arrive 	09:54
+
+
+Headsign
+OTP			Amsterdam CS via Amstelveen
+openov		Amsterdam via Amstelveen
+
+
+
+
+
+
+
+
 
 
 
