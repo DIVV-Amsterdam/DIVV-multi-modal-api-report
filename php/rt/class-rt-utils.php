@@ -10,8 +10,8 @@ class obj {
 class RtRequestKv78 {
 	public $type = "rtrequest_kv78";
 	public $route_id = "";	// e.g. "CXX|N082" for Connexxion 82 Marnixstraat->IJmuiden
-	public $headsign = "";	// "Station Sloterdijk" - maps to DestinationName50
 	public $from, $to;
+	public $kv78_id;       // Fill with get_kv78_id_for_leg, needed for get_rt_details_for_kv78
 	
 	function __construct() {
 		$this->from = new TransitLineStop();
@@ -37,8 +37,11 @@ class rtrequest_ns {
 
 class RtResponse {
 	public $status = 0;
-	public $realtime_reference = "";	//	Journey ID in KV78 turbo format
-
+	public $kv78_id = "";	//	Journey ID in KV78 turbo format
+    public $departure_time;
+    public $departure_delay;
+    public $arrival_time;
+    public $arrival_delay;
 }
 
 class RtUtils {
@@ -49,8 +52,7 @@ class RtUtils {
     public function request_as_string($request) {
     	if ($request->type == "rtrequest_kv78") {
     		$rv = "";
-    		$rv = $rv . "route_id[".$request->route_id."] ";
-    		$rv = $rv . "headsign[".$request->headsign."]\n";
+    		$rv = $rv . "route_id[".$request->route_id."]\n";
     		$rv = $rv . "    depart [".$request->from->toString()."\n    ]\n";
     		$rv = $rv . "    arrive [".$request->to->toString()."\n    ]";
     		return $rv;
@@ -67,7 +69,7 @@ class RtUtils {
     	return "Unknown request type";
     }
     
-    public function get_rt_details_from_leg_kv78($request) {
+    public function get_kv78_id_for_leg($request) {
     	/*
 		** Get the KV78 journey ID for a leg.
 		** This is found using the route ID, destination name, and the arrival time at a given stop.
@@ -77,7 +79,7 @@ class RtUtils {
     	if ($request->type != "rtrequest_kv78") {
 			$retval = new RtResponse();
 			$retval->status = -1;
-			$retval->realtime_reference = "invalid request type, please use a class of rtrequest_kv78";
+			$retval->kv78_id = "invalid request type, please use a class of rtrequest_kv78";
 			return $retval;
     	}
     	
@@ -112,16 +114,15 @@ class RtUtils {
         // Data structure:
         // {'$JOURNEY_ID': {'Stops': {'$STOP_INDEX': {'ExpectedArrivalTime': <ISO stamp>, ...}, <more stops>}}, <more journeys>}
 		$retval = new RtResponse();
-        $openov_date_format = 'Y-m-d*H:i:s';
         
         foreach ($response as $journey_id => $journey_data) {
             foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
                 if ($stop_data['TimingPointCode'] == $request->to->timingPointCodeFromStopId()) {
-                    $tta = DateTime::createFromFormat($openov_date_format, $stop_data['TargetArrivalTime'], new DateTimeZone("Europe/Amsterdam"));
+                    $tta = $this->kv78_timestamp_to_datetime($stop_data['TargetArrivalTime']);
                     print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." at ".$stop_data['TimingPointName']."\n";
-                    if (abs($tta->getTimestamp() - $request->to->target_arrival_time->getTimestamp()) <= 90) {
+                    if (abs($tta->getTimestamp() - $request->to->target_arrival_time->getTimestamp()) <= 120) {
                         print "MATCH\n";
-                        $retval->realtime_reference = $journey_id;
+                        $retval->kv78_id = $journey_id;
                         return $retval;
                     }
                 }
@@ -131,6 +132,63 @@ class RtUtils {
 		$retval->status = -1;
 		return $retval;
     }
+    
+    
+    public function get_rt_details_for_kv78($request) {
+    	/*
+		** Get the KV78 journey details, given a KV78 ID
+		*/
+    	if ($request->type != "rtrequest_kv78") {
+			$retval = new RtResponse();
+			$retval->status = -1;
+			$retval->kv78_id = "invalid request type, please use a class of rtrequest_kv78";
+			return $retval;
+    	}
+    	if ($request->kv78_id == "") {
+			$retval = new RtResponse();
+			$retval->status = -1;
+			return $retval;
+    	}
+    	////////////////////////////////////////////////////////////////////
+    	// Retrieve the real-time data of our journey
+    	////////////////////////////////////////////////////////////////////
+		$url = "http://v0.ovapi.nl/journey/".$request->kv78_id;
+        $response = json_decode(file_get_contents($url), true);
+
+        // Data structure:
+        // {'$JOURNEY_ID': {'Stops': {'$STOP_INDEX': {'ExpectedArrivalTime': <ISO stamp>, ...}, <more stops>}}, <more journeys>}
+		$retval = new RtResponse();
+		$retval->status = 0;
+
+        foreach ($response as $journey_id => $journey_data) {
+            foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
+                $ttd = $this->kv78_timestamp_to_datetime($stop_data['TargetDepartureTime']);
+                $etd = $this->kv78_timestamp_to_datetime($stop_data['ExpectedDepartureTime']);
+                $tta = $this->kv78_timestamp_to_datetime($stop_data['TargetArrivalTime']);
+                $eta = $this->kv78_timestamp_to_datetime($stop_data['ExpectedArrivalTime']);
+
+                if ($stop_data['TimingPointCode'] == $request->from->timingPointCodeFromStopId()) {
+                    $retval->departure_time = $etd;
+                    $departure_interval = $ttd->diff($etd);
+                    $retval->departure_delay = $departure_interval->invert ? -$departure_interval->s : $departure_interval->s;
+                }
+                if ($stop_data['TimingPointCode'] == $request->to->timingPointCodeFromStopId()) {
+                    $retval->arrival_time = $eta;
+                    $arrival_interval = $tta->diff($eta);
+                    $retval->arrival_delay = $arrival_interval->invert ? -$arrival_interval->s : $arrival_interval->s;
+                }
+            }
+        }
+
+		return $retval;
+    }
+    
+    private function kv78_timestamp_to_datetime($kv78_timestamp) {
+        $openov_date_format = 'Y-m-d*H:i:s';
+        return DateTime::createFromFormat($openov_date_format, $kv78_timestamp, new DateTimeZone("Europe/Amsterdam"));
+    }
+    
+    
     
     
     public function get_rt_details_from_leg_ns($request) {
@@ -149,7 +207,7 @@ class RtUtils {
     	if ($request->type != "rtrequest_ns") {
 			$retval = new RtResponse();
 			$retval->status = -1;
-			$retval->realtime_reference = "invalid request type, please use a class of rtrequest_ns";
+			$retval->kv78_id = "invalid request type, please use a class of rtrequest_ns";
 			return $retval;
     	}
 		
@@ -160,7 +218,7 @@ class RtUtils {
 
 		$retval = new RtResponse();
 		$retval->status = 0;
-		$retval->realtime_reference = "reference to realtime data in train format";
+		$retval->kv78_id = "reference to realtime data in train format";
 		return $retval;
 
     
