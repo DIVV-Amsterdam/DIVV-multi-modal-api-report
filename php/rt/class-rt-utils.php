@@ -25,7 +25,7 @@ class RtRequestNS {
 	public $company = "NS";	// ns
 	public $mode = "TRAIN";
 	public $ritNummer = ""; // e.g. 5883, maps to OTP tripShortName (not the routeId!)
-	public $from, $to;
+	public $from, $to; // We match NS on stop name, so either "Schiphol", "Amsterdam Airport", "shl", or (as from->name from OTP): "Schiphol Spoor 3"
 	
 	function __construct() {
 		$this->from = new TransitLineStop();
