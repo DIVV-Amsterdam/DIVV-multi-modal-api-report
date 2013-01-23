@@ -38,7 +38,7 @@ class RtResponse {
 	public $status = 0;
 	public $realtime_journey_id = ""; // Journey ID (for example, KV78 ID or NS ritnr)
     public $departure_time;
-    public $departure_delay;
+    public $departure_delay; // Delay is always in seconds
     public $changed_departure_track; // Track, e.g. "10B", if it has changed from planning.
     public $departure_remarks; // Freeform remarks (in Dutch, probably)
     public $arrival_time;
@@ -265,7 +265,7 @@ class RtUtils {
             if($departing_train->RitNummer != $ritNummer) continue;
             $retval['departure_time'] = DateTime::createFromFormat(DateTime::ISO8601, $departing_train->VertrekTijd, new DateTimeZone("UTC"));
             $delay_found = preg_match('/PT(\d+)M/', $departing_train->VertrekVertraging, $matches);
-            if ($delay_found) $retval['departure_delay'] = $matches[1];
+            if ($delay_found) $retval['departure_delay'] = ($matches[1]*60);
             
             $retval['remarks'] = trim($departing_train->Opmerkingen->Opmerking);
             
