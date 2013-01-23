@@ -42,7 +42,7 @@ class plan_request {
 
 class plan_reponse {
 	public $status = 0;
-	public $realtime_reference = "";	//	Journey ID in KV78 turbo format
+	public $realtime_journey_id = "";	//	Journey ID in KV78 turbo format
 
 }
 
