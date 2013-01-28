@@ -65,16 +65,27 @@ class Leg {
 	public $mode;
 	public $transitinfo;
 	public $startTime, $endTime;
+	public $type;
 
 	
 	function __construct() {
 		$this->transitinfo = new TransitInfoBase();
+		$this->type = "leg";
 	}
 	
     public function __toString()
     {
     	try {
 	        return sprintf('%s --> %s --> (%s) (st:%s et:%s) (%s)',$this->from,$this->to,$this->mode,$this->startTime,$this->endTime,$this->transitinfo);
+	    } catch(Exception $e) {
+	        return $this->from . " --> " . $this->to ." (". $this->mode . ") (no transit info)";
+	    }
+    }
+
+    public function summary()
+    {
+    	try {
+	        return sprintf('%s --> %s --> (%s) (st:%s et:%s)',$this->from,$this->to,$this->mode,$this->startTime,$this->endTime);
 	    } catch(Exception $e) {
 	        return $this->from . " --> " . $this->to ." (". $this->mode . ") (no transit info)";
 	    }

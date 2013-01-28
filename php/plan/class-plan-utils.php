@@ -2,6 +2,7 @@
 
 require_once '../classes/class-base.php';
 require_once '../classes/class-leg.php';
+require_once '../classes/class-journey.php';
 require_once '../etc/config.php';
 
 class obj {
@@ -85,6 +86,7 @@ class PlanUtils {
 		$retval->rawdata = $result1;
 		$retval->data = json_decode($result1);
 		$retval->legs = array($lg);
+		$retval->type = "car/gmaps";
 //		$retval->legs = $legs;
     	return $retval;
 
@@ -206,6 +208,7 @@ class PlanUtils {
 		$retval->rawdata = $data;
 		$retval->data = json_decode($data);
 		$retval->legs = $legs;
+		$retval->type = "transit/OTP";
 	
 //		$items = json_decode($data);
 //		array_push($totalitems , $items->items);
@@ -216,6 +219,124 @@ class PlanUtils {
 
     	
     	return $retval;
+
+    }
+    
+    
+    public function plan($from, $to, $__datetime, $mmh, $options) {
+    
+    	$routes = array();
+    
+		for ($j=0; $j < count($mmh->hubs); $j++) {
+		
+			$journey = new Journey();
+
+			if ($options->debug) echo sprintf("\n\nREQ3 / HUB %s (%S) (%s) \n\n", $j,$mmh->hubs[$j], $mmh->hubs[$j]->type);
+	
+			if (startsWith($mmh->hubs[$j]->type,"CAR-TO")) {
+			
+				$_datetime = $__datetime;
+	
+				$req = new plan_request();
+				$req->from = $from;
+				$req->to = $mmh->hubs[$j]->asPlace();
+				$req->options->_date = $_datetime->asDate();
+				$req->options->_time = $_datetime->asTime();
+
+				$response = $this->plan_car($req);
+				
+				$journey->addleg($response);
+				
+				
+
+				if ($options->debug) echo "DRIVING :: " . $response->legs[0] . " dist : " .$response->distancetxt.", duration : " .$response->durationtxt."\n";
+		
+				if ($options->debug) echo sprintf(" duration in mons %s \n", floor($response->duration/60));
+				if ($options->debug) echo sprintf(" old start date : %s \n",$_datetime->toString());
+				$_datetime->addMinutes(floor($response->duration/60));
+				if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
+
+
+				$leg = new Leg();
+				$leg->from = $mmh->hubs[$j]->asPlace();
+				$leg->to = $mmh->hubs[$j]->asPlace();
+				$leg->mode = "PARKING";
+				$leg->type = "STATIC";
+				$leg->startTime = $_datetime;
+				$_datetime->addMinutes(5);
+				$leg->endTime = $_datetime;
+				$journey->addleg($leg);
+
+
+				$req = new plan_request();
+				$req->from = $mmh->hubs[$j]->asPlace();
+				$req->to = $to;
+				$req->options->_date = $_datetime->asDate();
+				$req->options->_time = $_datetime->asTime();
+
+				$response = $this->plan_otp($req);
+				$journey->addleg($response);
+				
+				if ($options->debug) {
+					echo sprintf("url : %s \n\n",$response->url);
+					for ($i=0; $i < count($response->legs); $i++) {
+						echo "Leg $i :: " . $response->legs[$i] . "\n";
+					}
+				}
+
+			    array_push($routes , $journey);
+				
+			}
+
+
+		}
+		
+		// driving all the way
+		echo sprintf("\n\nREQ3 / DRIVING ALL THE WAY \n\n");
+		$_datetime = $__datetime;
+		$req = new plan_request();
+		$req->from = $from;
+		$req->to = $to;
+		$req->options->_date = $_datetime->asDate();
+		$req->options->_time = $_datetime->asTime();
+
+		$response = $this->plan_car($req);
+	
+		if ($options->debug) echo "DRIVING ALL THE WAY :: " . $response->legs[0] . " dist : " .$response->distancetxt.", duration : " .$response->durationtxt."\n";
+		
+		$journey = new Journey();
+		$journey->addleg($response);
+	    array_push($routes , $journey);
+
+
+		// transit all the way
+		if ($options->debug) echo sprintf("\n\nREQ3 / TRANSIT ALL THE WAY \n\n");
+		$_datetime = $__datetime;
+		$req = new plan_request();
+		$req->from = $from;
+		$req->to = $to;
+		$req->options->_date = $_datetime->asDate();
+		$req->options->_time = $_datetime->asTime();
+
+		$response = $this->plan_otp($req);
+	
+	
+		if ($options->debug) {
+			for ($i=0; $i < count($response->legs); $i++) {
+				echo "Leg $i :: " . $response->legs[$i] . "\n";
+			}
+		}
+
+		$journey = new Journey();
+		$journey->addleg($response);
+	    array_push($routes , $journey);
+
+		
+		$retval = new obj();
+		$retval->routes = $routes;
+		
+		return $retval;
+
 
     }
     

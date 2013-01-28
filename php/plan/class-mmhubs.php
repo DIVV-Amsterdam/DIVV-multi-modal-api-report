@@ -1,5 +1,8 @@
 <?php
 
+require_once 'class-divv-parking-locations.php';
+
+
 /* 
 	defintion of a location 
 	lat, lon, name, address (all obvious)
@@ -80,8 +83,8 @@ class mmhubs {
 	function __construct() {
 	
 		$hub = new mmhub(52.313831,4.940286,"P+R ArenA Transferium","Burgemeester+Stramanweg+130,+1101+EP+Amsterdam");
-		$hub->location->type = "CARPARK";
-		$hub->type = "CARPARK-TO-TRANSIT";
+		$hub->location->type = "P+R";
+		$hub->type = "CAR-TO-TRANSIT";
 		
 		$con = new mmhub_connection();
 		$con->type = "TRANSIT";
@@ -93,8 +96,8 @@ class mmhubs {
 		array_push($this->hubs , $hub);
 
 		$hub = new mmhub(52.390294,4.837804,"P+R Sloterdijk","Piarcoplein%2B1,Amsterdam");
-		$hub->location->type = "CARPARK";
-		$hub->type = "CARPARK-TO-TRANSIT";
+		$hub->location->type = "P+R";
+		$hub->type = "CAR-TO-TRANSIT";
 		
 		$con = new mmhub_connection();
 		$con->type = "TRANSIT";
@@ -107,8 +110,8 @@ class mmhubs {
 
 
 		$hub = new mmhub(52.344254,4.853961,"P+R Olympisch Stadion","Olympisch+Stadion+44,+1076+DE+Amsterdam");
-		$hub->location->type = "CARPARK";
-		$hub->type = "CARPARK-TO-TRANSIT";
+		$hub->location->type = "P+R";
+		$hub->type = "CAR-TO-TRANSIT";
 		
 		$con = new mmhub_connection();
 		$con->type = "TRANSIT";
@@ -118,7 +121,39 @@ class mmhubs {
 		$hub->addConnection($con);
 
 		array_push($this->hubs , $hub);
+		
+		
+		$divvlocations = new divvlocations();
+		for ($i=0; $i < count($divvlocations->locations->parkeerlocaties); $i++) {
+			$loc = $divvlocations->locations->parkeerlocaties[$i]->parkeerlocatie;
+			if ($loc->type == "Taxistandplaats"){
+				$Locatie = json_decode($loc->Locatie);
+				$hub = new mmhub($Locatie->coordinates[1],$Locatie->coordinates[0],$loc->type." ".$loc->title,$loc->adres.",".$loc->woonplaats);
+				$hub->location->type = "TAXI";
+				$hub->type = "TRANSIT-TO-TAXI";
+				array_push($this->hubs , $hub);
+				
+			}
+			if ($loc->type == "Parkeergarage"){
+				$Locatie = json_decode($loc->Locatie);
+				$hub = new mmhub($Locatie->coordinates[1],$Locatie->coordinates[0],$loc->type." ".$loc->title,$loc->adres.",".$loc->woonplaats);
+				$hub->location->type = "CARPARK";
+				$hub->type = "CAR-TO-TRANSIT";
+				array_push($this->hubs , $hub);
+			}
+			if ($loc->type == "Fietspunt"){
+				$Locatie = json_decode($loc->Locatie);
+				$hub = new mmhub($Locatie->coordinates[1],$Locatie->coordinates[0],$loc->type." ".$loc->title,$loc->adres.",".$loc->woonplaats);
+				$hub->location->type = "BIKEPARK";
+				$hub->type = "BIKE-TO-TRANSIT";
+				array_push($this->hubs , $hub);
+			}
+			if ($loc->type == "P+R"){
+				$Locatie = json_decode($loc->Locatie);
+				// P+R covered above
+			}
 
+		}
 
 	
 	}

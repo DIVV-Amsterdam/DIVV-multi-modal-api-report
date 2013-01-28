@@ -11,7 +11,10 @@ require_once 'class-mmhubs.php';
 $pu = new PlanUtils();
 $mmh = new mmhubs();
 
-
+function startsWith($haystack, $needle)
+{
+    return !strncmp($haystack, $needle, strlen($needle));
+}
 
 /*
 // http://opentripplanner.nl/opentripplanner-api-webapp/ws/plan?maxTransfers=12
@@ -54,7 +57,7 @@ $response = $pu->plan_car($req);
 
 echo "REQ2";
 echo "\n\n";
-echo $response->rawdata;
+//echo $response->rawdata;
 echo "\n\n";
 echo $response->url;
 echo "\n\n";
@@ -73,43 +76,62 @@ $from = new place(52.083266,4.878896 , "Anjerstraat 3, Woerden");
 
 $to = new place(52.359798 , 4.884206 , "");
 
-$_datetime = new mm_datetime(2013,1,22,15,00);
+$_datetime = new mm_datetime(2013,1,27,9,30);
 echo sprintf(" begining start date : %s \n",$_datetime->toString());
 
 
+$options = new obj();
+$options->debug = false;
+
+$results = $pu->plan($from,$to,$_datetime,$mmh,$options);
+for ($i=0; $i < count($results->routes); $i++) {
+	$route = $results->routes[$i];
+	echo "Route $i :: ".$route->summary()."\n";
+//	for ($j=0; $j < count($route->legs); $j++) {
+//		echo "Leg $j :: " . $route->legs[$j]->summary() . "\n";
+//	}
+}
+
+
+//var_dump($results);
+
+/*
 for ($j=0; $j < count($mmh->hubs); $j++) {
 
-	echo sprintf("\n\nREQ3 / HUB %s (%S) \n\n", $j,$mmh->hubs[$j]);
+	echo sprintf("\n\nREQ3 / HUB %s (%S) (%s) \n\n", $j,$mmh->hubs[$j], $mmh->hubs[$j]->type);
 	
-	$req = new plan_request();
-	$req->from = $from;
-	$req->to = $mmh->hubs[$j]->asPlace();
-	$req->options->_date = $_datetime->asDate();
-	$req->options->_time = $_datetime->asTime();
-	$req->options->_datetime->setDate(2013,1,18);
-	$req->options->_datetime->setTime(9,30);
-
-	$response = $pu->plan_car($req);
-
-	echo "DRIVING :: " . $response->legs[0] . " dist : " .$response->distancetxt.", duration : " .$response->durationtxt."\n";
+	if (startsWith($mmh->hubs[$j]->type,"CAR-TO")) {
 	
-	echo sprintf(" duration in mons %s \n", floor($response->duration/60));
-	echo sprintf(" old start date : %s \n",$_datetime->toString());
-	$_datetime->addMinutes(floor($response->duration/60));
-	echo sprintf(" new start date : %s \n",$_datetime->toString());
+		$req = new plan_request();
+		$req->from = $from;
+		$req->to = $mmh->hubs[$j]->asPlace();
+		$req->options->_date = $_datetime->asDate();
+		$req->options->_time = $_datetime->asTime();
+		$req->options->_datetime->setDate(2013,1,18);
+		$req->options->_datetime->setTime(9,30);
 
-	$req = new plan_request();
-	$req->from = $mmh->hubs[$j]->asPlace();
-	$req->to = $to;
-	$req->options->_date = $_datetime->asDate();
-	$req->options->_time = $_datetime->asTime();
+		$response = $pu->plan_car($req);
 
-	$response = $pu->plan_otp($req);
-	echo sprintf("url : %s \n\n",$response->url);
+		echo "DRIVING :: " . $response->legs[0] . " dist : " .$response->distancetxt.", duration : " .$response->durationtxt."\n";
+		
+		echo sprintf(" duration in mons %s \n", floor($response->duration/60));
+		echo sprintf(" old start date : %s \n",$_datetime->toString());
+		$_datetime->addMinutes(floor($response->duration/60));
+		echo sprintf(" new start date : %s \n",$_datetime->toString());
+
+		$req = new plan_request();
+		$req->from = $mmh->hubs[$j]->asPlace();
+		$req->to = $to;
+		$req->options->_date = $_datetime->asDate();
+		$req->options->_time = $_datetime->asTime();
+
+		$response = $pu->plan_otp($req);
+		echo sprintf("url : %s \n\n",$response->url);
 	
 	
-	for ($i=0; $i < count($response->legs); $i++) {
-		echo "Leg $i :: " . $response->legs[$i] . "\n";
+		for ($i=0; $i < count($response->legs); $i++) {
+			echo "Leg $i :: " . $response->legs[$i] . "\n";
+		}
 	}
 
 
@@ -148,28 +170,7 @@ for ($j=0; $j < count($mmh->hubs); $j++) {
 		echo "Leg $i :: " . $response->legs[$i] . "\n";
 	}
 
-
-
-$st = "2013-01-17T23:51:00+01:00";
-list($y, $m, $d, $hh, $mm) = sscanf($st, "%d-%d-%dT%d:%d+");
-echo sprintf('%s,%s,%s,%s,%s \n\n',$y,$m,$d,$hh,$mm);					
-
-$mandate = "January 01 2000";
-list($month, $day, $year) = sscanf($mandate, "%s %d %d");
-echo sprintf('%s,%s,%s\n\n',$month,$day,$year);					
-					/*
-					$mandate = "January 01 2000";
-					list($month, $day, $year) = sscanf($mandate, "%s %d %d");
-					<startTime>2013-01-17T23:51:00+01:00</startTime>
-					<endTime>2013-01-18T00:15:04+01:00</endTime>
-					*/
-
-
-
-
-
-
-
+*/
 
 
 ?>
