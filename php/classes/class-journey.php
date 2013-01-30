@@ -19,7 +19,7 @@ class Journey extends BaseClass {
     		if ($leg->type == "STATIC") {
     			$retval = $retval . "\t" . $leg->mode . "\n";
     		} else {
-    			$retval = $retval . "\t" . $leg->type . "\n";
+    			$retval = $retval . "\t" . $leg->type . " (et:".$leg->endTime.", dur:".$leg->duration.") \n";
     		
 		    	foreach ($leg->legs as $leg2) {
 				    $retval = $retval . "\t\t". $leg2->summary()."\n";

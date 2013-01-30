@@ -87,6 +87,7 @@ class PlanUtils {
 		$retval->data = json_decode($result1);
 		$retval->legs = array($lg);
 		$retval->type = "car/gmaps";
+		$retval->endTime = "";
 //		$retval->legs = $legs;
     	return $retval;
 
@@ -122,6 +123,7 @@ class PlanUtils {
 		curl_close($ch);
 		
 		$legs = array();
+		$last_endtime = null;
 				
 		$trip = json_decode($data);
 		if ($trip->plan) {
@@ -138,6 +140,8 @@ class PlanUtils {
 				$lg->mode = $leg->mode;
 				$lg->startTime = mm_datetime::createFromDateTime(DateTime::createFromFormat('U',($leg->startTime/1000)+(60*60),new DateTimeZone('Europe/Amsterdam')));
 				$lg->endTime = mm_datetime::createFromDateTime(DateTime::createFromFormat('U',($leg->endTime/1000)+(60*60),new DateTimeZone('Europe/Amsterdam')));
+				$last_endtime = $lg->endTime;
+				
 				if ($leg->mode == "BUS") {
 					$lg->transitinfo = new TransitInfoBus();
 					$lg->transitinfo->agency = $leg->agencyName;
@@ -209,6 +213,8 @@ class PlanUtils {
 		$retval->data = json_decode($data);
 		$retval->legs = $legs;
 		$retval->type = "transit/OTP";
+		$retval->endTime = $last_endtime;
+		$retval->duration = 0;
 	
 //		$items = json_decode($data);
 //		array_push($totalitems , $items->items);
@@ -287,7 +293,98 @@ class PlanUtils {
 			    array_push($routes , $journey);
 				
 			}
+			if (startsWith($mmh->hubs[$j]->type,"TRANSIT-TO-TAXI")) {
+			
+				// transit
+				if ($options->debug) echo sprintf("\n\nREQ3 / TRANSIT FIRST \n\n");
+				$_datetime = $__datetime;
+				$req = new plan_request();
+				$req->from = $from;
+				$req->to = $mmh->hubs[$j]->asPlace();
+				$req->options->_date = $_datetime->asDate();
+				$req->options->_time = $_datetime->asTime();
 
+				$response = $this->plan_otp($req);
+				$journey->addleg($response);
+				
+				// add duration
+//				$_datetime->addMinutes(floor($response->duration/60));
+				$_datetime = $response->endTime;
+
+				// swith to taxi
+				$leg = new Leg();
+				$leg->from = $mmh->hubs[$j]->asPlace();
+				$leg->to = $mmh->hubs[$j]->asPlace();
+				$leg->mode = "GET TAXI";
+				$leg->type = "STATIC";
+				$leg->startTime = $_datetime;
+				$_datetime->addMinutes(5);
+				$leg->endTime = $_datetime;
+				$journey->addleg($leg);
+				
+				// now driving to address				
+
+				$req = new plan_request();
+				$req->from = $mmh->hubs[$j]->asPlace();
+				$req->to = $to;
+				$req->options->_date = $_datetime->asDate();
+				$req->options->_time = $_datetime->asTime();
+
+				$response = $this->plan_car($req);
+				
+				$journey->addleg($response);
+				if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
+
+			    array_push($routes , $journey);
+				
+			}
+			if (startsWith($mmh->hubs[$j]->type,"BIKE-TO-TRANSIT")) {
+			
+				// transit
+				if ($options->debug) echo sprintf("\n\nREQ3 / TRANSIT FIRST \n\n");
+				$_datetime = $__datetime;
+				$req = new plan_request();
+				$req->from = $from;
+				$req->to = $mmh->hubs[$j]->asPlace();
+				$req->options->_date = $_datetime->asDate();
+				$req->options->_time = $_datetime->asTime();
+				$req->options->mode = "WALK";
+				
+
+				$response = $this->plan_otp($req);
+				$journey->addleg($response);
+				
+				// add duration
+//				$_datetime->addMinutes(floor($response->duration/60));
+				$_datetime = $response->endTime;
+
+				// swith to taxi
+				$leg = new Leg();
+				$leg->from = $mmh->hubs[$j]->asPlace();
+				$leg->to = $mmh->hubs[$j]->asPlace();
+				$leg->mode = "PARK BIKE";
+				$leg->type = "STATIC";
+				$leg->startTime = $_datetime;
+				$_datetime->addMinutes(5);
+				$leg->endTime = $_datetime;
+				$journey->addleg($leg);
+				
+				// now driving to address				
+
+				$req = new plan_request();
+				$req->from = $mmh->hubs[$j]->asPlace();
+				$req->to = $to;
+				$req->options->_date = $_datetime->asDate();
+				$req->options->_time = $_datetime->asTime();
+
+				$response = $this->plan_otp($req);
+				
+				$journey->addleg($response);
+				if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
+
+			    array_push($routes , $journey);
+				
+			}
 
 		}
 		
