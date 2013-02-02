@@ -1,0 +1,13 @@
+De in het bestand opgenomen velden:
+
+-- properties --
+LOCATION: 	De naam van het traject
+TIMESTAMP: 	Timestamp voor het moment waarop reistijd bepaalt is
+COLOR: 		De kleur die in het verkeerssysteem wordt gebruikt voor de huidige reistijd (groen = normaal, oranje/rood = vertraagd)
+VELOCITY:	Huidige snelheid (km/u) op traject
+LENGTH:		Lengte van traject (in meters)
+TRAVELTIME:	De huidige reistijd op het traject
+TRAVELTIME_FF:	'Traveltime Free Flow', de reistijd bij normale doorstroming
+
+-- geometry --
+coordinates:	De coördinaten van het traject, in Rijksdriehoekscoördinaten en in de volgorde van de rijrichting

@@ -3,18 +3,14 @@ ini_set("memory_limit","1024M");
 
 error_reporting(-1);
 
-require_once '../etc/config.php';
-require_once 'class-plan-utils.php';
-require_once 'class-mmhubs.php';
+require_once dirname(__FILE__).'/../etc/config.php';
+require_once dirname(__FILE__).'/class-plan-utils.php';
+require_once dirname(__FILE__).'/class-mmhubs.php';
 
 
 $pu = new PlanUtils();
 $mmh = new mmhubs();
 
-function startsWith($haystack, $needle)
-{
-    return !strncmp($haystack, $needle, strlen($needle));
-}
 
 /*
 // http://opentripplanner.nl/opentripplanner-api-webapp/ws/plan?maxTransfers=12
@@ -57,10 +53,55 @@ $response = $pu->plan_car($req);
 
 echo "REQ2";
 echo "\n\n";
-//echo $response->rawdata;
+echo $response->rawdata;
 echo "\n\n";
 echo $response->url;
 echo "\n\n";
+echo sprintf("dist: %s\n",$response->distance);
+echo sprintf("dur: %s\n",$response->duration);
+echo sprintf("start: %s\n",$response->startaddress);
+echo sprintf("end: %s\n",$response->endaddress);
+echo "\n\n";
+
+
+
+$response = $pu->plan_car_mapquest($req);
+
+echo "REQ2";
+echo "\n\n";
+echo $response->rawdata;
+echo "\n\n";
+echo $response->url;
+echo "\n\n";
+echo sprintf("dist: %s\n",$response->distance);
+echo sprintf("dur: %s\n",$response->duration);
+echo sprintf("start: %s\n",$response->startaddress);
+echo sprintf("end: %s\n",$response->endaddress);
+echo "\n\n";
+
+$req = new obj();
+$req->term = "eerste+weterin";
+
+$response = $pu->suggest($req);
+echo "REQ2A";
+echo "\n\n";
+var_dump($response);
+echo "\n\n";
+
+
+$req = new obj();
+$req->term = "rijksmuseum";
+
+$response = $pu->geolookup($req);
+echo "REQ2A";
+echo "\n\n";
+var_dump($response);
+echo "\n\n";
+
+
+
+
+
 
 /*
 from this location 

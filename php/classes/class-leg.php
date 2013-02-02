@@ -1,6 +1,6 @@
 <?php
 
-require_once 'class-base.php';
+require_once dirname(__FILE__).'/class-base.php';
 
 class TransitInfoBase {
 	public $agency = "";

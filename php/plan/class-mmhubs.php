@@ -1,6 +1,6 @@
 <?php
 
-require_once 'class-divv-parking-locations.php';
+require_once dirname(__FILE__).'/class-divv-parking-locations.php';
 
 
 /* 

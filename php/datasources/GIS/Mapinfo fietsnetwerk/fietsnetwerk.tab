@@ -1,0 +1,67 @@
+!table
+!version 300
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "WindowsLatin1"
+  Fields 60
+    Straatnaam Char (20) ;
+    SOURCE Char (32) ;
+    HIGHWAY Char (14) ;
+    SOLITARY Char (3) ;
+    CYCLEWAY Char (14) ;
+    CYCLEWAY_R Char (11) ;
+    CYCLEWAY_L Char (13) ;
+    ONEWAY Char (9) ;
+    ONEWAY_BIC Char (3) ;
+    WIDTH Char (6) ;
+    CYCLEWAY_W Char (4) ;
+    CYCLEWA_01 Char (4) ;
+    CYCLEWA_02 Char (4) ;
+    SURFACE Char (16) ;
+    ASPHALT Char (3) ;
+    CONCRETE Char (32) ;
+    PAVING_STO Char (3) ;
+    PAVING__01 Char (3) ;
+    CYCLEWAY_S Char (13) ;
+    CYCLEWA_03 Char (16) ;
+    CYCLEWA_04 Char (16) ;
+    SMOOTHNESS Char (12) ;
+    SURFACE_CO Char (6) ;
+    CYCLEWA_05 Char (13) ;
+    CYCLEWA_06 Char (5) ;
+    CYCLEWA_07 Char (5) ;
+    LIT Char (4) ;
+    LIT_INDIRE Char (3) ;
+    MOPED Char (10) ;
+    DUTY_OF_US Char (2) ;
+    BARRIER Char (10) ;
+    Z_ORDER Decimal (11, 0) ;
+    WAY_AREA Float ;
+    OSM_USER Char (32) ;
+    OSM_UID Char (32) ;
+    OSM_VERSIO Char (32) ;
+    OSM_TIMEST Char (32) ;
+    NETWERK Char (50) ;
+    TYPE Char (254) ;
+    TYPE_R Char (254) ;
+    TYPE_L Char (254) ;
+    RICHTING Char (254) ;
+    BREEDTE Decimal (5, 1) ;
+    BREEDTE_R Decimal (5, 1) ;
+    BREEDTE_L Decimal (5, 1) ;
+    VERHARD Char (254) ;
+    VERHARD_R Char (254) ;
+    VERHARD_L Char (254) ;
+    ONDERHOUD Decimal (4, 0) ;
+    KLEUR Char (254) ;
+    KLEUR_R Char (254) ;
+    KLEUR_L Char (254) ;
+    VERLICHT Char (254) ;
+    STATUS Char (254) ;
+    STADSDEEL Char (50) ;
+    WVK_ID Decimal (9, 0) ;
+    GEBSEL Decimal (4, 0) ;
+    DIST Decimal (9, 0) ;
+    SNELHEID Decimal (4, 0) ;
+    DRUKSTE Decimal (1, 0) ;

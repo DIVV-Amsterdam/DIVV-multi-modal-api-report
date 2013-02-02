@@ -5,9 +5,9 @@ error_reporting(-1);
 session_start();
 
 
-require_once '../etc/config.php';
-require_once 'class-plan-utils.php';
-require_once 'class-mmhubs.php';
+require_once dirname(__FILE__).'/../etc/config.php';
+require_once dirname(__FILE__).'/class-plan-utils.php';
+require_once dirname(__FILE__).'/class-mmhubs.php';
 
 
 

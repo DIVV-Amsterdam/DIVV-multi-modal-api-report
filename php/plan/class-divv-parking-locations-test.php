@@ -3,8 +3,8 @@ ini_set("memory_limit","1024M");
 
 error_reporting(-1);
 
-require_once '../etc/config.php';
-require_once 'class-divv-parking-locations.php';
+require_once dirname(__FILE__).'/../etc/config.php';
+require_once dirname(__FILE__).'/class-divv-parking-locations.php';
 
 $divvlocations = new divvlocations();
 

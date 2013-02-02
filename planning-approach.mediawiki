@@ -391,8 +391,35 @@ Headsign
 OTP			Amsterdam CS via Amstelveen
 openov		Amsterdam via Amstelveen
 
+Driving Directions
+http://open.mapquestapi.com/directions/
+http://developers.cloudmade.com/wiki/navengine/
+http://www.openrouteservice.org
 
 
+Geocoding
+http://open.mapquestapi.com/geocoding/#locations
+http://open.mapquestapi.com/geocoding/v1/address?location=rijksmuseum
+http://developers.cloudmade.com/wiki/geocoding-http-api/Documentation
+http://maps.googleapis.com/maps/api/geocode/json?address=amsterdam+cs&sensor=true
+
+
+http://nominatim.openstreetmap.org/search.php?q=1017sk%2C+amsterdam%2C+netherlands&viewbox=5.1%2C52.07%2C5.11%2C52.06
+
+
+show realtime driving
+http://www.trafficlink-online.nl/trafficlinkdata/wegdata/TrajectSensorsNH.GeoJSON
+http://jon651.glimworm.com/divvamsterdam/php/datasources/metadata_realtime_verkeersdata/voorbeeldcode%20realtime%20verkeersdata.php
+
+
+list of mapping alternatives
+http://www.netmagazine.com/features/top-seven-alternatives-google-maps-api
+http://www.esri.com/software/arcgis/arcgisonline/purchase
+
+
+components
+http://bmander.github.com/graphserver/
+http://opentripplanner.nl/index.html#/
 
 
 

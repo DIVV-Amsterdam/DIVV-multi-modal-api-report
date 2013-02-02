@@ -1,6 +1,6 @@
 <?php
 
-require_once 'class-base.php';
+require_once dirname(__FILE__).'/class-base.php';
 
 class Journey extends BaseClass {
     public $legs = array();
@@ -19,7 +19,7 @@ class Journey extends BaseClass {
     		if ($leg->type == "STATIC") {
     			$retval = $retval . "\t" . $leg->mode . "\n";
     		} else {
-    			$retval = $retval . "\t" . $leg->type . " (et:".$leg->endTime.", dur:".$leg->duration.") \n";
+    			$retval = $retval . "\t" . $leg->type . " (et:".$leg->endTime.", dur:".$leg->duration.", cost:".$leg->cost.") \n";
     		
 		    	foreach ($leg->legs as $leg2) {
 				    $retval = $retval . "\t\t". $leg2->summary()."\n";

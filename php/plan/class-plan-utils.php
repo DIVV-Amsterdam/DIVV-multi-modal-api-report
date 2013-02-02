@@ -1,9 +1,16 @@
 <?php
 
-require_once '../classes/class-base.php';
-require_once '../classes/class-leg.php';
-require_once '../classes/class-journey.php';
-require_once '../etc/config.php';
+require_once dirname(__FILE__).'/../classes/class-base.php';
+require_once dirname(__FILE__).'/../classes/class-leg.php';
+require_once dirname(__FILE__).'/../classes/class-journey.php';
+require_once dirname(__FILE__).'/../etc/config.php';
+
+function startsWith($haystack, $needle)
+{
+    return !strncmp($haystack, $needle, strlen($needle));
+}
+
+
 
 class obj {
 }
@@ -93,6 +100,244 @@ class PlanUtils {
 
 
     }
+    public function plan_car_openrouteservice($request) {
+	    // http://www.openrouteservice.org
+	    
+    }
+    
+    
+    public function geolookup_mapquest($address) {
+		//	http://open.mapquestapi.com/geocoding/v1/address?location=glimworm    
+		// (see http://open.mapquestapi.com/geocoding/#locations )
+		
+		$url="http://open.mapquestapi.com/geocoding/v1/address?location=".$address;
+		$ch1 = curl_init();
+		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch1, CURLOPT_URL, $url);
+		$result1 = curl_exec($ch1);
+		$response = json_decode($result1);
+		$retval = array();
+		
+		foreach ($response->results[0]->locations as $loc) {
+			$ad = new obj();
+			$ad->name = "";
+			$ad->lat = $loc->latLng->lat;
+			$ad->lng = $loc->latLng->lng;
+			$ad->street = $loc->street;
+			$ad->postcode = $loc->postalCode;
+			$ad->url = $loc->mapUrl;
+			$ad->type = $loc->type;
+			$ad->data = $loc;
+			array_push($retval , $ad);
+		}
+		
+		return $retval;
+    }
+    
+    public function geolookup_gm($address) {
+		// http://maps.googleapis.com/maps/api/geocode/json?address=amsterdam+cs&sensor=true
+    
+		$url="http://maps.googleapis.com/maps/api/geocode/json?address=".$address."&sensor=true";
+		$ch1 = curl_init();
+		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch1, CURLOPT_URL, $url);
+		$result1 = curl_exec($ch1);
+		$response = json_decode($result1);
+		$retval = array();
+		
+		foreach ($response->results as $loc) {
+			$ad = new obj();
+			$ad->name = $loc->formatted_address;
+			$ad->lat = $loc->geometry->location->lat;
+			$ad->lng = $loc->geometry->location->lng;
+			$ad->street = "";
+			$ad->postcode = "";
+			$ad->url = "";
+			$ad->type = $loc->types;
+			$ad->data = $loc;
+			array_push($retval , $ad);
+		}
+		
+		return $retval;
+    }
+
+
+
+    public function geolookup_nominatim($address) {
+		// http://nominatim.openstreetmap.org/search?q=glimworm&format=json&polygon=0&addressdetails=1    
+    
+		$url="http://nominatim.openstreetmap.org/search?q=".$address."&format=json&polygon=0&addressdetails=1";
+		$ch1 = curl_init();
+		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch1, CURLOPT_URL, $url);
+		$result1 = curl_exec($ch1);
+		$response = json_decode($result1);
+		$retval = array();
+		
+		foreach ($response->results[0]->locations as $loc) {
+			$ad = new obj();
+			$ad->name = "";
+			$ad->lat = $loc->latLng->lat;
+			$ad->lng = $loc->latLng->lng;
+			$ad->street = $loc->street;
+			$ad->postcode = $loc->postalCode;
+			$ad->url = $loc->mapUrl;
+			$ad->type = $loc->type;
+			$ad->data = $loc;
+			array_push($retval , $ad);
+		}
+		
+		return $retval;
+    }
+    
+    public function taxicosts($distance, $time) {
+    	$cost = 283 + ((208*$distance)/1000) + (34 * $time);
+    	return ($cost/100);
+    }
+
+    public function geolookup($request) {
+    	$retval = new obj();
+    	$retval->mapquestapi = $this->geolookup_mapquest($request->term);
+    	$retval->suggestions = $this->suggest($request);
+    	$retval->gm = $this->geolookup_gm($request->term);
+    	
+    	return $retval;
+    }
+    
+    public function suggest($request) {
+    	//	http://9292.nl/suggest?q=eerste+weteringp
+		$url="http://9292.nl/suggest?q=".$request->term;
+		
+		$ch1 = curl_init();
+		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch1, CURLOPT_URL, $url);
+
+		$result1 = curl_exec($ch1);
+		$response = json_decode($result1);
+
+
+		$retval = array();
+		
+		foreach ($response->locations as $loc) {
+			$ad = new obj();
+			$ad->name = $loc->name;
+			$ad->type = $loc->type . "/" .$loc->subType;
+			$ad->lat = 0;
+			$ad->lng = 0;
+			$ad->street = "";
+			$ad->postcode = "";
+			$ad->url = "http://9292.nl/".$loc->url;
+			$ad->data = $loc;
+			array_push($retval , $ad);
+		}
+		
+		return $retval;
+    }
+    
+    public function getnode($request) {
+    }
+
+    public function RD2WGS84($x, $y){
+        /* Conversie van Rijksdriehoeksmeting naar latitude en longitude (WGS84)
+        Voorbeeld: Station Utrecht    
+        x = 136013;
+        y = 455723;
+        */
+
+        $dX = ($x - 155000) * pow(10,-5);
+        $dY = ($y - 463000) * pow(10,-5);
+
+        $SomN = (3235.65389 * $dY) + (-32.58297 * pow($dX,2)) + (-0.2475 * pow($dY,2)) + (-0.84978 * pow($dX,2) * $dY) + (-0.0655 * pow($dY,3)) + (-0.01709 * pow($dX,2) * pow($dY,2)) + (-0.00738 * $dX) + (0.0053 * pow($dX,4)) + (-0.00039 * pow($dX,2) * pow($dY,3)) + (0.00033 * pow($dX,4) * $dY) + (-0.00012 * $dX * $dY);
+        $SomE = (5260.52916 * $dX) + (105.94684 * $dX * $dY) + (2.45656 * $dX * pow($dY,2)) + (-0.81885 * pow($dX,3)) + (0.05594 * $dX * pow($dY,3)) + (-0.05607 * pow($dX,3) * $dY) + (0.01199 * $dY) + (-0.00256 * pow($dX,3) * pow($dY,2)) + (0.00128 * $dX * pow($dY,4)) + (0.00022 * pow($dY,2)) + (-0.00022 * pow($dX,2)) + (0.00026 * pow($dX,5));
+
+        $lat = 52.15517 + ($SomN / 3600);
+        $lon = 5.387206 + ($SomE / 3600);
+        
+        return(Array("lat" => $lat, "lon" => $lon));
+    }
+
+    public function is_driving_delays($request) {
+		$count = 0;
+		$jsontxt = file_get_contents("http://www.trafficlink-online.nl/trafficlinkdata/wegdata/TrajectSensorsNH.GeoJSON");
+		$json = json_decode($jsontxt);
+		foreach($json->features as $feature){
+			$count++;
+			$color = $feature->properties->COLOR;
+			$points = $feature->geometry->coordinates;
+			$info = "". $feature->properties->LOCATION . " ";
+			$info .= "Lengte: ". $feature->properties->LENGTH ." meter ";
+			$info .= "Snelheid: ". $feature->properties->VELOCITY ." km/u ";
+			$info .= "Normale reistijd: ". floor($feature->properties->TRAVELTIME_FF / 60) .":". str_pad($feature->properties->TRAVELTIME_FF % 60,2,"0") ." ";
+			$info .= "Huidige reistijd: ". floor($feature->properties->TRAVELTIME / 60) .":". str_pad($feature->properties->TRAVELTIME % 60,2,"0") ."";
+			$split = "";
+			print("var path". $count ." = [");
+			foreach($points as $point){
+				$latlon = $this->RD2WGS84($point[0], $point[1]);
+				$lat = $latlon["lat"];
+				$lon = $latlon["lon"];
+				print($split . " new google.maps.LatLng(". $lat .", ". $lon .")");
+				$split = ",";
+			}
+			print("];\n");
+           
+			print("var line". $count ." = new google.maps.Polyline({map: map, path: path". $count .", strokeColor: '". $color ."', strokeOpacity: 1.0,strokeWeight: 3, title: '". $title ."'});\n");
+			print("google.maps.event.addListener(line". $count .", 'click', function() {alert('". $info ."'); });\n");
+		}
+    }
+    
+    public function plan_car_mapquest($request) {
+    
+    	$origin = $request->from->lat ."," . $request->from->lon;
+    	$destination = $request->to->lat ."," . $request->to->lon;
+    	
+    	/*
+    		reference : http://open.mapquestapi.com/directions/
+    	*/
+		
+		$url="http://open.mapquestapi.com/directions/v1/route";
+		
+		$ch1 = curl_init();
+//			curl_setopt($ch1, CURLOPT_POST, 1);
+		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch1, CURLOPT_URL, $url."?outFormat=json&from=".$origin."&to=".$destination."&unit=k&routeType=fastest&narrativeType=text&");
+		
+		//mustAvoidLinkIds
+		//tryAvoidLinkIds
+		//dateType=2 (mon, 3=tue)
+		//&timeType=2&dateType=0&date=04/14/2011&localTime=12:05
+		
+		$result1 = curl_exec($ch1);
+		$response = json_decode($result1);
+
+//			echo "<h1>dump response</h1>";
+//			var_dump($response);
+		
+		$lg = new Leg();
+		$lg->from = new Place($request->from->lat, $request->from->lon, $request->from->name);
+		$lg->to = new Place($request->to->lat, $request->to->lon, $request->to->name);
+		$lg->mode = "DRIVING";
+		
+
+		$retval = new obj();
+		$retval->distance = floor($response->route->distance*1000);
+		$retval->duration = $response->route->time;
+		$retval->distancetxt = floor($response->route->distance*1000);
+		$retval->durationtxt = $response->route->time;
+		$retval->startaddress = $response->route->locations[0]->street . $response->route->locations[0]->postalCode;
+		$retval->endaddress = $response->route->locations[1]->street . $response->route->locations[1]->postalCode;
+		$retval->src = "curl";
+		$retval->url = $url;
+		$retval->rawdata = $result1;
+		$retval->data = json_decode($result1);
+		$retval->legs = array($lg);
+		$retval->type = "car/mapquest";
+		$retval->endTime = "";
+//		$retval->legs = $legs;
+    	return $retval;
+
+
+    }
+    
     public function plan_otp($request) {
     
     	$h = "http://opentripplanner.nl/opentripplanner-api-webapp/ws/plan";
@@ -331,6 +576,10 @@ class PlanUtils {
 				$req->options->_time = $_datetime->asTime();
 
 				$response = $this->plan_car($req);
+				
+				$response->cost = $this->taxicosts($response->distance, ($response->duration/60));
+				
+				
 				
 				$journey->addleg($response);
 				if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
