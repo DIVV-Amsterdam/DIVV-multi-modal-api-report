@@ -1,0 +1,7 @@
+=Deliverables=
+* Report (max. 10 pages)
+* Powerpoint presentation
+* Website/prototype
+* Github
+** Code
+** Documentation
