@@ -1,198 +1,176 @@
 Testdocument to include data-related content from end report...
 
-<h1>Current state of OV datasets for NL</h1>
+=Current state of OV datasets for NL=
 The ecosystem of OV datasets is still very young and somewhat immature - most of these platforms are less than a year old. Often documentation is insufficient, and can quickly get out of data as developments are fast. Many of the data formats are quite complex and require large amounts of domain knowledge. Some of the licenses are restrictive.
 
 To cover Amsterdam, we would need data from Connexxion (CXX), EBS, GVB and NS, at this time. This may change as concessions change, but not for the next year at least.
 
-<h2>Currently available datasets</h2>
+==Currently available datasets==
 Possibly interesting datasets for our project highlighted in bold.
-<table border="1" width="100%" cellspacing="0" cellpadding="2">
+<table>
+<thead>
+<tr>
+<th><b>Dataset</b></th>
+<th><b>Source</b></th>
+<th><b>Geographic coverage</b></th>
+<th><b>Frequency</b></th>
+<th><b>Should respond to planned changes</b></th>
+<th><b>Should respond to unplanned changes</b></th>
+<th><b>Format in</b></th>
+<th><b>Format out</b></th>
+<th><b>License/price</b></th>
+<th><b>Notes</b></th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td valign="top"><font face="Verdana"><b>Dataset</b></font></td>
-<td valign="top"><font face="Verdana"><b>Source</b></font></td>
-<td valign="top"><font face="Verdana"><b>Geographic coverage</b></font></td>
-<td valign="top"><font face="Verdana"><b>Frequency</b></font></td>
-<td valign="top"><font face="Verdana"><b>Should respond to planned changes</b></font></td>
-<td valign="top"><font face="Verdana"><b>Should respond to unplanned changes</b></font></td>
-<td valign="top"><font face="Verdana"><b>Format in</b></font></td>
-<td valign="top"><font face="Verdana"><b>Format out</b></font></td>
-<td valign="top"><font face="Verdana"><b>License/price</b></font></td>
-<td valign="top"><font face="Verdana"><b>Notes</b></font></td>
+<td><b>GTFS NL</b></td>
+<td>9292</td>
+<td>National, perhaps no trains</td>
+<td>Unclear, does not seem up to date</td>
+<td>No</td>
+<td>No</td>
+<td><br></td>
+<td>GTFS</td>
+<td>Free for now</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>GTFS NL</b></font></td>
-<td valign="top"><font face="Verdana">9292</font></td>
-<td valign="top"><font face="Verdana">National, perhaps no trains</font></td>
-<td valign="top"><font face="Verdana">Unclear, does not seem up to date</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana">GTFS</font></td>
-<td valign="top"><font face="Verdana">Free for now</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>KV1 for ARR CXX EBS GVB HTM QBUZZ SYNTUS VEOLIA RETBUS</b></td>
+<td>9292</td>
+<td>Depends on concessions</td>
+<td>When service changes?</td>
+<td>No</td>
+<td>No</td>
+<td><br></td>
+<td>KV1</td>
+<td>Free for now<br></td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV1 for ARR CXX EBS GVB HTM QBUZZ SYNTUS VEOLIA RETBUS</b></font></td>
-<td valign="top"><font face="Verdana">9292</font></td>
-<td valign="top"><font face="Verdana">Depends on concessions</font></td>
-<td valign="top"><font face="Verdana">When service changes?</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana">KV1</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">Free for now</span><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>KV6 for ARR CXX HTM</b></td>
+<td>9292</td>
+<td>Depends on concessions</td>
+<td>Real-time</td>
+<td>Yes</td>
+<td>Up to certain extent?</td>
+<td>Custom VPN</td>
+<td>KV6</td>
+<td>Custom SLA contract</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV6 for ARR CXX HTM</b></font></td>
-<td valign="top"><font face="Verdana">9292</font></td>
-<td valign="top"><font face="Verdana">Depends on concessions</font></td>
-<td valign="top"><font face="Verdana">Real-time</font></td>
-<td valign="top"><font face="Verdana">Yes</font></td>
-<td valign="top"><font face="Verdana">Up to certain extent?</font></td>
-<td valign="top"><font face="Verdana">Custom VPN</font></td>
-<td valign="top"><font face="Verdana">KV6</font></td>
-<td valign="top"><font face="Verdana">Custom SLA contract</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>KV15 for ARR CXX</b></td>
+<td>9292</td>
+<td>Depends on concessions<br></td>
+<td>Real-time</td>
+<td>Yes</td>
+<td>Up to certain extent?</td>
+<td>Custom VPN</td>
+<td>KV15</td>
+<td>Custom SLA contract</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV15 for ARR CXX</b></font></td>
-<td valign="top"><font face="Verdana">9292</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">Depends on concessions</span><br></font></td>
-<td valign="top"><font face="Verdana">Real-time</font></td>
-<td valign="top"><font face="Verdana">Yes</font></td>
-<td valign="top"><font face="Verdana">Up to certain extent?</font></td>
-<td valign="top"><font face="Verdana">Custom VPN</font></td>
-<td valign="top"><font face="Verdana">KV15</font></td>
-<td valign="top"><font face="Verdana">Custom SLA contract</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>KV17 for CXX</b></td>
+<td>9292</td>
+<td>Depends on concessions<br></td>
+<td>Daily?</td>
+<td>Yes</td>
+<td>No</td>
+<td>Custom VPN</td>
+<td>KV17</td>
+<td>Custom SLA contract</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV17 for CXX</b></font></td>
-<td valign="top"><font face="Verdana">9292</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">Depends on concessions</span><br></font></td>
-<td valign="top"><font face="Verdana">Daily?</font></td>
-<td valign="top"><font face="Verdana">Yes</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana">Custom VPN</font></td>
-<td valign="top"><font face="Verdana">KV17</font></td>
-<td valign="top"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;"><font face="Verdana">Custom SLA contract</font></span></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td>RET</td>
+<td>9292</td>
+<td>Rotterdam</td>
+<td>When service changes?</td>
+<td><br></td>
+<td><br></td>
+<td><br></td>
+<td>RET custom</td>
+<td>Free for now</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana">RET</font></td>
-<td valign="top"><font face="Verdana">9292</font></td>
-<td valign="top"><font face="Verdana">Rotterdam</font></td>
-<td valign="top"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;"><font face="Verdana">When service changes?</font></span></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana">RET custom</font></td>
-<td valign="top"><font face="Verdana">Free for now</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>NS IFF</b></td>
+<td>9292</td>
+<td>National (NS)</td>
+<td>When service changes?</td>
+<td>No</td>
+<td>No</td>
+<td><br></td>
+<td>IFF</td>
+<td>Free for now</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>NS IFF</b></font></td>
-<td valign="top"><font face="Verdana">9292</font></td>
-<td valign="top"><font face="Verdana">National (NS)</font></td>
-<td valign="top"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;"><font face="Verdana">When service changes?</font></span></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana">IFF</font></td>
-<td valign="top"><font face="Verdana">Free for now</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>KV 7/8 turbo</b></td>
+<td>GOVI</td>
+<td>Missing parts of concessions ZH, Rotterdam, Arnhem, Gelderland, Twente, Friesland</td>
+<td>Real-time, except GVB metro</td>
+<td>Yes</td>
+<td>Up to certain extent?<br></td>
+<td>Custom VPN / MQ</td>
+<td>KV 7/8</td>
+<td>GOVI license</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV 7/8 turbo</b></font></td>
-<td valign="top"><font face="Verdana">GOVI</font></td>
-<td valign="top"><font face="Verdana">Missing parts of concessions ZH, Rotterdam, Arnhem, Gelderland, Twente, Friesland</font></td>
-<td valign="top"><font face="Verdana">Real-time, except GVB metro</font></td>
-<td valign="top"><font face="Verdana">Yes</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">Up to certain extent?</span><br></font></td>
-<td valign="top"><font face="Verdana">Custom VPN / MQ</font></td>
-<td valign="top"><font face="Verdana">KV 7/8</font></td>
-<td valign="top"><font face="Verdana">GOVI license</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td>KV 55</td>
+<td>GOVI</td>
+<td>Same as KV78 GOVI<br></td>
+<td>Real-time?</td>
+<td>Probably</td>
+<td>Up to certain extent?<br></td>
+<td>Custom VPN / MQ</td>
+<td>KV 55</td>
+<td>GOVI license</td>
+<td>Seems to be deprecated in favour of KV 7/8</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana">KV 55</font></td>
-<td valign="top"><font face="Verdana">GOVI</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">Same as KV78 GOVI</span><br></font></td>
-<td valign="top"><font face="Verdana">Real-time?</font></td>
-<td valign="top"><font face="Verdana">Probably</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">Up to certain extent?</span><br></font></td>
-<td valign="top"><font face="Verdana">Custom VPN / MQ</font></td>
-<td valign="top"><font face="Verdana">KV 55</font></td>
-<td valign="top"><font face="Verdana">GOVI license</font></td>
-<td valign="top"><font face="Verdana">Seems to be deprecated in favour of KV 7/8</font></td>
+<td><b>KV1 ARR CXX EBS GVB HTM QBUZZ RET? SYNTUS VEOLIA</b></td>
+<td>OpenOV</td>
+<td>Depends on concessions</td>
+<td>Unclear</td>
+<td>No</td>
+<td>No</td>
+<td><br></td>
+<td>KV1</td>
+<td>CC0</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV1 ARR CXX EBS GVB HTM QBUZZ RET? SYNTUS VEOLIA</b></font></td>
-<td valign="top"><font face="Verdana">OpenOV</font></td>
-<td valign="top"><font face="Verdana">Depends on concessions</font></td>
-<td valign="top"><font face="Verdana">Unclear</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana">No</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana">KV1</font></td>
-<td valign="top"><font face="Verdana">CC0</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>KV 7/8 turbo on v0.ovapi.nl</b></td>
+<td>OpenOV</td>
+<td>Same as GOVI<br></td>
+<td>Real-time, except GVB metro</td>
+<td>Yes</td>
+<td>Up to certain extent?</td>
+<td>REST</td>
+<td>JSON</td>
+<td>Some CC0, some GOVI-license (~no stats, no logging)</td>
+<td>On top of GOVI - might include KV15?</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV 7/8 turbo on v0.ovapi.nl</b></font></td>
-<td valign="top"><font face="Verdana">OpenOV</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">Same as GOVI</span><br></font></td>
-<td valign="top"><font face="Verdana">Real-time, except GVB metro</font></td>
-<td valign="top"><font face="Verdana">Yes</font></td>
-<td valign="top"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;"><font face="Verdana">Up to certain extent?</font></span></td>
-<td valign="top"><font face="Verdana">REST</font></td>
-<td valign="top"><font face="Verdana">JSON</font></td>
-<td valign="top"><font face="Verdana">Some CC0, some GOVI-license (~no stats, no logging)</font></td>
-<td valign="top"><font face="Verdana">On top of GOVI - might include KV15?</font></td>
-</tr>
-<tr>
-<td valign="top"><font face="Verdana"><b>NS API</b></font></td>
-<td valign="top"><font face="Verdana">NS</font></td>
-<td valign="top"><font face="Verdana">NS service area, covers the Dutch Hoofdrailnet and some smaller lines.</font></td>
-<td valign="top"><font face="Verdana">Real-time</font></td>
-<td valign="top"><font face="Verdana">Yes</font></td>
-<td valign="top"><font face="Verdana">Yes</font></td>
-<td valign="top"><font face="Verdana">REST</font></td>
-<td valign="top"><font face="Verdana">Custom XML</font></td>
-<td valign="top"><font face="Verdana">Custom license, only display facts about future trips, no judgements</font></td>
-<td valign="top"><font face="Verdana">Includes pricing calculations</font></td>
-</tr>
-<tr>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-</tr>
-<tr>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>NS API</b></td>
+<td>NS</td>
+<td>NS service area, covers the Dutch Hoofdrailnet and some smaller lines.</td>
+<td>Real-time</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>REST</td>
+<td>Custom XML</td>
+<td>Custom license, only display facts about future trips, no judgements</td>
+<td>Includes pricing calculations</td>
 </tr>
 </tbody>
-</table>									
-									
-<h2>Observations of KV78Turbo from OpenOV for GVB trams</h2>
+</table>
+
+==Observations of KV78Turbo from OpenOV for GVB trams==
 I've built a small app in the past using OpenOV KV78Turbo data (which comes from GOVI). A few observations I've made in GVB trams:
 <UL>
 <LI>Most of the time, the data is correct and up-to-date. Trams which are not available ("geen dienst") are not included (and should not be).</LI>
@@ -204,105 +182,106 @@ I've built a small app in the past using OpenOV KV78Turbo data (which comes from
 </UL>
 Note that for KV78Turbo GVB metro, there is no data at all of the vehicles on the line. So the only data available is when a metro is scheduled to leave from the start of the line. Once the planned departure time has passed, the vehicle disappears. There is no data for any other stops, real-time or planned.
 
-<h3>Data formats</h3>
+==Data formats==
 OV-data is commonly stored in GTFS format or in the Transmodel 8.000 NL standard (TMI8). TMI8 defines a series of koppelvlakken (KV). The TMI8 standard is defined by the Platform Beheer Informatie Standaarden OV Nederland (BISON). The specs are fully open. OpenOV has some code to parse these different datasets.
 
 The basic model of TMI8 consists of OV companies, like GVB; integrators, like 9292 (also known as Reisinformatiegroep/RIG) or the platform Grenzeloze Openbaar Vervoer Informatie (GOVI); and users, like app makers. The OV companies publish all their data in specific KV-datasets, like KV1 or KV19. This data is then aggregated by integrators, like 9292/RIG or GOVI. For example, they need to aggregate the stops: different OV companies may have different identifiers for the same stop. The integrators are intended to make the data agnostic in terms of which OV company is the source, and translate it to the most suitable KVs for users.
 However, it does not seem like these roles are kept very strict: the data from GOVI is mostly in KVs intended for users, like 7 and 8, but the data from 9292 is mostly in the raw KVs, like KV6 or KV17.
 
 The current standards defined by BISON are:
-<table border="1" width="100%" cellspacing="0" cellpadding="2">
+<table>
+<thead>
+<tr><th><b>Dataset</b></th>
+<th><b>Type of data</b></th>
+<th><b>Notes</b></th>
+<th><b>Target groups</b></th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td valign="top"><font face="Verdana"><b>Dataset</b></font></td>
-<td valign="top"><font face="Verdana"><b>Type of data</b></font></td>
-<td valign="top"><font face="Verdana"><b>Notes</b></font></td>
-<td valign="top"><font face="Verdana"><b>Target groups</b></font></td>
+<td><b>KV1</b></td>
+<td>Static planning and network data</td>
+<td>Similar to GTFS in purpose, but different format</td>
+<td>From OV company to integrator</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV1</b></font></td>
-<td valign="top"><font face="Verdana">Static planning and network data</font></td>
-<td valign="top"><font face="Verdana">Similar to GTFS in purpose, but different format</font></td>
-<td valign="top"><font face="Verdana">From OV company to integrator</font></td>
+<td>KV4</td>
+<td>Real-time platform data (which trip leaves from which platform) for station operators</td>
+<td></td>
+<td>From OV company to station operators</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana">KV4</font></td>
-<td valign="top"><font face="Verdana">Real-time platform data (which trip leaves from which platform) for station operators</font></td>
-<td valign="top"></td>
-<td valign="top"><font face="Verdana">From OV company to station operators</font></td>
+<td><b>KV6</b></td>
+<td>Real-time punctuality of trips: has data on progress of trip</td>
+<td>Requires detailed knowledge of route to work out consequences for travellers</td>
+<td>From OV company to integrator</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV6</b></font></td>
-<td valign="top"><font face="Verdana">Real-time punctuality of trips: has data on progress of trip</font></td>
-<td valign="top"><font face="Verdana">Requires detailed knowledge of route to work out consequences for travellers</font></td>
-<td valign="top"><font face="Verdana">From OV company to integrator</font></td>
+<td><b>KV7</b></td>
+<td>Static planning and network data for stops</td>
+<td>Usually used together with KV8</td>
+<td>From integrator to data users</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV7</b></font></td>
-<td valign="top"><font face="Verdana">Static planning and network data for stops</font></td>
-<td valign="top"><font face="Verdana">Usually used together with KV8</font></td>
-<td valign="top"><font face="Verdana">From integrator to data users</font></td>
+<td><b>KV8</b></td>
+<td>Real-time data for stops</td>
+<td>Usually used together with KV7</td>
+<td>From integrator to data users</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV8</b></font></td>
-<td valign="top"><font face="Verdana">Real-time data for stops</font></td>
-<td valign="top"><font face="Verdana">Usually used together with KV7</font></td>
-<td valign="top"><font face="Verdana">From integrator to data users</font></td>
+<td>KV9</td>
+<td>Data for verkeerregelinstallaties (traffic lights, flexible barriers, etc.)</td>
+<td></td>
+<td>From road operators to OV companies</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana">KV9</font></td>
-<td valign="top"><font face="Verdana">Data for verkeerregelinstallaties (traffic lights, flexible barriers, etc.)</font></td>
-<td valign="top"></td>
-<td valign="top"><font face="Verdana">From road operators to OV companies</font></td>
+<td><b>KV15</b></td>
+<td>Free text to be shown at stops</td>
+<td><br></td>
+<td>From OV company to everyone</td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV15</b></font></td>
-<td valign="top"><font face="Verdana">Free text to be shown at stops</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana">From OV company to everyone</font></td>
+<td><b>KV17</b></td>
+<td>Traffic control mutations</td>
+<td>For example, skipping a trip, cancelling a running trip, shortening a trip, delaying departure</td>
+<td><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">From OV company to integrator</span><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV17</b></font></td>
-<td valign="top"><font face="Verdana">Traffic control mutations</font></td>
-<td valign="top"><font face="Verdana">For example, skipping a trip, cancelling a running trip, shortening a trip, delaying departure</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">From OV company to integrator</span><br></font></td>
+<td><b>KV19</b></td>
+<td>Real-time planned transit times of trips at stops</td>
+<td>Can also be used to indicate that a stop was skipped</td>
+<td><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">From OV company to integrator</span><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV19</b></font></td>
-<td valign="top"><font face="Verdana">Real-time planned transit times of trips at stops</font></td>
-<td valign="top"><font face="Verdana">Can also be used to indicate that a stop was skipped</font></td>
-<td valign="top"><font face="Verdana"><span style="color: rgb(0, 0, 0); font-size: medium; font-variant: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; display: inline !important; float: none;">From OV company to integrator</span><br></font></td>
+<td><b>KV20</b></td>
+<td>Temporary mutations: changes planned typically a few days in advance</td>
+<td>For example, dropping trips or shortening a line</td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>KV20</b></font></td>
-<td valign="top"><font face="Verdana">Temporary mutations: changes planned typically a few days in advance</font></td>
-<td valign="top"><font face="Verdana">For example, dropping trips or shortening a line</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td>Haltetoegankelijkheid</td>
+<td>Fysieke haltestructuur en toegankelijkheid</td>
+<td><br></td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana">Haltetoegankelijkheid</font></td>
-<td valign="top"><font face="Verdana">Fysieke haltestructuur en toegankelijkheid</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td><b>PPT fase 1</b></td>
+<td>Products, prices and tariffs</td>
+<td><br></td>
+<td><br></td>
 </tr>
 <tr>
-<td valign="top"><font face="Verdana"><b>PPT fase 1</b></font></td>
-<td valign="top"><font face="Verdana">Products, prices and tariffs</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
-</tr>
-<tr>
-<td valign="top"><font face="Verdana">KV55</font></td>
-<td valign="top"><font face="Verdana">Current departure times for mobile applications, deprecated?</font></td>
-<td valign="top"><font face="Verdana">Custom standard for GOVI?</font></td>
-<td valign="top"><font face="Verdana"><br></font></td>
+<td>KV55</td>
+<td>Current departure times for mobile applications, deprecated?</td>
+<td>Custom standard for GOVI?</td>
+<td><br></td>
 </tr>
 </tbody>
 </table>	
 
 The government is also working on setting op a ND-OV locket (nationale data OV). Current contestants for this role are RIG (9292) and Stichting OpenGeo (which runs OpenOV). They will be required to take and distribute all data and may charge a max of € 1000/year. OpenGeo intends to provide best-effort KV1 and KV78 data as OpenOV, and KV1/KV6/KV15/KV17 under SLA with ND-OV.
 
-Some references:
+==References==
 <UL>
 <LI>BISON standards: http://bison.connekt.nl/standaarden/</LI>
 <LI>BISON architecture: http://bison.connekt.nl/www/filelib/file/BISON/Architectuur/Beschrijving%20BISON%20architectuur%20v1_1.pdf</LI>
@@ -318,3 +297,5 @@ Some references:
 <LI>Instructions on building your own OpenOV KV78Turbo API (perhaps dated): http://www.ovstatus.nl/UbuntuServer-OpenOV-V3.pdf</LI>
 <LI>Hoofdrailnet, the train lines covered by NS data: http://upload.wikimedia.org/wikipedia/commons/a/ad/Hoofdrailnet.png</LI>
 </UL>
+=Current state of Motorized traffic datasets for NL=
+-To be added by Jonathan-
