@@ -1,0 +1,74 @@
+Testdocument to include data-related content from end report...
+
+Current state of OV datasets for NL
+The ecosystem of OV datasets is still very young and somewhat immature - most of these platforms are less than a year old. Often documentation is insufficient, and can quickly get out of data as developments are fast. Many of the data formats are quite complex and require large amounts of domain knowledge. Some of the licenses are restrictive.
+
+To cover Amsterdam, we would need data from Connexxion (CXX), EBS, GVB and NS, at this time. This may change as concessions change, but not for the next year at least.
+
+Currently available datasets
+Possibly interesting datasets for our project highlighted in bold.
+Dataset  Source	Geographic coverage	Frequency	Should respond to planned changes	Should respond to unplanned changes	Format in	Format out	License/price	Notes
+GTFS NL	9292	National, perhaps no trains	Unclear, does not seem up to date	No	No		GTFS	Free for now	
+KV1 for ARR CXX EBS GVB HTM QBUZZ SYNTUS VEOLIA RETBUS	9292	Depends on concessions	When service changes?	No	No		KV1	Free for now	
+KV6 for ARR CXX HTM	9292	Depends on concessions	Real-time	Yes	Up to certain extent?	Custom VPN	KV6	Custom SLA contract	
+KV15 for ARR CXX	9292	Depends on concessions	Real-time	Yes	Up to certain extent?	Custom VPN	KV15	Custom SLA contract	
+KV17 for CXX	9292	Depends on concessions	Daily?	Yes	No	Custom VPN	KV17	Custom SLA contract	
+RET	9292	Rotterdam	When service changes?				RET custom	Free for now	
+NS IFF	9292	National (NS)	When service changes?	No	No		IFF	Free for now	
+KV 7/8 turbo	GOVI	Missing parts of concessions ZH, Rotterdam, Arnhem, Gelderland, Twente, Friesland	Real-time, except GVB metro	Yes	Up to certain extent?	Custom VPN / MQ	KV 7/8	GOVI license	
+KV 55	GOVI	Same as KV78 GOVI	Real-time?	Probably	Up to certain extent?	Custom VPN / MQ	KV 55	GOVI license	Seems to be deprecated in favour of KV 7/8
+KV1 ARR CXX EBS GVB HTM QBUZZ RET? SYNTUS VEOLIA	OpenOV	Depends on concessions	Unclear	No	No		KV1	CC0	
+KV 7/8 turbo on v0.ovapi.nl	OpenOV	Same as GOVI	Real-time, except GVB metro	Yes	Up to certain extent?	REST	JSON	Some CC0, some GOVI-license (~no stats, no logging)	On top of GOVI - might include KV15?
+NS API	NS	NS service area, covers the Dutch Hoofdrailnet and some smaller lines.	Real-time	Yes	Yes	REST	Custom XML	Custom license, only display facts about future trips, no judgements	Includes pricing calculations
+									
+									
+
+Observations of KV78Turbo from OpenOV for GVB trams
+I've built a small app in the past using OpenOV KV78Turbo data (which comes from GOVI). A few observations I've made in GVB trams:
+•	Most of the time, the data is correct and up-to-date. Trams which are not available ("geen dienst") are not included (and should not be).
+•	Occasionally, all real-time data disappears: according to the data, there are no vehicles on the line.
+•	Delays are properly registered. However, GOVI uses an algorithm that the delay will slowly be caught up with after a while, meaning that 10 stops later, the trip is expected to be on schedule again. However, in my experience, delayed trams never catch up, and often get delayed more, due to slower boarding at stops. Therefore, the GOVI algorithm is too optimistic in the expected arrival time of later stops for a tram which is known to be delayed.
+•	Planned changes, like shortening or rerouting a line due to the marathon, are perfectly picked up. All data is correctly updated.
+•	Unplanned changes, like a temporary detour due to a traffic accident, are not picked up at all. The tram is basically completely missing as long as it's not following it's regular route: it will stay on "driving to <first stop after devation>". The data becomes really weird in some cases, dropping stops which will still be passed later, until the tram reports at one of it's regular stops again. After that, all data recovers. I think this is because GVB does not actually register detours like this properly in their systems, as they are short and a bit unpredictable.
+•	In (so far) rare occasions, very strange things happen with the data. I've been in a few trams which were missing in the KV78Turbo data. The strangest case was a tram which was recorded as being between stops F and G, but was actually still much earlier on the route, near stop B. Only after passing stop G, the data picked up correctly.
+Note that for KV78Turbo GVB metro, there is no data at all of the vehicles on the line. So the only data available is when a metro is scheduled to leave from the start of the line. Once the planned departure time has passed, the vehicle disappears. There is no data for any other stops, real-time or planned.
+
+Data formats
+OV-data is commonly stored in GTFS format or in the Transmodel 8.000 NL standard (TMI8). TMI8 defines a series of koppelvlakken (KV). The TMI8 standard is defined by the Platform Beheer Informatie Standaarden OV Nederland (BISON). The specs are fully open. OpenOV has some code to parse these different datasets.
+
+The basic model of TMI8 consists of OV companies, like GVB; integrators, like 9292 (also known as Reisinformatiegroep/RIG) or the platform Grenzeloze Openbaar Vervoer Informatie (GOVI); and users, like app makers. The OV companies publish all their data in specific KV-datasets, like KV1 or KV19. This data is then aggregated by integrators, like 9292/RIG or GOVI. For example, they need to aggregate the stops: different OV companies may have different identifiers for the same stop. The integrators are intended to make the data agnostic in terms of which OV company is the source, and translate it to the most suitable KVs for users.
+However, it does not seem like these roles are kept very strict: the data from GOVI is mostly in KVs intended for users, like 7 and 8, but the data from 9292 is mostly in the raw KVs, like KV6 or KV17.
+
+The current standards defined by BISON are:
+Dataset	Type of data	Notes	Target groups
+KV1	Static planning and network data	Similar to GTFS in purpose, but different format	From OV company to integrator
+KV4	Real-time platform data (which trip leaves from which platform) for station operators		From OV company to station operators
+KV6	Real-time punctuality of trips: has data on progress of trip	Requires detailed knowledge of route to work out consequences for travellers	From OV company to integrator
+KV7	Static planning and network data for stops	Usually used together with KV8	From integrator to data users
+KV8	Real-time data for stops	Usually used together with KV7	From integrator to data users
+KV9	Data for verkeerregelinstallaties (traffic lights, flexible barriers, etc.)		From road operators to OV companies
+KV15	Free text to be shown at stops		From OV company to everyone
+KV17	Traffic control mutations	For example, skipping a trip, cancelling a running trip, shortening a trip, delaying departure	From OV company to integrator
+KV19	Real-time planned transit times of trips at stops	Can also be used to indicate that a stop was skipped	From OV company to integrator
+KV20	Temporary mutations: changes planned typically a few days in advance	For example, dropping trips or shortening a line	
+Haltetoegankelijkheid	Fysieke haltestructuur en toegankelijkheid		
+PPT fase 1	Products, prices and tariffs		
+KV55	Current departure times for mobile applications, deprecated?	Custom standard for GOVI?	
+
+The government is also working on setting op a ND-OV locket (nationale data OV). Current contestants for this role are RIG (9292) and Stichting OpenGeo (which runs OpenOV). They will be required to take and distribute all data and may charge a max of € 1000/year. OpenGeo intends to provide best-effort KV1 and KV78 data as OpenOV, and KV1/KV6/KV15/KV17 under SLA with ND-OV.
+
+Some references:
+•	BISON standards: http://bison.connekt.nl/standaarden/
+•	BISON architecture: http://bison.connekt.nl/www/filelib/file/BISON/Architectuur/Beschrijving%20BISON%20architectuur%20v1_1.pdf
+•	9292 open data: http://9292opendata.org/
+•	Documentation for KV78 from OpenOV: https://github.com/skywave/KV78Turbo-OVAPI/wiki
+•	NS API: http://www.ns.nl/api/api
+•	More explanation on koppelvlakken: http://www.wegenwiki.nl/Koppelvlak
+•	Blog post with overview of many APIs: http://blog.onderweg.eu/2012/11/apis-voor-actuele-ov-informatie-in-nederland/
+•	OpenOV mailing list: https://groups.google.com/forum/?fromgroups#!forum/openov
+•	NS API mailing list: https://groups.google.com/forum/?fromgroups#!forum/ns-api
+•	OpenGeo's ND-OV loket: http://loket.opengeo.nl
+•	OpenOV docs on getting KV6 data through VPN from 9292: http://openov.nl/docs/9292-vpn-kv6.pdf
+•	Instructions on building your own OpenOV KV78Turbo API (perhaps dated): http://www.ovstatus.nl/UbuntuServer-OpenOV-V3.pdf
+•	Hoofdrailnet, the train lines covered by NS data: http://upload.wikimedia.org/wikipedia/commons/a/ad/Hoofdrailnet.png
+
