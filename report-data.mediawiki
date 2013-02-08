@@ -1,5 +1,440 @@
 Testdocument to include data-related content from end report...
 
+=Introduction=
+==Cause for the project==
+Within the "Open Data game" Amsterdam defined that apps should be developed by the open market. The municipality is dedicated to the provision of Open Data. 
+
+For some time there is a topic within the transport domain of the municipality that has specific political attention: the multimodal app. Until now, there have been no strong initiatives from the open market in this direction. To encourage such developments, DIVV wants to examine the development of a multimodal API. By bringing data from different modes of transport together the development of such apps are much easier. 
+
+Our project focused on how to come to such an API, in this document we will described the approach we’ve used and the results it delivered.
+
+==The Multi Modal Route Planner==
+
+==Scope for project==
+===Assignment===
+Investigate the potential for DIVV to achieve a multimodal API with the current set of data sources and summarizes the conclusions in a presentation / report. 
+===Implementation of the assignment===
+#Determination of objectives and constraints:
+In an interview with the client, the limits are established within which the API should be developed. Amongst other things, it shall be determined which resources are required and which ones should NOT be used.
+#Catalogue of appropriate data sources:
+In the widest perspective, it will be determined which data sources are suitable for the API.
+#*Informationsubstantive aspects:
+This concerns both the kind of information (auto, rail, metro, bus, walking, etc.) and the quality of information (intensity, update frequency, geographic coverage and granularity, etc.).
+#*Technical aspects:
+In what form and what formats the data sources are available. It also looks at the technical availability of the information and the opportunities to link and combine with the information of other sources.
+#*Definition of the most likely use cases:
+For a good design of the API, there should be a picture of how the API will be addressed by future apps. It is important to look at multiple appconcepts and to determine what would be dominant concepts in the market. This determines the technical structure of the API. 
+
+In this case, we want to address the most likely use cases using the 80/20 rule. That is that 80% of the users can be satisfied with 20% of the functionality.
+#Technical and functional investigation with proof of concept:
+
+Based on the results of activity 3, an advise is made which data sets should be combined in the multimodal API. If necessary, a future growth path for further development will be outlined. During the process it is inevitable that a proof of concept API / mashup will be produced. This is not intended to be in any way a final product but it will provide the basis of the results.
+#*For each use case it will be specified what information from what existing data sets and APIs are needed, and if and how these can be combined in one or more functions in the multimodal API.
+#*We will attempt to connect to the sources and determineif the developer community will be able to use these easily.
+#*Code and functions used will be documented with any deficiencies highlighted with notes for improvement
+#*For each function it will be specified if this is feasible with the currently available data sets and APIs.
+#*Finally, we will define the API that we would propose can make the multi‐modal API a reality
+#Report on the most important data sources:
+As a result of activity 4, we will document the data sources we think are necessary to make the multimodal API in more detail from an organizational perspective.
+#*Financial aspects:
+
+What are the direct costs and other financial conditions to for the use of the different data sources. Most of the time the intensity of the data usages is crucial.
+#*Strategic aspects:
+
+With which suppliers of data, the municipality of Amsterdam can or can NOT cooperate. An estimate is also made of what the next two years is expected in the field of available datasets.
+#*Organizational and operational aspects: 
+
+It can be assumed that the organization that provides the data in the future will continue to do so under the same conditions.
+#Intermediate reports:
+
+Every two weeks coordination will take place with the client on the progress of the investigation.
+#Final report: 
+
+The results of this project will be summarized in a presentation using slides and with practical demonstrations. This presentation will be discussed with the client.
+
+=Modes of transport=
+'''Bussen AMS/NH'''
+Haltes, routes en kosten M
+Alle planningen M
+Alles real time M
+
+'''Trams AMS'''
+Haltes, routes en kosten M
+Alle planningen M
+Alles real time M
+
+'''Pont AMS'''
+Haltes, routes en kosten M
+Alle planningen M
+Alles real time M
+
+'''Treinen NL'''
+Haltes, routes en kosten M
+Alle planningen M
+Alles real time M
+
+'''Metro AMS'''
+Haltes, routes en kosten M
+Alle planningen M
+Alles real time M
+
+'''Auto NL'''
+Reguliere navigatie M
+Rental (greenwheels/gar2go) M (locations only)
+Files RT M
+Wegonderhoud RT M
+Parkeren parkeergebouwen RT M
+Parkeren parkeerterreinen RT M
+Parkeren straat (globaal) RT + K M
+
+'''Fiets AMS'''
+Reguliere navigatie M
+++ Rental (OV)? M
+Wegonderhoud RT M
+Parkeerplaats RT + K M
+
+'''Scooter AMS'''
+Reguliere navigatie M
+Wegonderhoud RT M
+Parkeerplaats RT + K W
+
+'''Motor AMS'''
+Reguliere navigatie (same as car)
+Files RT + / - "
+Wegonderhoud RT "
+Parkeren parkeergebouwen RT "
+Parkeren parkeerterreinen RT "
+Parkeren straat (globaal) RT + K "
+
+'''Taxi AMS'''
+Timer / cost estimation M
+Standplaatsen M
+information about rules and prices M
+
+'''Lopen AMS'''
+Reguliere navigatie M
+
+'''On the way NH'''
+Events which affect transport (e.g. marathon) M
+Emergency Locations (e.g. police/hospital) M
+Toilets W*
+Meals W*
+Tourist attractions W*
+Hotels W*
+events W*
+* these should be available to choose destinations but won't be part of the planning api in any other way
+
+'''Global options/User input'''
+I prefer not to use certain modes of transport S
+I am traveling with a family or a group, now tell me if this makes a difference C
+I am disabled W
+
+'''Additional items'''
+In trip updates via non official sources M twitter etc..
+
+The api data should be available to tom-tom and other in car routing companies in a format they can easily incorporate, Cor asked us to contact tom-tom and find out if there is a standard format.
+
+==Overview of data==
+<table>
+<tr><th>Mode of transport</th><th>Type of info</th></tr>
+<tr><td>All public Transport</td><td>Haltes</td></tr>
+<tr><td></td><td>Routes</td></tr>
+<tr><td></td><td>Costs</td></tr>
+<tr><td></td><td>Planning/navigation</td></tr>
+<tr><td></td><td>Delay</td></tr>
+<tr><td></td><td>Location</td></tr>
+<tr><td>Motorized traffic</td><td>Planning/navigation</td></tr>
+<tr><td></td><td>Delay</td></tr>
+<tr><td></td><td>Costs</td></tr>
+<tr><td></td><td>Parking</td></tr>
+<tr><td></td><td>Rental</td></tr>
+<tr><td>Bike</td><td>Planning/navigation</td></tr>
+<tr><td></td><td>Delay</td></tr>
+<tr><td></td><td>Parking</td></tr>
+<tr><td></td><td>Rental</td></tr>
+<tr><td>Walking</td><td>Planning/navigation</td></tr>
+<tr><td></td><td>Delay</td></tr>
+<tr><td>Taxi</td><td>Planning/navigation</td></tr>
+<tr><td></td><td>Location</td></tr>
+<tr><td></td><td>Delay</td></tr>
+<tr><td></td><td>Costs</td></tr>
+<tr><td></td><td>Availability</td></tr>
+<tr><td>Points of Interest</td><td>Location</td></tr>
+</table>
+
+=Use Cases=
+
+For this report, we will focus on 5 scenario’s we have defined in accordance with IVV. As a rule of a thumb, these uses cases cover 80% of the need of travellers in the greater Amsterdam area.
+
+;A) Frequent traveller.
+: This person is probably on a normal route to work (or other regular journey), there is a delay somewhere in journey that can be avoided if they reroute NOW. This is also called the 'automatic' traveller.  The key points are that the traveller is familiar with the journey and leaves the margins between steps in the journey tight.  This traveller also knows about possible alternative routes already and only needs to know whether to divert or not on a particular day.
+;B) The basic A -> B planner.
+: This person is starting and ending their journey within Amsterdam (or its nearby surroundings).  They may be a resident or a frequent visitor.  They don't necessarily know the route they are planning, it may be to an appointment or to an event.  This person may currently use the OV9292 planner or something similar.
+;C) The Amsterdam Visitor.
+: This person is visiting Amsterdam from another town or city and can travel by car or train into the city.  They want to know how best to travel to Amsterdam and how to get from either the train station or parking garage to their final destination.  In addition to the route planning they find it important where they are going to leave their vehicle and the convenience of reaching their final destination.  They may not be aware of the difficulties of negotiating the city by car.
+;D) The new tourist.
+:This person is a tourist who arrives probably by Air at Schiphol and is not online yet, they need basic information about how to proceed with transportation within the city, for instance about buying on OV card. and how to get to their initial destination such as a hotel.
+;E) The destination planner.
+: This is a variation on the A -> B  planner but in this case they are attending an appointment and then traveling onward. For instance traveling, Having an appointment for 2 hours and then travelling on to a 3rd destination.  This may influence the type of transportation and the overall price.
+
+===Excluded for now===
+We have explicitly excluded some use case scenario’s for this report:
+*Several people wanting to co-ordinate their trips with calendars
+
+The challenges of connecting to different calendar formats would consume to much of the available developing time for this project.
+*Disabled travellers on public transportation.
+
+The information needed to realize this scenario properly is not yet available. Other parties focus on this challenge already.  (However parking spots for disabled drivers are included)
+
+==Scenario A: Frequent traveller==
+===Scenario===
+This person is probably on a normal route to work (or other regular journey), there is a delay somewhere in journey that can be avoided if they reroute NOW. This is also called the 'automatic' traveller.  The key points are that the traveller is familiar with the journey and leaves the margins between steps in the journey tight.  This traveller also knows about possible alternative routes already and only needs to know whether to divert or not on a particular day.
+===Tasks===
+BASIC SCENARIO: Based on a specific route, transport modes and time frame, the scenario outputs whether everything is OK (‘No delay’) or there are delays on the route. For each delay the expected delay in minutes is provided. (In the basic scenario it’s up to the traveller to reroute)
+
+EXTENDED/OPTIONAL: If the route is delayed, alternatives are planned and provided to the traveller.
+
+*Input
+**Identify regular routes
+***By specifying your regular route (specific lines/routes/highways/etc.)
+***or by route planning (OPTIONAL)
+**Identify regular time frames
+***By specifying regular timeframes
+***or just for ‘now’
+**Identify normal mode(s) of transport
+**Identify available alternative modes of transport (OPTIONAL)
+*Process
+**Get planned delays
+***For all modes of transport
+**Get current delays
+***For all modes of transport
+**Calculate current timing for normal routes (OPTIONAL)
+**Calculate current timing for alternatives (OPTIONAL)
+*Output
+**‘No delay’-message or overview of delays
+**Provide alternative route(s) or mode(s) of transport (OPTIONAL)
+
+===Data needed===
+<table>
+<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</tr>
+<tr><td>All public Transport</td><td>Haltes</td><td>Required</td></tr>
+<tr><td></td><td>Routes</td><td>Required</td></tr>
+<tr><td></td><td>Costs</td><td>-</td></tr>
+<tr><td></td><td>Planning/navigation</td><td>Optional (regular route can be input f.e. bus line)</td></tr>
+<tr><td></td><td>Delay</td><td>-</td></tr>
+<tr><td></td><td>Location</td><td>-</td></tr>
+<tr><td>Motorized traffic</td><td>Planning/navigation</td><td>-</td></tr>
+<tr><td></td><td>Delay</td><td>Required, both real-time and planned</td></tr>
+<tr><td></td><td>Costs</td><td>-</td></tr>
+<tr><td></td><td>Parking</td><td>-</td></tr>
+<tr><td></td><td>Rental</td><td>Optional</td></tr>
+<tr><td>Bike</td><td>Planning/navigation</td><td>Optional</td></tr>
+<tr><td></td><td>Delay</td><td>Optional</td></tr>
+<tr><td></td><td>Parking</td><td>-</td></tr>
+<tr><td></td><td>Rental</td><td>Optional</td></tr>
+<tr><td>Walking</td><td>Planning/navigation</td><td>Optional</td></tr>
+<tr><td></td><td>Delay</td><td>-</td></tr>
+<tr><td>Taxi</td><td>Planning/navigation</td><td>Optional</td></tr>
+<tr><td></td><td>Location</td><td>-</td></tr>
+<tr><td></td><td>Delay</td><td>= motorized traffic</td></tr>
+<tr><td></td><td>Costs</td><td>Optional</td></tr>
+<tr><td></td><td>Availability</td><td>Optional</td></tr>
+<tr><td>Points of Interest</td><td>Location</td><td>-</td></tr>
+</table>
+
+[As it turns out, the .nl-domains for vertragingsalarm, vertragingalarm, vertragingsalert en vertragingalert are all still available]
+==Scenario B: The basic A -> B planner==
+===Scenario===
+This person is starting and ending their journey within Amsterdam (or its nearby surroundings).  They may be a resident or a frequent visitor.  They don't necessarily know the route they are planning, it may be to an appointment or to an event.  This person may currently use the OV9292 planner or something similar.
+
+===Tasks===
+*Input
+**Point/address A (Departure, start)
+**Point/address B (Destination, end)
+**Time (‘Now’ or time in future to start or end route)
+**Available modes of transport (OPTIONAL)
+**Time to stay (OPTIONAL, mainly for parking costs)
+*Process
+**Route planning
+***Option 1: Simple
+*Calculate routes for all modes of transport for complete route (from A to B)
+***Option 2: Advanced
+*Calculate routes for first mile (From A to predefined transport hubs), for all modes of transport specified for transport hub
+*Calculate routes for last mile (From predefined transport hubs to B), for all modes of transport specified for transport hub
+*Calculate routes for main route between transport hubs, for all modes of transport specified for transport hub
+*Calculate best sums for total route
+**Delay calculation
+***If not included in the route planning, calculate current delays on planned routes
+**Cost calculation
+***For best X routes, calculate cost for used transport modes
+**Prioritize routes
+***Based on time, costs and distance, prioritize routes
+*Output
+**Overview of routes
+***Start time, end time, total duration, distance, costs, transport mode(s), number of transfers
+**Route details
+***Turn-by-turn navigation
+
+[N.B. For the real-time part ‘on the route’, scenario B (Extended) will be used to signal last minute alternatives]
+
+===Data needed===
+<table>
+<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</tr>
+<tr><td>All public Transport</td><td>Haltes</td><td>Required</td></tr>
+<tr><td></td><td>Routes</td><td>Required</td></tr>
+<tr><td></td><td>Costs</td><td>Required</td></tr>
+<tr><td></td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Delay</td><td>Required/Optional&sup1;</td></tr>
+<tr><td></td><td>Location</td><td>-</td></tr>
+<tr><td>Motorized traffic</td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Delay</td><td>Required/Optional&sup1;</td></tr>
+<tr><td></td><td>Costs</td><td>Required</td></tr>
+<tr><td></td><td>Parking</td><td>Required</td></tr>
+<tr><td></td><td>Rental</td><td>Optional</td></tr>
+<tr><td>Bike</td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Delay</td><td>Required/Optional&sup1;</td></tr>
+<tr><td></td><td>Parking</td><td>Optional</td></tr>
+<tr><td></td><td>Rental</td><td>Optional</td></tr>
+<tr><td>Walking</td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Delay</td><td>Required/Optional&sup1;</td></tr>
+<tr><td>Taxi</td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Location</td><td>-</td></tr>
+<tr><td></td><td>Delay</td><td>Required/Optional&sup1;</td></tr>
+<tr><td></td><td>Costs</td><td>Required</td></tr>
+<tr><td></td><td>Availability</td><td>Required/Optional&sup1;</td></tr>
+<tr><td>Points of Interest</td><td>Location</td><td>Optional</td></tr>
+</table>
+
+&sup1; Even without real-time information on delay, this scenario may be of added value.
+====Transport hubs====
+Additional needs for the advanced route planning are ‘transport hubs’ within the greater Amsterdam Area. These are locations that facilitate the change of mode of transport. For example train stations, P+R, parking garages, etc.
+
+[This needs more brainstorming. Each transport hub may have a set of transport modes for ‘inbound’ and ‘outbound’ traffic, may be a ‘reach’, etc.
+Probably a complete list of transport hubs will be out of scope for this pilot, but we might consider doing a proof of concept on this point.]
+
+==Scenario C: The Amsterdam Visitor==
+===Scenario===
+This person is visiting Amsterdam from another town or city and can travel by car or train into the city.  They want to know how best to travel to Amsterdam and how to get from either the train station or parking garage to their final destination.  In addition to the route planning they find it important where they are going to leave their vehicle and the convenience of reaching their final destination.  They may not be aware of the difficulties of negotiating the city by car.
+
+===Tasks===
+This scenario is similar to Scenario B, including the ‘simple’ calculation or the ‘advanced’ calculation for the last mile. (The first mile is out of scope, because this is outside the Amsterdam area).
+
+*Additional input
+**-
+*Additional process
+**-
+*Additional output
+**More information (or links to more information) on destination and/or transport hub. (F.e. information on ‘P+R’-system, use of OV-chip, rental bikes, parking tariffs, etc.)
+
+===Data needed===
+See ‘data needed’ for Scenario B.
+
+==Scenario D: The new tourist==
+===Scenario===
+This person is a tourist who arrives probably by Air at Schiphol and is not online yet, they need basic information about how to proceed with transportation within the city, for instance about buying on OV card and how to get to their initial destination such as a hotel.
+===Tasks===
+*Input
+**Current location
+**Planned destination (POI/Address)
+**Time (‘Now’ or time in future to start or end route)
+**Available modes of transport (OPTIONAL, for ‘new tourist’ defaults to public transport and taxi, no car, no bike)
+*Process
+**Simple route planning
+***Calculate routes for all modes of transport for complete route (from A to B)
+**Cost calculation
+***For best X routes, calculate cost for used transport modes
+**Prioritize routes
+***Based on time, costs and distance, prioritize routes
+*Output
+**Route planning
+***Start time, end time, total duration, distance, costs, transport mode(s), number of transfers
+***Turn-by-turn navigation
+**Information on:
+***Mode of transport (f.e. on how to get a Taxi)
+***Cost and transactions (f.e. info on OV-chip and where to buy)
+***Destination
+***General information on travelling in Amsterdam
+
+===Data needed===
+<table>
+<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</tr>
+<tr><td>All public Transport</td><td>Haltes</td><td>Required</td></tr>
+<tr><td></td><td>Routes</td><td>Required</td></tr>
+<tr><td></td><td>Costs</td><td>Required</td></tr>
+<tr><td></td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Delay</td><td>Optional</td></tr>
+<tr><td></td><td>Location</td><td>-</td></tr>
+<tr><td>Motorized traffic</td><td>Planning/navigation</td><td>-</td></tr>
+<tr><td></td><td>Delay</td><td>-</td></tr>
+<tr><td></td><td>Costs</td><td>-</td></tr>
+<tr><td></td><td>Parking</td><td>-</td></tr>
+<tr><td></td><td>Rental</td><td>-</td></tr>
+<tr><td>Bike</td><td>Planning/navigation</td><td>-</td></tr>
+<tr><td></td><td>Delay</td><td>-</td></tr>
+<tr><td></td><td>Parking</td><td>-</td></tr>
+<tr><td></td><td>Rental</td><td>-</td></tr>
+<tr><td>Walking</td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Delay</td><td>-</td></tr>
+<tr><td>Taxi</td><td>Planning/navigation</td><td>Required</td></tr>
+<tr><td></td><td>Location</td><td>Required (static)</td></tr>
+<tr><td></td><td>Delay</td><td>-</td></tr>
+<tr><td></td><td>Costs</td><td>Required</td></tr>
+<tr><td></td><td>Availability</td><td>Optional</td></tr>
+<tr><td>Points of Interest</td><td>Location</td><td>Required</td></tr>
+</table>
+====Tourist information====
+Apart from the transport data in the table above, additional tourist information on modes of transport, costs, transactions, destination and transport hubs is needed. Part of this information may be available through IVV, other parts may be available through ATCB or the IAmsterdam-website.
+
+The gathering and editing of the actual content of this information is outside the scope of this project, for this Pilot we will use temporary information.
+
+[To discuss: IMHO the solution to this problem is an application/product/service, not an API. Should we include the ‘static’ tourist information in the API?]
+
+==Scenario E: The destination planner==
+===Scenario===
+This is a variation on the A -> B  planner but in this case they are attending an appointment and then traveling onward. For instance traveling, Having an appointment for 2 hours and then travelling on to a 3rd destination.  This may influence the type of transportation and the overall price.
+
+===Tasks===
+*Input
+**Point/address A (Departure, start)
+**Point/address B 
+**Planned time to stay at B
+**Point C + time to stay at C
+**Point D + time to stay at D
+**.. etc.
+**Point/address Z (Destination, end)
+**Time (‘Now’ or time in future to start or end route)
+**Available modes of transport (OPTIONAL)
+*Process
+**Route planning
+***Option 1: Simple (for all routes)
+*Calculate routes for all modes of transport for all parts of the route (from A to B, B to C, C to D, D to Z)
+***Option 2: Advanced (for all routes)
+*Calculate routes for first miles (From A to predefined transport hubs, From B to … etc.), for all modes of transport specified for transport hub
+*Calculate routes for last mile (From predefined transport hubs to B, from transport hub to C, etc. ), for all modes of transport specified for transport hub
+*Calculate routes for main routes between transport hubs, for all modes of transport specified for transport hub
+***Calculate best sums for total routes
+**Delay calculation
+***If not included in the route planning, calculate current delays on planned routes
+**Cost calculation
+***For best X routes, calculate cost for used transport modes
+***For best X routes, calculate cost for staying the specified time
+**Prioritize routes
+***Based on time, costs and distance, prioritize routes
+*Output
+**Overview of routes
+***Start time, end time, total duration, total distance, total costs, transport mode(s), total number of transfers
+***For each part of route:
+*Start time, end time, duration, distance, costs, transport mode(s), number of transfers
+***For each stay:
+*Start time, end time, costs
+**Route details
+***Turn-by-turn navigation
+
+[N.B. For the real-time part ‘on the route’, scenario B (Extended) will be used to signal last minute alternatives]
+
+===Data needed===
+See ‘data needed’ for Scenario B.
+
 =Current state of OV datasets for NL=
 The ecosystem of OV datasets is still very young and somewhat immature - most of these platforms are less than a year old. Often documentation is insufficient, and can quickly get out of data as developments are fast. Many of the data formats are quite complex and require large amounts of domain knowledge. Some of the licenses are restrictive.
 
@@ -279,7 +714,7 @@ The current standards defined by BISON are:
 </tbody>
 </table>	
 
-The government is also working on setting op a ND-OV locket (nationale data OV). Current contestants for this role are RIG (9292) and Stichting OpenGeo (which runs OpenOV). They will be required to take and distribute all data and may charge a max of € 1000/year. OpenGeo intends to provide best-effort KV1 and KV78 data as OpenOV, and KV1/KV6/KV15/KV17 under SLA with ND-OV.
+The government is also working on setting op a ND-OV locket (nationale data OV). Current contestants for this role are RIG (9292) and Stichting OpenGeo (which runs OpenOV). They will be required to take and distribute all data and may charge a max of â‚¬ 1000/year. OpenGeo intends to provide best-effort KV1 and KV78 data as OpenOV, and KV1/KV6/KV15/KV17 under SLA with ND-OV.
 
 ==References==
 <UL>
