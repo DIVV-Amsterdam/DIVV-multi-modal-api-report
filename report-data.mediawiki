@@ -1,6 +1,36 @@
 Testdocument to include data-related content from end report...
 
 =Introduction=
+# Determination of objectives and constraints
+#* In an interview with the client, the limits are established within which the API should be developed. Amongst other things, it shall be determined which resources are required and which ones should NOT be used.
+# Catalogue of appropriate data sources
+#* In the widest perspective, it will be determined which data sources are suitable for the API.
+#* Informationsubstantive aspects
+#** This concerns both the kind of information (auto, rail, metro, bus, walking, etc.) and the quality of information (intensity, update frequency, geographic coverage and granularity, etc.).
+#* Technical aspects
+#** In what form and what formats the data sources are available. It also looks at the technical availability of the information and the opportunities to link and combine with the information of other sources.
+#* Definition of the most likely use cases
+#** For a good design of the API, there should be a picture of how the API will be addressed by future apps. It is important to look at multiple appconcepts and to determine what would be dominant concepts in the market. This determines the technical structure of the API. 
+#** In this case, we want to address the most likely use cases using the 80/20 rule. That is that 80% of the users can be satisfied with 20% of the functionality.
+# Technical and functional investigation with proof of concept:
+#* Based on the results of activity 3, an advise is made which data sets should be combined in the multimodal API. If necessary, a future growth path for further development will be outlined. During the process it is inevitable that a proof of concept API / mashup will be produced. This is not intended to be in any way a final product but it will provide the basis of the results.
+#* For each use case it will be specified what information from what existing data sets and APIs are needed, and if and how these can be combined in one or more functions in the multimodal API.
+#* We will attempt to connect to the sources and determineif the developer community will be able to use these easily.
+#* Code and functions used will be documented with any deficiencies highlighted with notes for improvement
+#* For each function it will be specified if this is feasible with the currently available data sets and APIs.
+#* Finally, we will define the API that we would propose can make the multi‐modal API a reality
+# Report on the most important data sources
+#* As a result of activity 4, we will document the data sources we think are necessary to make the multimodal API in more detail from an organizational perspective.
+#* Financial aspects
+#** What are the direct costs and other financial conditions to for the use of the different data sources. Most of the time the intensity of the data usages is crucial.
+#* Strategic aspects
+#** With which suppliers of data, the municipality of Amsterdam can or can NOT cooperate. An estimate is also made of what the next two years is expected in the field of available datasets.
+#* Organizational and operational aspects
+#** It can be assumed that the organization that provides the data in the future will continue to do so under the same conditions.
+# Intermediate reports
+#* Every two weeks coordination will take place with the client on the progress of the investigation.
+# Final report
+#* The results of this project will be summarized in a presentation using slides and with practical demonstrations. This presentation will be discussed with the client.
 ==Cause for the project==
 Within the "Open Data game" Amsterdam defined that apps should be developed by the open market. The municipality is dedicated to the provision of Open Data. 
 
@@ -14,122 +44,137 @@ Our project focused on how to come to such an API, in this document we will desc
 ===Assignment===
 Investigate the potential for DIVV to achieve a multimodal API with the current set of data sources and summarizes the conclusions in a presentation / report. 
 ===Implementation of the assignment===
-#Determination of objectives and constraints:
-In an interview with the client, the limits are established within which the API should be developed. Amongst other things, it shall be determined which resources are required and which ones should NOT be used.
-#Catalogue of appropriate data sources:
-In the widest perspective, it will be determined which data sources are suitable for the API.
-#*Informationsubstantive aspects:
-This concerns both the kind of information (auto, rail, metro, bus, walking, etc.) and the quality of information (intensity, update frequency, geographic coverage and granularity, etc.).
-#*Technical aspects:
-In what form and what formats the data sources are available. It also looks at the technical availability of the information and the opportunities to link and combine with the information of other sources.
-#*Definition of the most likely use cases:
-For a good design of the API, there should be a picture of how the API will be addressed by future apps. It is important to look at multiple appconcepts and to determine what would be dominant concepts in the market. This determines the technical structure of the API. 
 
-In this case, we want to address the most likely use cases using the 80/20 rule. That is that 80% of the users can be satisfied with 20% of the functionality.
-#Technical and functional investigation with proof of concept:
-
-Based on the results of activity 3, an advise is made which data sets should be combined in the multimodal API. If necessary, a future growth path for further development will be outlined. During the process it is inevitable that a proof of concept API / mashup will be produced. This is not intended to be in any way a final product but it will provide the basis of the results.
-#*For each use case it will be specified what information from what existing data sets and APIs are needed, and if and how these can be combined in one or more functions in the multimodal API.
-#*We will attempt to connect to the sources and determineif the developer community will be able to use these easily.
-#*Code and functions used will be documented with any deficiencies highlighted with notes for improvement
-#*For each function it will be specified if this is feasible with the currently available data sets and APIs.
-#*Finally, we will define the API that we would propose can make the multi‐modal API a reality
-#Report on the most important data sources:
-As a result of activity 4, we will document the data sources we think are necessary to make the multimodal API in more detail from an organizational perspective.
-#*Financial aspects:
-
-What are the direct costs and other financial conditions to for the use of the different data sources. Most of the time the intensity of the data usages is crucial.
-#*Strategic aspects:
-
-With which suppliers of data, the municipality of Amsterdam can or can NOT cooperate. An estimate is also made of what the next two years is expected in the field of available datasets.
-#*Organizational and operational aspects: 
-
-It can be assumed that the organization that provides the data in the future will continue to do so under the same conditions.
-#Intermediate reports:
-
-Every two weeks coordination will take place with the client on the progress of the investigation.
-#Final report: 
-
-The results of this project will be summarized in a presentation using slides and with practical demonstrations. This presentation will be discussed with the client.
 
 =Modes of transport=
 '''Bussen AMS/NH'''
+
 Haltes, routes en kosten M
+
 Alle planningen M
+
 Alles real time M
 
 '''Trams AMS'''
+
 Haltes, routes en kosten M
+
 Alle planningen M
+
 Alles real time M
 
 '''Pont AMS'''
+
 Haltes, routes en kosten M
+
 Alle planningen M
+
 Alles real time M
 
 '''Treinen NL'''
+
 Haltes, routes en kosten M
+
 Alle planningen M
+
 Alles real time M
 
 '''Metro AMS'''
+
 Haltes, routes en kosten M
+
 Alle planningen M
+
 Alles real time M
 
 '''Auto NL'''
+
 Reguliere navigatie M
+
 Rental (greenwheels/gar2go) M (locations only)
+
 Files RT M
+
 Wegonderhoud RT M
+
 Parkeren parkeergebouwen RT M
+
 Parkeren parkeerterreinen RT M
+
 Parkeren straat (globaal) RT + K M
 
 '''Fiets AMS'''
+
 Reguliere navigatie M
+
 ++ Rental (OV)? M
+
 Wegonderhoud RT M
+
 Parkeerplaats RT + K M
 
 '''Scooter AMS'''
+
 Reguliere navigatie M
+
 Wegonderhoud RT M
+
 Parkeerplaats RT + K W
 
 '''Motor AMS'''
+
 Reguliere navigatie (same as car)
+
 Files RT + / - "
+
 Wegonderhoud RT "
+
 Parkeren parkeergebouwen RT "
+
 Parkeren parkeerterreinen RT "
+
 Parkeren straat (globaal) RT + K "
 
 '''Taxi AMS'''
+
 Timer / cost estimation M
+
 Standplaatsen M
+
 information about rules and prices M
 
 '''Lopen AMS'''
+
 Reguliere navigatie M
 
 '''On the way NH'''
+
 Events which affect transport (e.g. marathon) M
+
 Emergency Locations (e.g. police/hospital) M
-Toilets W*
-Meals W*
-Tourist attractions W*
-Hotels W*
-events W*
-* these should be available to choose destinations but won't be part of the planning api in any other way
+
+Toilets W&sup1;
+
+Meals W&sup1;
+
+Tourist attractions W&sup1;
+
+Hotels W&sup1;
+
+events W&sup1;
+
+#these should be available to choose destinations but won't be part of the planning api in any other way
 
 '''Global options/User input'''
+
 I prefer not to use certain modes of transport S
+
 I am traveling with a family or a group, now tell me if this makes a difference C
+
 I am disabled W
 
 '''Additional items'''
+
 In trip updates via non official sources M twitter etc..
 
 The api data should be available to tom-tom and other in car routing companies in a format they can easily incorporate, Cor asked us to contact tom-tom and find out if there is a standard format.
@@ -216,7 +261,7 @@ EXTENDED/OPTIONAL: If the route is delayed, alternatives are planned and provide
 
 ===Data needed===
 <table>
-<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</tr>
+<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</th></tr>
 <tr><td>All public Transport</td><td>Haltes</td><td>Required</td></tr>
 <tr><td></td><td>Routes</td><td>Required</td></tr>
 <tr><td></td><td>Costs</td><td>-</td></tr>
@@ -279,7 +324,7 @@ This person is starting and ending their journey within Amsterdam (or its nearby
 
 ===Data needed===
 <table>
-<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</tr>
+<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</th></tr>
 <tr><td>All public Transport</td><td>Haltes</td><td>Required</td></tr>
 <tr><td></td><td>Routes</td><td>Required</td></tr>
 <tr><td></td><td>Costs</td><td>Required</td></tr>
@@ -357,7 +402,7 @@ This person is a tourist who arrives probably by Air at Schiphol and is not onli
 
 ===Data needed===
 <table>
-<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</tr>
+<tr><th>Mode of transport</th><th>Type of info</th><th>Needed for this scenario</th></tr>
 <tr><td>All public Transport</td><td>Haltes</td><td>Required</td></tr>
 <tr><td></td><td>Routes</td><td>Required</td></tr>
 <tr><td></td><td>Costs</td><td>Required</td></tr>
