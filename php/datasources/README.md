@@ -2,9 +2,13 @@ Info
 
 GIS : 
 
-elektrischvervoer : 
+# elektrischvervoer
 
-# 3) metadata_realtime_verkeersdata
+This is a list in XML of all the electric charging stations in Amsterdam
+
+There are no Issues at present with this list, it can be used as a static input to the MMP
+
+# metadata_realtime_verkeersdata
 
 Description and sample code for the real time traffic velocity on some main routes into and out of amsterdam
 
@@ -23,5 +27,15 @@ Alternative
 
 strooiroutes : 
 
-touringcarinfo : 
+# touringcarinfo
+
+This contains several files all of which are usefull to the planner
+
+-aanbevolen_route.json - not sure
+-in_uitstaphaltes.json - A simple json list of bus and tram stops (halts = stops, instap = get on, uitstap = get out)
+-max_doorrijhoogtes.json - a list of maximum clearance heights (??)
+-parkeerplaatsen.json - a list of all parking garages for busses and touring cars
+-verplichte_route_29mrt.json - a list of mandatory routes for busses
+
+
 
