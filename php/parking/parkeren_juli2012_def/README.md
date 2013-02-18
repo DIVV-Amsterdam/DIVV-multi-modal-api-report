@@ -1,4 +1,3 @@
-
 #locaties.json
 
 This contains all of the registeredparking locations in amsterdam with the following types
@@ -44,5 +43,36 @@ Issue 6
  
 Issue 7
 - Issue : this does not contain any reference to on street parking
+
+# enron.json
+
+This contains parking tarrifs and times.  it contains
+- area table (geographic areas)
+- regulation table (start end end of policies and days)
+- fare table (per hour and evening and day cards)
+
+The fare table contains data like this
+
+<pre>
+                      {
+                EndDateFare = 29991231;
+                FareCalculationCode = TC2; (link to other data)
+                FareCalculationDesc = "Tariefcode 02 (4,00)";
+                FarePartTable =                 {
+                    FarePartData =                     {
+                        AmountFarePart = "0.06666667"; (this is euros per minute, we know that because 'StepSizeFarePart' is 1)
+                        EndDateFarePart = 29991231;
+                        EndDurationFarePart = 999999;
+                        StartDateFarePart = 20050101;
+                        StartDurationFarePart = 0;
+                        StepSizeFarePart = 1;
+                        TotalAmountParts = "0.00000000";
+                    };
+                };
+                StartDateFare = 20050101;
+                VATPercentage = "0.00";
+</pre>
+
+
 
 
