@@ -1,9 +1,9 @@
 #The classes are all needed in the multi modal example
 
-xxx
+class-base.php
 - place
 - TransitLineStop
 - StopName
 
-Utils
+class-utils.php
 - rd2wgs , conversion from RDH to lat, lon
