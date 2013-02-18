@@ -44,12 +44,15 @@ Issue 6
 Issue 7
 - Issue : this does not contain any reference to on street parking
 
-# enron.json
+# enpro.json
 
 This contains parking tarrifs and times.  it contains
 - area table (geographic areas)
 - regulation table (start end end of policies and days)
 - fare table (per hour and evening and day cards)
+- 
+Details can also be found in english in Annex A of the document http://www.rdw.nl/SiteCollectionDocuments/RenI/SHPV/RPV%20-%20Interface%20Description%20v2%2011.pdf
+
 
 The fare table contains data like this
 
