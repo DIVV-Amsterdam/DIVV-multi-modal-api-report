@@ -56,11 +56,11 @@ The fare table contains data like this
 <pre>
                       {
                 EndDateFare = 29991231;
-                FareCalculationCode = TC2; (link to other data)
+                FareCalculationCode = TC2; (**link to other data)
                 FareCalculationDesc = "Tariefcode 02 (4,00)";
                 FarePartTable =                 {
                     FarePartData =                     {
-                        AmountFarePart = "0.06666667"; (this is euros per minute, we know that because 'StepSizeFarePart' is 1)
+                        AmountFarePart = "0.06666667"; (**this is euros per minute, we know that because 'StepSizeFarePart' is 1)
                         EndDateFarePart = 29991231;
                         EndDurationFarePart = 999999;
                         StartDateFarePart = 20050101;
@@ -73,6 +73,106 @@ The fare table contains data like this
                 VATPercentage = "0.00";
 </pre>
 
+The regulation table contains entries like this
 
+<pre>
+ EndDateRegulation = 29991231;
+                RegulationDesc = "Basistarief TC4B";
+                RegulationId = BP14B; (** id code used in other tables)
+                StartDateRegulation = 20050101;
+                TimeFrameTable =                 {
+                    TimeFrameData =                     (
+                                                {
+                            ClaimRightPossible = Y;
+                            DayTimeFrame = MAANDAG; (** day of week)
+                            EndTimeTimeFrame = 2100; (** end 21:00)
+                            FareTimeFrame = TC4; (**link to fare table)
+                            StartTimeTimeFrame = 900; (** start 09:00)
+                        },
+                                                {
+                            ClaimRightPossible = Y;
+                            DayTimeFrame = DINSDAG;
+                            EndTimeTimeFrame = 2100;
+                            FareTimeFrame = TC4;
+                            StartTimeTimeFrame = 900;
+                        },
+                                                {
+                            ClaimRightPossible = Y;
+                            DayTimeFrame = WOENSDAG;
+                            EndTimeTimeFrame = 2100;
+                            FareTimeFrame = TC4;
+                            StartTimeTimeFrame = 900;
+                        },
+                                                {
+                            ClaimRightPossible = Y;
+                            DayTimeFrame = DONDERDAG;
+                            EndTimeTimeFrame = 2100;
+                            FareTimeFrame = TC4;
+                            StartTimeTimeFrame = 900;
+                        },
+                                                {
+                            ClaimRightPossible = Y;
+                            DayTimeFrame = VRIJDAG;
+                            EndTimeTimeFrame = 2100;
+                            FareTimeFrame = TC4;
+                            StartTimeTimeFrame = 900;
+                        },
+                                                {
+                            ClaimRightPossible = Y;
+                            DayTimeFrame = ZATERDAG;
+                            EndTimeTimeFrame = 2100;
+                            FareTimeFrame = TC4;
+                            StartTimeTimeFrame = 900;
+                        },
+                                                {
+                            ClaimRightPossible = N;
+                            DayTimeFrame = ZONDAG;
+                            EndTimeTimeFrame = 2400;
+                            StartTimeTimeFrame = 0;
+                        },
+                                                {
+                            ClaimRightPossible = N;
+                            DayTimeFrame = VRIJPARK; (** free parking days)
+                            EndTimeTimeFrame = 2400;
+                            StartTimeTimeFrame = 0;
+                        }
+                    );
+                };
+            },
+</pre>
+
+The area table contains entries like this
+
+<pre>
+                       {
+                AreaDesc = "T14B_H01 ma-za 09-21";
+                AreaId = "T14B_H01";
+                AreaRegulationTable =                 {
+                    AreaRegulationData =                     (
+                                                {
+                            RegulationIdArea = "BP14_D0919";
+                            StartDateAreaRegulation = "2005-01-01T00:00:00Z";
+                        },
+                                                {
+                            RegulationIdArea = "BP14_D0921";
+                            StartDateAreaRegulation = "2005-01-01T00:00:00Z";
+                        },
+                                                {
+                            RegulationIdArea = BP14B; (** link to regulation table)
+                            StartDateAreaRegulation = "2005-01-01T00:00:00Z";
+                        }
+                    );
+                };
+                GracePeriodAfter = 10; 
+                GracePeriodBefore = 1;
+                PriceOneHourParking = 0; (** note - this is not used)
+                StartDateArea = 20050101;
+                UsageDesc = BetaaldParkeren;
+                UsageId = BETAALDP; (** this means paid parking)
+            },
+
+
+
+</pre>
 
 
