@@ -1,4 +1,4 @@
-#sdfsfas
+#parkeertariefgebieden.kml
 
 The parking areas in Amsterdam. The field 'name' contains the parking area code that matches the code in the file .
 
