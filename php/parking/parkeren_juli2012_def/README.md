@@ -1,4 +1,9 @@
-#locaties.json
+#sdfsfas
+
+The parking areas in Amsterdam. The field 'name' contains the parking area code that matches the code in the file .
+
+
+#locaties.json'parking rates
 
 This contains all of the registeredparking locations in amsterdam with the following types
 - Parkeergarage
