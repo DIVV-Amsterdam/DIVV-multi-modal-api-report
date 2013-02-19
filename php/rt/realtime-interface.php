@@ -17,6 +17,14 @@ class RtRequestKv78 {
 		$this->from = new TransitLineStop();
 		$this->to = new TransitLineStop();
 	}
+	
+	public function __toString() {
+		$rv = "";
+		$rv = $rv . "route_id[".$this->route_id."]\n";
+		$rv = $rv . "    depart [".$this->from->toString()."\n    ]\n";
+		$rv = $rv . "    arrive [".$this->to->toString()."\n    ]";
+		return $rv;
+	}
 }
 
 
@@ -32,6 +40,15 @@ class RtRequestNS {
 		$this->to = new TransitLineStop();
 	}
 	
+	public function __toString() {
+	    $rv = "";
+		$rv = $rv . "company [".$this->company."] ";
+		$rv = $rv . "mode [".$this->mode."] ";
+		$rv = $rv . "ritNummer [".$this->ritNummer."]\n";
+		$rv = $rv . "    depart [".$this->from->toString()."\n    ]\n";
+		$rv = $rv . "    arrive [".$this->to->toString()."\n    ]";
+		return $rv;
+	}
 }
 
 class RtResponse {
@@ -39,7 +56,7 @@ class RtResponse {
 	public $realtime_journey_id = ""; // Journey ID (for example, KV78 ID or NS ritnr)
     public $departure_time;
     public $departure_delay; // Delay is always in seconds
-    public $changed_departure_track; // Track, e.g. "10B", if it has changed from planning.
+    public $changed_departure_track; // Track, e.g. "10B", only if it has changed from planning.
     public $departure_remarks; // Freeform remarks (in Dutch, probably)
     public $arrival_time;
     public $arrival_delay;
@@ -47,32 +64,8 @@ class RtResponse {
     public $arrival_remarks;
 }
 
-class RtUtils {
-
-    function __construct() {
-    }
-
-    public function request_as_string($request) {
-    	if ($request->type == "rtrequest_kv78") {
-    		$rv = "";
-    		$rv = $rv . "route_id[".$request->route_id."]\n";
-    		$rv = $rv . "    depart [".$request->from->toString()."\n    ]\n";
-    		$rv = $rv . "    arrive [".$request->to->toString()."\n    ]";
-    		return $rv;
-    	}
-    	if ($request->type == "rtrequest_ns") {
-    		$rv = "";
-    		$rv = $rv . "company [".$request->company."] ";
-    		$rv = $rv . "mode [".$request->mode."] ";
-    		$rv = $rv . "ritNummer [".$request->ritNummer."]\n";
-    		$rv = $rv . "    depart [".$request->from->toString()."\n    ]\n";
-    		$rv = $rv . "    arrive [".$request->to->toString()."\n    ]";
-    		return $rv;
-    	}
-    	return "Unknown request type";
-    }
-    
-    public function get_realtime_journey_id_for_leg($request) {
+class RealtimeDataKV78 {
+    public function get_kv78_id($request) {
     	/*
 		** Get the KV78 journey ID for a leg.
 		** This is found using the route ID, destination name, and the arrival time at a given stop.
@@ -94,7 +87,7 @@ class RtUtils {
 		$url = "http://v0.ovapi.nl/line/".$route_id."_1,".$route_id."_2"; // Generate the URL like http://v0.ovapi.nl/line/GVB_17_1,GVB_17_2
         $response = json_decode(file_get_contents($url), true);
         
-#        print "response: ".print_r($response)."\n\n----\n";
+       // print "response: ".print_r($response)."\n\n----\n";
 #        return;
         
         // Data structure: (relevant parts only)
@@ -104,9 +97,6 @@ class RtUtils {
                  $journey_ids[] = $journey_id;
              }
         }
-        // print_r($response);
-        // return;
-        
 
     	////////////////////////////////////////////////////////////////////
     	// Retrieve the real-time data of all journeys to find a matching ID
@@ -137,9 +127,9 @@ class RtUtils {
     }
     
     
-    public function get_rt_details_for_kv78($request) {
+    public function get_status($request) {
     	/*
-		** Get the KV78 journey details, given a KV78 ID
+		** Get the KV78 journey details, given a KV78 ID in the request object
 		*/
     	if ($request->type != "rtrequest_kv78") {
 			$retval = new RtResponse();
@@ -190,11 +180,11 @@ class RtUtils {
         $openov_date_format = 'Y-m-d*H:i:s';
         return DateTime::createFromFormat($openov_date_format, $kv78_timestamp, new DateTimeZone("Europe/Amsterdam"));
     }
+}
+
+class RealtimeDataNS {
     
-    
-    
-    
-    public function get_rt_details_for_ns($request, $username, $key) {
+    public function get_status($request, $username, $key) {
     	/*
 		Get train by company_shortcode_fromstation_timedepart
 		== train is easier ==
@@ -213,15 +203,6 @@ class RtUtils {
 			$retval->realtime_journey_id = "invalid request type, please use a class of rtrequest_ns";
 			return $retval;
     	}
-		
-        // public $status = 0;
-        //      public $realtime_journey_id = ""; // Journey ID (for example, KV78 ID or NS ritnr)
-        //         public $departure_time;
-        //         public $departure_delay;
-        //         public $arrival_time;
-        //         public $arrival_delay;
-        //         public $changed_departure_track;
-        //         public $changed_arrival_track;
 		
 		$retval = new RtResponse();
 		$retval->status = 0;
@@ -286,8 +267,6 @@ class RtUtils {
         curl_setopt($ch, CURLOPT_USERPWD, "$username:$key");
         // Makes curl_exec() return server response
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // Lately the Twitter API expects an Expect header. It's a mystery
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
         // And here's the result XML
         $response = curl_exec($ch);
         curl_close($ch);
