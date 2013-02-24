@@ -75,6 +75,7 @@
 
 <pre>
 *pu = planning/class-plan-utils.php
+*rti = rt/realtimeinterface
 </pre>
 
 <table>
@@ -95,6 +96,8 @@
 <td>RT<br>RT predict</td>
 <td>?<br>? </td>
 </tr>
+
+
 <tr><td colspan=9>Trams	AMS</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
@@ -109,8 +112,13 @@
 <tr>
 <td>Alles real time</td><td>M</td>
 <td>RT<br>RT predict</td>
-<td>?<br>?</td>
+<td>
+ <pre>rti.RealtimeDataKV78</pre>
+ <pre>?</pre>
+</td>
 </tr>
+
+
 <tr><td colspan=9>Pont	AMS</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
@@ -125,8 +133,12 @@
 <tr>
 <td>Alles real time</td><td>M</td>
 <td>RT<br>RT predict</td>
-<td>?<br>?</td>
+<td>
+ <pre>rti.RealtimeDataKV78</pre>
+ <pre>?</pre>
+</td>
 </tr>
+
 <tr><td colspan=9>Treinen	NL</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
@@ -141,8 +153,12 @@
 <tr>
 <td>Alles real time</td><td>M</td>
 <td>RT<br>RT predict</td>
-<td>?<br>?</td>
+<td>
+ <pre>rti.RtRequestNS</pre>
+ <pre>?</pre>
+</td>
 </tr>
+
 <tr><td colspan=9>Metro	AMS</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
@@ -157,8 +173,12 @@
 <tr>
 <td>Alles real time</td><td>M</td>
 <td>RT<br>RT predict</td>
-<td>?<br>?</td>
+<td>
+ <pre>rti.RealtimeDataKV78</pre>
+ <pre>?</pre>
+</td>
 </tr>
+
 <tr><td colspan=9>Auto 	NL</td></tr>
 <tr>
 <td>Reguliere navigatie</td><td>M</td>
@@ -264,7 +284,7 @@
 
 
 
-<tr><td colspan=9>On the way	NH</td><td></td><td></td></tr>
+<tr><td colspan=9>On the way	NH</td></tr>
 <tr><td>Events which affect transport (e.g. marathon)</td><td>M</td><td>planning	RT</td><td></td></tr>
 <tr><td>Emergency Locations (e.g. police/hospital)</td><td>M</td><td>planning	RT</td><td></td></tr>
 </table>
