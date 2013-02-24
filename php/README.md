@@ -74,21 +74,21 @@
 </table>
 
 <pre>
-pu::pc planning/class-plan-utils->plan_car()
+pu = planning/class-plan-utils.php
 </pre>
 
 <table>
 <tr><td colspan=9>Bussen</td><td>AMS/NH</td></tr>
 <tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes</td><td>route</td></tr>	kost	
-<tr><td>Alle planningen</td><td>M</td><td>planning</td><td></td></tr>
+<tr><td>Alle planningen</td><td>M</td><td>[pu.plan_otp()]</td><td></td></tr>
 <tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
 <tr><td colspan=9>Trams	AMS</td><td></td><td></td></tr>
 <tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
-<tr><td>Alle planningen</td><td>M</td><td>planning</td><td></td></tr>
+<tr><td>Alle planningen</td><td>M</td><td>pu.plan_otp()</td><td></td></tr>
 <tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
 <tr><td colspan=9>Pont	AMS</td><td></td><td></td></tr>
 <tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
-<tr><td>Alle planningen</td><td>M</td><td>planning</td><td></td></tr>
+<tr><td>Alle planningen</td><td>M</td><td>[pu]plan_otp()</td><td></td></tr>
 <tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
 <tr><td colspan=9>Treinen	NL</td><td></td><td></td></tr>
 <tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
