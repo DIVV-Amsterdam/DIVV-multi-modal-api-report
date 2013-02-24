@@ -102,7 +102,7 @@
 <td>RT<br>RT predict</td>
 <td>
  <pre>rti.RealtimeDataKV78</pre>
- <pre>?</pre>
+ <pre>no prediction is necessary because they wait until they are ontime</pre>
 </td>
 </tr>
 
@@ -197,7 +197,7 @@
 <td>location<br>RT<br>kost</td>
 <td>
 Locations are downloadable from divv - see /parking<br>
-RT is not available
+RT is not available<br>
 Prices cane be calculated - formulas are in parkshark
 </td>
 </tr>
@@ -212,7 +212,12 @@ Prices cane be calculated - formulas are in parkshark
 
 
 
-<tr><td>++ Rental (OV)?</td><td>M</td><td>locations	availability</td><td></td></tr>
+<tr><td>++ Rental (OV)?</td>
+<td>M</td><td>locations	availability</td>
+<td>
+locations are added by hand into the mmhubs<br>
+we could not find an API for avaiabilty
+</td></tr>
 <tr><td>Wegonderhoud RT</td><td>M</td><td>static	RT</td><td></td></tr>
 
 <tr>
