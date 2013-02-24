@@ -163,14 +163,49 @@
 <tr>
 <td>Reguliere navigatie</td><td>M</td>
 <td>planning</td>
-<td><pre>planutils.plan_car() + planutils.plan_????car() </pre></td>
+<td><pre>planutils.plan_car() + planutils.plan_car_mapquest() </pre></td>
 </tr>
 
-<tr><td>Rental (greenwheels/gar2go)	M (locations only)	locations</td><td></td></tr>
-<tr><td>Files RT</td><td>M</td><td>RT</td><td></td></tr>
-<tr><td>Wegonderhoud RT</td><td>M</td><td>location 	RT	planned</td></tr>
-<tr><td>Parkeren parkeergebouwen RT</td><td>M</td><td>location 	RT	kost	RT predict</td></tr>
-<tr><td>Parkeren parkeerterreinen RT</td><td>M</td><td>location 	RT	kost	</td></tr>
+<tr>
+<td>Rental (greenwheels/gar2go)</td><td>M</td>
+<td> (locations only)	locations</td>
+<td>??</td>
+</tr>
+
+<tr>
+<td>Files RT</td><td>M</td>
+<td>RT files</td>
+<td>?jc</td>
+</tr>
+
+<tr>
+<td>Wegonderhoud RT</td><td>M</td>
+<td>location<br>RT<br>planned</td>
+<td>?jc<br>?jc<br>?jc</td>
+</tr>
+
+<tr>
+<td>Parkeren parkeergebouwen RT</td><td>M</td>
+<td>location<br>RT<br>kost<br>RT predict</td>
+<td>
+<pre>planutils.mmhubs</pre>
+<pre>NOT POSSIBLE</pre>
+<pre>?jc</pre>
+<pre>NOT POSSIBLE</pre>
+</td>
+</tr>
+
+<tr>
+<td>Parkeren parkeerterreinen RT</td><td>M</td>
+<td>location<br>RT<br>kost<br>RT predict</td>
+<td>
+<pre>planutils.mmhubs</pre>
+<pre>NOT POSSIBLE</pre>
+<pre>?jc</pre>
+<pre>NOT POSSIBLE</pre>
+</td>
+</tr>
+
 <tr><td>Parkeren straat (globaal) RT + K</td><td> </td><td></td><td>location 	RT	kost	</td></tr>
 <tr><td colspan=9>Fiets 	AMS</td><td></td><td></td></tr>
 <tr><td>Reguliere navigatie</td><td>M</td><td>planning</td><td></td></tr>
@@ -188,16 +223,45 @@
 <tr><td>Parkeren parkeergebouwen RT	"	(same as car)</td><td></td></tr>
 <tr><td>Parkeren parkeerterreinen RT	"	(same as car)</td><td></td></tr>
 <tr><td>Parkeren straat (globaal) RT + K	"	(same as car)</td><td></td></tr>
+
 <tr><td colspan=9>Taxi	AMS</td><td></td><td></td></tr>
 <tr><td>Timer / cost estimation</td><td>M</td><td>estimator</td><td></td></tr>
-<tr><td>Standplaatsen</td><td>M</td><td>locations</td><td></td></tr>
+
+<tr>
+<td>Timer / cost estimation</td><td>M</td>
+<td>cost estimation</td>
+<td><pre>planutils.taxicosts()</pre></td>
+</tr>
+
+<tr>
+<td>Standplaatsen</td><td>M</td>
+<td>location</td>
+<td><pre>planutils.mmhubs</pre></td>
+</tr>
+
+
 <tr><td>information about rules and prices</td><td>M</td><td>fixed inormation</td><td></td></tr>
-<tr><td colspan=9>Lopen	AMS</td><td></td><td></td></tr>
-<tr><td>Reguliere navigatie</td><td>M</td><td>planning</td><td></td></tr>
+
+<tr>
+<td colspan=9>Lopen	AMS</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils.plan_car() + planutils.plan_car_mapquest() </pre></td>
+</tr>
+
+
+
 <tr><td colspan=9>On the way	NH</td><td></td><td></td></tr>
 <tr><td>Events which affect transport (e.g. marathon)</td><td>M</td><td>planning	RT</td><td></td></tr>
 <tr><td>Emergency Locations (e.g. police/hospital)</td><td>M</td><td>planning	RT</td><td></td></tr>
 </table>
+
+<pre>
+planutils.geolookup()
+returns 
+ mapquest	// suggestions frm mapquest 
+ sugestions	// suggestions from ov9292
+ gm		// suggestions from google maps
+</pre>
 
 						
 Global options						
