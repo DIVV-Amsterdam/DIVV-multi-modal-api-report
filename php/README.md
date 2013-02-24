@@ -95,7 +95,7 @@
 <td>RT<br>RT predict</td>
 <td>?<br>? </td>
 </tr>
-<tr><td colspan=9>Trams	AMS</td><td></td><td></td></tr>
+<tr><td colspan=9>Trams	AMS</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
 <td>haltes<br>route<br>	kost	</td>
@@ -111,7 +111,7 @@
 <td>RT<br>RT predict</td>
 <td>?<br>?</td>
 </tr>
-<tr><td colspan=9>Pont	AMS</td><td></td><td></td></tr>
+<tr><td colspan=9>Pont	AMS</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
 <td>haltes<br>route<br>	kost	</td>
@@ -127,7 +127,7 @@
 <td>RT<br>RT predict</td>
 <td>?<br>?</td>
 </tr>
-<tr><td colspan=9>Treinen	NL</td><td></td><td></td></tr>
+<tr><td colspan=9>Treinen	NL</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
 <td>haltes<br>route<br>	kost	</td>
@@ -143,7 +143,7 @@
 <td>RT<br>RT predict</td>
 <td>?<br>?</td>
 </tr>
-<tr><td colspan=9>Metro	AMS</td><td></td><td></td></tr>
+<tr><td colspan=9>Metro	AMS</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
 <td>haltes<br>route<br>	kost	</td>
@@ -159,7 +159,7 @@
 <td>RT<br>RT predict</td>
 <td>?<br>?</td>
 </tr>
-<tr><td colspan=9>Auto 	NL</td><td></td><td></td></tr>
+<tr><td colspan=9>Auto 	NL</td></tr>
 <tr>
 <td>Reguliere navigatie</td><td>M</td>
 <td>planning</td>
@@ -207,26 +207,40 @@
 </tr>
 
 <tr><td>Parkeren straat (globaal) RT + K</td><td> </td><td></td><td>location 	RT	kost	</td></tr>
-<tr><td colspan=9>Fiets 	AMS</td><td></td><td></td></tr>
-<tr><td>Reguliere navigatie</td><td>M</td><td>planning</td><td></td></tr>
+
+
+<tr><td colspan=9>Fiets 	AMS</td></tr>
+<tr>
+<td>Reguliere navigatie</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils.plan_otp()</pre></td>
+</tr>
+
+
+
 <tr><td>++ Rental (OV)?</td><td>M</td><td>locations	availability</td><td></td></tr>
 <tr><td>Wegonderhoud RT</td><td>M</td><td>static	RT</td><td></td></tr>
-<tr><td>Parkeerplaats RT + K</td><td>M	location 	RT	kost	RT predict</td></tr>
+
+<tr>
+<td>Parkeerplaats</td><td>M</td>
+<td>location<br>cost<br>RT prediction</td>
+<td><pre>planutils.mmhubs</pre><pre>NOT POSSIBLE</pre><pre>NOT POSSIBLE</pre></td>
+</tr>
+
 <tr><td colspan=9>Scooter	AMS</td><td></td><td></td></tr>
 <tr><td>Reguliere navigatie</td><td>M</td><td>planning</td><td></td></tr>
 <tr><td>Wegonderhoud RT</td><td>M</td><td>static	RT</td><td></td></tr>
 <tr><td>Parkeerplaats RT + K</td><td>W</td><td>location 	RT	kost	</td></tr>
+
 <tr><td colspan=9>Motor	AMS</td><td></td><td></td></tr>
-<tr><td>Reguliere navigatie	(same as car)	(same as car)</td><td></td></tr>
-<tr><td>Files RT + / -	"	(same as car)</td><td></td></tr>
-<tr><td>Wegonderhoud RT	"	(same as car)</td><td></td></tr>
-<tr><td>Parkeren parkeergebouwen RT	"	(same as car)</td><td></td></tr>
-<tr><td>Parkeren parkeerterreinen RT	"	(same as car)</td><td></td></tr>
-<tr><td>Parkeren straat (globaal) RT + K	"	(same as car)</td><td></td></tr>
+<tr><td>Reguliere navigatie</td><td>(same as car)</td><td></td></tr>
+<tr><td>Files RT</td><td>(same as car)</td><td></td></tr>
+<tr><td>Wegonderhoud</td><td>(same as car)</td><td></td></tr>
+<tr><td>Parkeren parkeergebouwen</td><td>(same as car)</td><td></td></tr>
+<tr><td>Parkeren parkeerterreinen</td><td>(same as car)</td><td></td></tr>
+<tr><td>Parkeren straat (globaal)</td><td>(no restrictions)</td><td></td></tr>
 
 <tr><td colspan=9>Taxi	AMS</td><td></td><td></td></tr>
-<tr><td>Timer / cost estimation</td><td>M</td><td>estimator</td><td></td></tr>
-
 <tr>
 <td>Timer / cost estimation</td><td>M</td>
 <td>cost estimation</td>
