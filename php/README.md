@@ -79,27 +79,93 @@
 
 <table>
 <tr><td colspan=9>Bussen</td><td>AMS/NH</td></tr>
-<tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes</td><td>route</td></tr>	kost	
-<tr><td>Alle planningen</td><td>M</td><td>[pu.plan_otp()]</td><td></td></tr>
-<tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
+<tr>
+<td>Haltes, routes en kosten</td><td>M</td><td>haltes<br>routes<br>kost</td>
+<td>?<br>?<br>?</td>
+</tr>
+
+<tr>
+<td>Alle planningen</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils . plan_otp()</pre></td>
+</tr>
+
+<tr>
+<td>Alles real time</td><td>M</td>
+<td>RT<br>RT predict</td>
+<td>?<br>? </td>
+</tr>
 <tr><td colspan=9>Trams	AMS</td><td></td><td></td></tr>
-<tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
-<tr><td>Alle planningen</td><td>M</td><td>pu.plan_otp()</td><td></td></tr>
-<tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
+<tr>
+<td>Haltes, routes en kosten</td><td>M</td>
+<td>haltes<br>route<br>	kost	</td>
+<td>?<br>?<br>?</td>
+</tr>
+<tr>
+<td>Alle planningen</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils.plan_otp()</pre></td>
+</tr>
+<tr>
+<td>Alles real time</td><td>M</td>
+<td>RT<br>RT predict</td>
+<td>?<br>?</td>
+</tr>
 <tr><td colspan=9>Pont	AMS</td><td></td><td></td></tr>
-<tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
-<tr><td>Alle planningen</td><td>M</td><td>[*pu].plan_otp()</td><td></td></tr>
-<tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
+<tr>
+<td>Haltes, routes en kosten</td><td>M</td>
+<td>haltes<br>route<br>	kost	</td>
+<td>?<br>?<br>?</td>
+</tr>
+<tr>
+<td>Alle planningen</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils.plan_otp()</pre></td>
+</tr>
+<tr>
+<td>Alles real time</td><td>M</td>
+<td>RT<br>RT predict</td>
+<td>?<br>?</td>
+</tr>
 <tr><td colspan=9>Treinen	NL</td><td></td><td></td></tr>
-<tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
-<tr><td>Alle planningen</td><td>M</td><td>planning</td><td></td></tr>
-<tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
+<tr>
+<td>Haltes, routes en kosten</td><td>M</td>
+<td>haltes<br>route<br>	kost	</td>
+<td>?<br>?<br>?</td>
+</tr>
+<tr>
+<td>Alle planningen</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils.plan_otp()</pre></td>
+</tr>
+<tr>
+<td>Alles real time</td><td>M</td>
+<td>RT<br>RT predict</td>
+<td>?<br>?</td>
+</tr>
 <tr><td colspan=9>Metro	AMS</td><td></td><td></td></tr>
-<tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes</td><td>route</td><td>kost	</td></tr>
-<tr><td>Alle planningen</td><td>M</td><td>planning</td><td></td></tr>
-<tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
+<tr>
+<td>Haltes, routes en kosten</td><td>M</td>
+<td>haltes<br>route<br>	kost	</td>
+<td>?<br>?<br>?</td>
+</tr>
+<tr>
+<td>Alle planningen</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils.plan_otp()</pre></td>
+</tr>
+<tr>
+<td>Alles real time</td><td>M</td>
+<td>RT<br>RT predict</td>
+<td>?<br>?</td>
+</tr>
 <tr><td colspan=9>Auto 	NL</td><td></td><td></td></tr>
-<tr><td>Reguliere navigatie</td><td>M</td><td>planning</td><td></td></tr>
+<tr>
+<td>Reguliere navigatie</td><td>M</td>
+<td>planning</td>
+<td><pre>planutils.plan_car() + planutils.plan_????car() </pre></td>
+</tr>
+
 <tr><td>Rental (greenwheels/gar2go)	M (locations only)	locations</td><td></td></tr>
 <tr><td>Files RT</td><td>M</td><td>RT</td><td></td></tr>
 <tr><td>Wegonderhoud RT</td><td>M</td><td>location 	RT	planned</td></tr>
