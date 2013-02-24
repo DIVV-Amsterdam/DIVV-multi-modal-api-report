@@ -58,7 +58,10 @@
 <tr>
 <td>Alles real time</td><td>M</td>
 <td>RT<br>RT predict</td>
-<td>?<br>? </td>
+<td>
+ <pre>rti.RealtimeDataKV78</pre>
+ <pre>rti.RealtimeDataKV78</pre>
+</td>
 </tr>
 
 
@@ -78,7 +81,7 @@
 <td>RT<br>RT predict</td>
 <td>
  <pre>rti.RealtimeDataKV78</pre>
- <pre>?</pre>
+ <pre>rti.RealtimeDataKV78</pre>
 </td>
 </tr>
 
@@ -119,7 +122,7 @@
 <td>RT<br>RT predict</td>
 <td>
  <pre>rti.RtRequestNS</pre>
- <pre>?</pre>
+ <pre>rti.RtRequestNS</pre>
 </td>
 </tr>
 
@@ -139,7 +142,7 @@
 <td>RT<br>RT predict</td>
 <td>
  <pre>rti.RealtimeDataKV78</pre>
- <pre>?</pre>
+ <pre>rti.RealtimeDataKV78</pre>
 </td>
 </tr>
 
