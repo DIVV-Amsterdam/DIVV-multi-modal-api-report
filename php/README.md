@@ -190,7 +190,14 @@
 </td>
 </tr>
 
-<tr><td>Parkeren straat (globaal) RT + K</td><td> </td><td></td><td>location 	RT	kost	</td></tr>
+<tr><td>Parkeren straat (globaal) RT + K</td><td>M</td>
+<td>location<br>RT<br>kost</td>
+<td>
+Locations are downloadable from divv - see /parking<br>
+RT is not available
+Prices cane be calculated - formulas are in parkshark
+</td>
+</tr>
 
 
 <tr><td colspan=9>Fiets 	AMS</td></tr>
@@ -238,7 +245,11 @@
 </tr>
 
 
-<tr><td>information about rules and prices</td><td>M</td><td>fixed inormation</td><td></td></tr>
+<tr>
+<td>information about rules and prices</td><td>M</td>
+<td>fixed inormation</td>
+<td>This is available from i-Amsterdam</td>
+</tr>
 
 <tr>
 <td colspan=9>Lopen	AMS</td><td>M</td>
