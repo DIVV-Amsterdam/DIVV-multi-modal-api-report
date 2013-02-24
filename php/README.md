@@ -78,7 +78,7 @@
 </pre>
 
 <table>
-<tr><td colspan=9>Bussen</td><td>AMS/NH</td></tr>
+<tr><td colspan=9>Bussen AMS/NH</td></tr>
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td><td>haltes<br>routes<br>kost</td>
 <td>?<br>?<br>?</td>
