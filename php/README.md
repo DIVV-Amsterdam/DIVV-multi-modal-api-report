@@ -74,7 +74,7 @@
 </table>
 
 <pre>
-pu = planning/class-plan-utils.php
+*pu = planning/class-plan-utils.php
 </pre>
 
 <table>
@@ -88,7 +88,7 @@ pu = planning/class-plan-utils.php
 <tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
 <tr><td colspan=9>Pont	AMS</td><td></td><td></td></tr>
 <tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
-<tr><td>Alle planningen</td><td>M</td><td>[pu]plan_otp()</td><td></td></tr>
+<tr><td>Alle planningen</td><td>M</td><td>[*pu].plan_otp()</td><td></td></tr>
 <tr><td>Alles real time</td><td>M</td><td>RT</td><td>RT predict</td></tr>
 <tr><td colspan=9>Treinen	NL</td><td></td><td></td></tr>
 <tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes	route</td><td>	kost	</td></tr>
