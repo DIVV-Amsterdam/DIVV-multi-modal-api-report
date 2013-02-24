@@ -73,6 +73,10 @@
 </tr>
 </table>
 
+<pre>
+pu::pc planning/class-plan-utils->plan_car()
+</pre>
+
 <table>
 <tr><td colspan=9>Bussen</td><td>AMS/NH</td></tr>
 <tr><td>Haltes, routes en kosten</td><td>M</td><td>haltes</td><td>route</td></tr>	kost	
