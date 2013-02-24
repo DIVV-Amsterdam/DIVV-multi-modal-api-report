@@ -153,7 +153,7 @@
 <tr>
 <td>Rental (greenwheels/gar2go)</td><td>M</td>
 <td> (locations only)	locations</td>
-<td>??</td>
+<td><pre>greenwheels and connectcar are added as multimodal hubs by hand</pre><pre>car2go has an api</pre></td>
 </tr>
 
 <tr>
