@@ -69,7 +69,10 @@
 <tr>
 <td>Haltes, routes en kosten</td><td>M</td>
 <td>haltes<br>route<br>	kost	</td>
-<td>?<br>?<br>?</td>
+<td>
+KV1?<br>
+KV1?<br>
+KV1</td>
 </tr>
 <tr>
 <td>Alle planningen</td><td>M</td>
