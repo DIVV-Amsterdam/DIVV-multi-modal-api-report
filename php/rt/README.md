@@ -21,8 +21,8 @@ For the train data, you need to know the ritnummer (train number) and
 the departure and destination station names.
 
 Note that due to limitations in the NS API, the arrival delay at the 
-destination is inaccurate: the result is actually the departure time. This is
-a mismatch in case a train arrives 5 minutes late, but is scheduled to wait
+destination is inaccurate: the code actually uses the departure time. This is
+a mismatch in case a train arrives 5 minutes behind schedule, but is scheduled to wait
 at the destination station for 10 minutes. It will depart on time, but arrived
 late.
 
