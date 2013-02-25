@@ -31,7 +31,7 @@ issues need to overcome, we’ve built a proof of concept for a multimodal API.
 
 What can you find here on Github?
 ---------------------------------
-In our [Wiki](wiki/) you can find a detailed look at the requirements we 
+In our [Wiki](../../wiki/) you can find a detailed look at the requirements we 
 set for the multimodal travel API, use cases we defined, an overview of 
 required and available data, and more.
 
