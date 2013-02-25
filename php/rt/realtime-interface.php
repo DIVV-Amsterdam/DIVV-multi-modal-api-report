@@ -112,7 +112,7 @@ class RealtimeDataKV78 {
             foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
                 if ($stop_data['TimingPointCode'] == $request->to->timingPointCodeFromStopId()) {
                     $tta = $this->kv78_timestamp_to_datetime($stop_data['TargetArrivalTime']);
-                    print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." at ".$stop_data['TimingPointName']."\n";
+                    // print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." at ".$stop_data['TimingPointName']."\n";
                     if (abs($tta->getTimestamp() - $request->to->target_arrival_time->getTimestamp()) <= 120) {
                         print "MATCH\n";
                         $retval->realtime_journey_id = $journey_id;
