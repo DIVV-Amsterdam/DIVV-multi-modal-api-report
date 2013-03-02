@@ -144,11 +144,11 @@ error_reporting(-1);
 
 ?>
 
-<legend>Index of the example site</legend>
+<legend>DIVV-multi-modal-api-report</legend>
 <div class='container'>
-<div><a href='planning/plan.php'>Example planning</a> : planning a trip</div>
-<div><a href='geocoding/geocode.php'>Example geocoding</a> : example fo geocoding</div>
-<div><a href='planning/listmmhubs.php'>List of multimodal hubs</a> : list from the project</div>
+<div><a href='example/index.php'>Examples</a></div>
+
+<div><a href='https://github.com/DIVV-Amsterdam/DIVV-multi-modal-api-report'>GitHub</a> : Github repository with the report and instructions</div>
 </div>
 
 <footer>

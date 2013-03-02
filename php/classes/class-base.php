@@ -40,6 +40,13 @@ class mm_datetime {
 		$this->hour = $HH;
 		$this->minute = $MM;
 	}
+	function setMMDateTime($mmdt) {
+		$this->day = $mmdt->day;
+		$this->month = $mmdt->month;
+		$this->year = $mmdt->year;
+		$this->hour = $mmdt->hour;
+		$this->minute = $mmdt->minute;
+	}
 	
 	public static function createFromDateTime($DT) {
 		$dt = new mm_datetime();

@@ -112,7 +112,8 @@ class RealtimeDataKV78 {
         
         foreach ($response as $journey_id => $journey_data) {
             foreach ($journey_data['Stops'] as $stop_index => $stop_data) {
-                if ($stop_data['TimingPointCode'] == $request->to->timingPointCodeFromStopId()) {
+		$request_tpc = $request->to->timingPointCodeFromStopId();
+                if ($stop_data['TimingPointCode'] == $request_tpc || $stop_data['TimingPointCode'] == $request_tpc."1") {
                     $tta = $this->kv78_timestamp_to_datetime($stop_data['TargetArrivalTime']);
                     print "found journey $journey_id tta ".$tta->format('Y-m-d H:i:s')." status ".$status = $stop_data['TripStopStatus']." at ".$stop_data['TimingPointName']."\n";
                     if (abs($tta->getTimestamp() - $request->to->target_arrival_time->getTimestamp()) <= 120) {
@@ -162,12 +163,14 @@ class RealtimeDataKV78 {
                 $tta = $this->kv78_timestamp_to_datetime($stop_data['TargetArrivalTime']);
                 $eta = $this->kv78_timestamp_to_datetime($stop_data['ExpectedArrivalTime']);
 
-                if ($stop_data['TimingPointCode'] == $request->from->timingPointCodeFromStopId()) {
+		$request_tpc = $request->from->timingPointCodeFromStopId();
+                if ($stop_data['TimingPointCode'] == $request_tpc || $stop_data['TimingPointCode'] == $request_tpc."1") {
                     $retval->departure_time = $etd;
                     $departure_interval = $ttd->diff($etd);
                     $retval->departure_delay = $departure_interval->invert ? -$departure_interval->s : $departure_interval->s;
                 }
-                if ($stop_data['TimingPointCode'] == $request->to->timingPointCodeFromStopId()) {
+		$request_tpc = $request->to->timingPointCodeFromStopId();
+                if ($stop_data['TimingPointCode'] == $request_tpc || $stop_data['TimingPointCode'] == $request_tpc."1") {
                     $retval->arrival_time = $eta;
                     $arrival_interval = $tta->diff($eta);
                     $retval->arrival_delay = $arrival_interval->invert ? -$arrival_interval->s : $arrival_interval->s;

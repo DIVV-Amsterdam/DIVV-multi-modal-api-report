@@ -23,7 +23,7 @@ class plan_options {
 	public $arriveBy = 'false';
 	public $ui_date = "2013-01-14";
 	public $optimize = "QUICK";
-	public $maxWalkDistance = 1000;
+	public $maxWalkDistance = 3000;
 	public $walkSpeed = 0.833;
 	public $hst = true;
 	public $_date = "2013-01-14";
@@ -64,6 +64,7 @@ class PlanUtils {
     	$destination = $request->to->lat ."," . $request->to->lon;
     	
 		$url="http://maps.googleapis.com/maps/api/directions/json";
+		
 		$ch1 = curl_init();
 //			curl_setopt($ch1, CURLOPT_POST, 1);
 		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
@@ -74,10 +75,18 @@ class PlanUtils {
 
 //			echo "<h1>dump response</h1>";
 //			var_dump($response);
+
+		$dur = $response->routes[0]->legs[0]->duration->value;
 		
 		$lg = new Leg();
 		$lg->from = new Place($request->from->lat, $request->from->lon, $request->from->name);
 		$lg->to = new Place($request->to->lat, $request->to->lon, $request->to->name);
+		$lg->duration = $dur;
+		$lg->startTime = $request->options->_datetime;
+		$lg->endTime = new mm_datetime();
+		$lg->endTime->setMMDateTime($request->options->_datetime);
+		$lg->endTime->addMinutes(floor($dur/60));
+		
 		$lg->mode = "DRIVING";
 		
 
@@ -89,12 +98,13 @@ class PlanUtils {
 		$retval->startaddress = $response->routes[0]->legs[0]->start_address;
 		$retval->endaddress = $response->routes[0]->legs[0]->end_address;
 		$retval->src = "curl";
-		$retval->url = $url;
+		$retval->url = $url."?mode=driving&origin=".$origin."&destination=".$destination."&sensor=true";
 		$retval->rawdata = $result1;
 		$retval->data = json_decode($result1);
 		$retval->legs = array($lg);
 		$retval->type = "car/gmaps";
-		$retval->endTime = "";
+		$retval->startTime = $lg->startTime;
+		$retval->endTime = $lg->endTime;
 //		$retval->legs = $legs;
     	return $retval;
 
@@ -299,7 +309,7 @@ class PlanUtils {
 		$ch1 = curl_init();
 //			curl_setopt($ch1, CURLOPT_POST, 1);
 		curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch1, CURLOPT_URL, $url."?outFormat=json&from=".$origin."&to=".$destination."&unit=k&routeType=fastest&narrativeType=text&");
+		curl_setopt($ch1, CURLOPT_URL, $url."?outFormat=json&from=".$origin."&to=".$destination."&unit=k&routeType=fastest&shapeFormat=raw&narrativeType=text&generalize=200");
 		
 		//mustAvoidLinkIds
 		//tryAvoidLinkIds
@@ -312,11 +322,18 @@ class PlanUtils {
 //			echo "<h1>dump response</h1>";
 //			var_dump($response);
 		
+		$dur = $response->route->time;
+
 		$lg = new Leg();
 		$lg->from = new Place($request->from->lat, $request->from->lon, $request->from->name);
 		$lg->to = new Place($request->to->lat, $request->to->lon, $request->to->name);
 		$lg->mode = "DRIVING";
-		
+		$lg->duration = $dur;
+		$lg->startTime = $request->options->_datetime;
+		$lg->endTime = new mm_datetime();
+		$lg->endTime->setMMDateTime($request->options->_datetime);
+		$lg->endTime->addMinutes(floor($dur/60));
+
 
 		$retval = new obj();
 		$retval->distance = floor($response->route->distance*1000);
@@ -326,12 +343,13 @@ class PlanUtils {
 		$retval->startaddress = $response->route->locations[0]->street . $response->route->locations[0]->postalCode;
 		$retval->endaddress = $response->route->locations[1]->street . $response->route->locations[1]->postalCode;
 		$retval->src = "curl";
-		$retval->url = $url;
+		$retval->url = $url."?outFormat=json&from=".$origin."&to=".$destination."&unit=k&routeType=fastest&shapeFormat=raw&narrativeType=text&generalize=200";
 		$retval->rawdata = $result1;
 		$retval->data = json_decode($result1);
 		$retval->legs = array($lg);
 		$retval->type = "car/mapquest";
-		$retval->endTime = "";
+		$retval->startTime = $lg->startTime;
+		$retval->endTime = $lg->endTime;
 //		$retval->legs = $legs;
     	return $retval;
 
@@ -411,6 +429,7 @@ class PlanUtils {
 					$lg->transitinfo = new TransitInfoTram();
 					$lg->transitinfo->agency = $leg->agencyName;
 					$lg->transitinfo->line = $leg->route;
+					$lg->transitinfo->lineId = $leg->routeId;
 					$lg->transitinfo->headsign = $leg->headsign;
 					$lg->transitinfo->from->stopindex = $leg->from->stopIndex;
 					$lg->transitinfo->from->stopid = $leg->from->stopId->id;
@@ -429,6 +448,7 @@ class PlanUtils {
 					$lg->transitinfo = new TransitInfoSubway();
 					$lg->transitinfo->agency = $leg->agencyName;
 					$lg->transitinfo->line = $leg->route;
+					$lg->transitinfo->lineId = $leg->routeId;
 					$lg->transitinfo->headsign = $leg->headsign;
 					$lg->transitinfo->from->stopindex = $leg->from->stopIndex;
 					$lg->transitinfo->from->stopid = $leg->from->stopId->id;
@@ -450,16 +470,35 @@ class PlanUtils {
 				array_push($legs , $lg);
 				
 			}	
+			$retval = new obj();
+			$retval->url = $h;
+			$retval->rawdata = $data;
+			$retval->data = json_decode($data);
+			$retval->legs = $legs;
+			$retval->type = "transit/OTP";
+			$retval->endTime = $last_endtime;
+			$retval->duration = 0;	// we don't use the duration here we instead send the endtime
+			$retval->status = 0;	// ok
+		} else {
+			/* 
+
+			error occurred, it is generally possible to get errors like:
+
+			Trip is not possible.  Your start or end point might not be safely accessible (for instance, you might be starting on a residential street connected only to a highway).
+
+			*/
+			$retval = new obj();
+			$retval->url = $h;
+			$retval->rawdata = $data;
+			$retval->data = json_decode($data);
+			$retval->legs = array();
+			$retval->type = "transit/OTP";
+			$retval->endTime = $request->options->_datetime;
+			$retval->duration = 0;
+			$retval->status = -1;	// error
+			
 		}
 
-		$retval = new obj();
-		$retval->url = $h;
-		$retval->rawdata = $data;
-		$retval->data = json_decode($data);
-		$retval->legs = $legs;
-		$retval->type = "transit/OTP";
-		$retval->endTime = $last_endtime;
-		$retval->duration = 0;
 	
 //		$items = json_decode($data);
 //		array_push($totalitems , $items->items);
@@ -478,6 +517,7 @@ class PlanUtils {
     
     	$routes = array();
     
+//		for ($j=0; $j < 20; $j++) {
 		for ($j=0; $j < count($mmh->hubs); $j++) {
 		
 			$journey = new Journey();
@@ -486,15 +526,18 @@ class PlanUtils {
 	
 			if (startsWith($mmh->hubs[$j]->type,"CAR-TO")) {
 			
-				$_datetime = $__datetime;
+				$_datetime = new mm_datetime();
+				$_datetime->setMMDateTime($__datetime);
 	
 				$req = new plan_request();
 				$req->from = $from;
 				$req->to = $mmh->hubs[$j]->asPlace();
 				$req->options->_date = $_datetime->asDate();
 				$req->options->_time = $_datetime->asTime();
+				$req->options->_datetime->setMMDateTime($_datetime);
 
-				$response = $this->plan_car($req);
+//				$response = $this->plan_car($req);
+				$response = $this->plan_car_mapquest($req);
 				
 				$journey->addleg($response);
 				
@@ -524,80 +567,268 @@ class PlanUtils {
 				$req->to = $to;
 				$req->options->_date = $_datetime->asDate();
 				$req->options->_time = $_datetime->asTime();
+				if($options->maxWalkDistance) $req->options->maxWalkDistance = $options->maxWalkDistance;
 
 				$response = $this->plan_otp($req);
-				$journey->addleg($response);
-				
-				if ($options->debug) {
-					echo sprintf("url : %s \n\n",$response->url);
-					for ($i=0; $i < count($response->legs); $i++) {
-						echo "Leg $i :: " . $response->legs[$i] . "\n";
-					}
-				}
 
-			    array_push($routes , $journey);
+				if ($response->status == 0) {
+
+					$journey->addleg($response);
+				
+					if ($options->debug) {
+						echo sprintf("url : %s \n\n",$response->url);
+						for ($i=0; $i < count($response->legs); $i++) {
+							echo "Leg $i :: " . $response->legs[$i] . "\n";
+						}
+					}
+				    array_push($routes , $journey);
+				}
 				
 			}
 			if (startsWith($mmh->hubs[$j]->type,"TRANSIT-TO-TAXI")) {
 			
 				// transit
 				if ($options->debug) echo sprintf("\n\nREQ3 / TRANSIT FIRST \n\n");
-				$_datetime = $__datetime;
+
+				$_datetime = new mm_datetime();
+				$_datetime->setMMDateTime($__datetime);
 				$req = new plan_request();
 				$req->from = $from;
 				$req->to = $mmh->hubs[$j]->asPlace();
 				$req->options->_date = $_datetime->asDate();
 				$req->options->_time = $_datetime->asTime();
+				$req->options->_datetime->setMMDateTime($_datetime);
+				if($options->maxWalkDistance) $req->options->maxWalkDistance = $options->maxWalkDistance;
 
 				$response = $this->plan_otp($req);
-				$journey->addleg($response);
 				
-				// add duration
-//				$_datetime->addMinutes(floor($response->duration/60));
-				$_datetime = $response->endTime;
-
-				// swith to taxi
-				$leg = new Leg();
-				$leg->from = $mmh->hubs[$j]->asPlace();
-				$leg->to = $mmh->hubs[$j]->asPlace();
-				$leg->mode = "GET TAXI";
-				$leg->type = "STATIC";
-				$leg->startTime = $_datetime;
-				$_datetime->addMinutes(5);
-				$leg->endTime = $_datetime;
-				$journey->addleg($leg);
+				if ($response->status == 0) {
+					// only calculate the 2nd half of the journey if there was not an error from OTP
 				
-				// now driving to address				
+					$journey->addleg($response);
+				
+					// add duration
+//					$_datetime->addMinutes(floor($response->duration/60));
 
+//					echo "RESPONSE";
+//					var_dump($response);
+//					echo "END TIME";
+//					var_dump($response->endTime);
+//					echo "END END TIME";
+
+					$_datetime = new mm_datetime();
+					$_datetime->setMMDateTime($response->endTime);
+
+					// swith to taxi
+					$leg = new Leg();
+					$leg->from = $mmh->hubs[$j]->asPlace();
+					$leg->to = $mmh->hubs[$j]->asPlace();
+					$leg->mode = "GET_TAXI";
+					$leg->type = "STATIC";
+					$leg->startTime = $_datetime;
+					$_datetime->addMinutes(5);
+					$leg->endTime = $_datetime;
+					$journey->addleg($leg);
+				
+					// now driving to address				
+
+					$req = new plan_request();
+					$req->from = $mmh->hubs[$j]->asPlace();
+					$req->to = $to;
+					$req->options->_date = $_datetime->asDate();
+					$req->options->_time = $_datetime->asTime();
+					$req->options->_datetime->setMMDateTime($_datetime);
+
+//					$response = $this->plan_car($req);
+					$response = $this->plan_car_mapquest($req);
+				
+					$response->cost = $this->taxicosts($response->distance, ($response->duration/60));
+				
+				
+				
+					$journey->addleg($response);
+					if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
+
+				    array_push($routes , $journey);
+				} else {
+//					var_dump($response->data->error);
+				
+				}
+				
+			}
+			if (startsWith($mmh->hubs[$j]->type,"TRANSIT-TO-CONNECTCAR")) {
+			
+				// transit
+				$_datetime = new mm_datetime();
+				$_datetime->setMMDateTime($__datetime);
 				$req = new plan_request();
-				$req->from = $mmh->hubs[$j]->asPlace();
-				$req->to = $to;
+				$req->from = $from;
+				$req->to = $mmh->hubs[$j]->asPlace();
 				$req->options->_date = $_datetime->asDate();
 				$req->options->_time = $_datetime->asTime();
+				$req->options->_datetime->setMMDateTime($_datetime);
+				if($options->maxWalkDistance) $req->options->maxWalkDistance = $options->maxWalkDistance;
 
-				$response = $this->plan_car($req);
-				
-				$response->cost = $this->taxicosts($response->distance, ($response->duration/60));
-				
-				
-				
-				$journey->addleg($response);
-				if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
+				$response = $this->plan_otp($req);
 
-			    array_push($routes , $journey);
+
+
+				
+				if ($response->status == 0) {
+					// only calculate the 2nd half of the journey if there was not an error from OTP
+				
+					$journey->addleg($response);
+				
+					// add duration
+//					$_datetime->addMinutes(floor($response->duration/60));
+
+//					echo "RESPONSE";
+//					var_dump($response);
+//					echo "END TIME";
+//					var_dump($response->endTime);
+//					echo "END END TIME";
+
+					$_datetime = $response->endTime;
+
+					// swith to taxi
+					$leg = new Leg();
+					$leg->from = $mmh->hubs[$j]->asPlace();
+					$leg->to = $mmh->hubs[$j]->asPlace();
+					$leg->mode = "GET_CONNECTCAR";
+					$leg->type = "STATIC";
+					$leg->startTime = $_datetime;
+					$_datetime->addMinutes(5);
+					$leg->endTime = $_datetime;
+					$journey->addleg($leg);
+				
+					// now driving to address				
+
+					$req = new plan_request();
+					$req->from = $mmh->hubs[$j]->asPlace();
+					$req->to = $to;
+					$req->options->_date = $_datetime->asDate();
+					$req->options->_time = $_datetime->asTime();
+					$req->options->_datetime->setMMDateTime($_datetime);
+
+//					$response = $this->plan_car($req);
+					$response = $this->plan_car_mapquest($req);
+				
+					$response->cost = 0;
+					// $this->taxicosts($response->distance, ($response->duration/60));
+				
+				
+				
+					$journey->addleg($response);
+					if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
+
+				    array_push($routes , $journey);
+				} else {
+					/*
+					echo "<pre>";
+					var_dump($response->data->error);
+					var_dump($from);
+					var_dump($to);
+					var_dump($__datetime);
+					var_dump($mmh->hubs[$j]);
+					var_dump($options);
+					echo "</pre>";
+					*/
+				}
+				
+			}
+
+
+			if (startsWith($mmh->hubs[$j]->type,"TRANSIT-TO-BIKERNETAL")) {
+			
+				// transit
+				$_datetime = new mm_datetime();
+				$_datetime->setMMDateTime($__datetime);
+				$req = new plan_request();
+				$req->from = $from;
+				$req->to = $mmh->hubs[$j]->asPlace();
+				$req->options->_date = $_datetime->asDate();
+				$req->options->_time = $_datetime->asTime();
+				$req->options->_datetime->setMMDateTime($_datetime);
+				if($options->maxWalkDistance) $req->options->maxWalkDistance = $options->maxWalkDistance;
+
+				$response = $this->plan_otp($req);
+
+
+
+				
+				if ($response->status == 0) {
+					// only calculate the 2nd half of the journey if there was not an error from OTP
+				
+					$journey->addleg($response);
+				
+					// add duration
+//					$_datetime->addMinutes(floor($response->duration/60));
+
+//					echo "RESPONSE";
+//					var_dump($response);
+//					echo "END TIME";
+//					var_dump($response->endTime);
+//					echo "END END TIME";
+
+					$_datetime = $response->endTime;
+
+					// swith to taxi
+					$leg = new Leg();
+					$leg->from = $mmh->hubs[$j]->asPlace();
+					$leg->to = $mmh->hubs[$j]->asPlace();
+					$leg->mode = "RENT_BIKE";
+					$leg->type = "STATIC";
+					$leg->startTime = $_datetime;
+					$_datetime->addMinutes(5);
+					$leg->endTime = $_datetime;
+					$journey->addleg($leg);
+				
+					// now driving to address				
+
+
+					$req = new plan_request();
+					$req->from = $mmh->hubs[$j]->asPlace();
+					$req->to = $to;
+					$req->options->_date = $_datetime->asDate();
+					$req->options->_time = $_datetime->asTime();
+					$req->options->_datetime->setMMDateTime($_datetime);
+					$req->options->mode = "BICYCLE";
+
+					$response1 = $this->plan_otp($req);
+					if ($response1->status == 0) {
+						$journey->addleg($response1);
+						if ($options->debug) echo sprintf(" new start date : %s \n",$_datetime->toString());
+					    array_push($routes , $journey);
+					}
+
+				} else {
+					/*
+					echo "<pre>";
+					var_dump($response->data->error);
+					var_dump($from);
+					var_dump($to);
+					var_dump($__datetime);
+					var_dump($mmh->hubs[$j]);
+					var_dump($options);
+					echo "</pre>";
+					*/
+				}
 				
 			}
 			if (startsWith($mmh->hubs[$j]->type,"BIKE-TO-TRANSIT")) {
 			
 				// transit
 				if ($options->debug) echo sprintf("\n\nREQ3 / TRANSIT FIRST \n\n");
-				$_datetime = $__datetime;
+				$_datetime = new mm_datetime();
+				$_datetime->setMMDateTime($__datetime);
 				$req = new plan_request();
 				$req->from = $from;
 				$req->to = $mmh->hubs[$j]->asPlace();
 				$req->options->_date = $_datetime->asDate();
 				$req->options->_time = $_datetime->asTime();
-				$req->options->mode = "WALK";
+				$req->options->_datetime->setMMDateTime($_datetime);
+				$req->options->mode = "BICYCLE";
+				if($options->maxWalkDistance) $req->options->maxWalkDistance = $options->maxWalkDistance;
 				
 
 				$response = $this->plan_otp($req);
@@ -607,11 +838,11 @@ class PlanUtils {
 //				$_datetime->addMinutes(floor($response->duration/60));
 				$_datetime = $response->endTime;
 
-				// swith to taxi
+				// swith to transit
 				$leg = new Leg();
 				$leg->from = $mmh->hubs[$j]->asPlace();
 				$leg->to = $mmh->hubs[$j]->asPlace();
-				$leg->mode = "PARK BIKE";
+				$leg->mode = "PARK_BIKE";
 				$leg->type = "STATIC";
 				$leg->startTime = $_datetime;
 				$_datetime->addMinutes(5);
@@ -625,6 +856,7 @@ class PlanUtils {
 				$req->to = $to;
 				$req->options->_date = $_datetime->asDate();
 				$req->options->_time = $_datetime->asTime();
+				if($options->maxWalkDistance) $req->options->maxWalkDistance = $options->maxWalkDistance;
 
 				$response = $this->plan_otp($req);
 				
@@ -638,15 +870,17 @@ class PlanUtils {
 		}
 		
 		// driving all the way
-		echo sprintf("\n\nREQ3 / DRIVING ALL THE WAY \n\n");
-		$_datetime = $__datetime;
+		$_datetime = new mm_datetime();
+		$_datetime->setMMDateTime($__datetime);
 		$req = new plan_request();
 		$req->from = $from;
 		$req->to = $to;
 		$req->options->_date = $_datetime->asDate();
 		$req->options->_time = $_datetime->asTime();
+		$req->options->_datetime->setMMDateTime($_datetime);
 
-		$response = $this->plan_car($req);
+//		$response = $this->plan_car($req);
+		$response = $this->plan_car_mapquest($req);
 	
 		if ($options->debug) echo "DRIVING ALL THE WAY :: " . $response->legs[0] . " dist : " .$response->distancetxt.", duration : " .$response->durationtxt."\n";
 		
@@ -657,12 +891,15 @@ class PlanUtils {
 
 		// transit all the way
 		if ($options->debug) echo sprintf("\n\nREQ3 / TRANSIT ALL THE WAY \n\n");
-		$_datetime = $__datetime;
+		$_datetime = new mm_datetime();
+		$_datetime->setMMDateTime($__datetime);
 		$req = new plan_request();
 		$req->from = $from;
 		$req->to = $to;
 		$req->options->_date = $_datetime->asDate();
 		$req->options->_time = $_datetime->asTime();
+		$req->options->_datetime->setMMDateTime($_datetime);
+		if($options->maxWalkDistance) $req->options->maxWalkDistance = $options->maxWalkDistance;
 
 		$response = $this->plan_otp($req);
 	

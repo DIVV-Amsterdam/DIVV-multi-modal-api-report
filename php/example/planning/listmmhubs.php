@@ -1,10 +1,5 @@
 <?php
-
-
-?>
-
-<html>
-
+?><html>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,8 +25,13 @@
       <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
       <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
       <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
       <link href="../css/styles.css" rel="stylesheet">
       <script src="plan.js"></script>
+      <script src="../js/json2.js"></script>
+      <script src="../js/jsonviewer.js"></script>
+      <!-- http://listjs.com/examples -->
+      <script src="../js/list.js"></script>
 	<script type='text/javascript'>
 		var uvOptions = {};
 		(function() {
@@ -56,6 +56,12 @@
 	border-right: 1px dotted #666666;
 	padding-right: 5px;
 	padding-left: 5px;	
+}
+.list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
 }
 .mode-DRIVING {
 	background-image: url('../images/glymphicons/glyphicons_005_car.png');
@@ -108,7 +114,7 @@
 	background-repeat: no-repeat;
 	background-position: 5px 0;
 }
-.mode-PARK_BIKE {
+.mode-PARK_BIKE, .mode-RENT_BIKE {
 	background-image: url('../images/glymphicons/parkbike.png');
 	background-repeat: no-repeat;
 	background-position: 5px 0;
@@ -118,7 +124,7 @@
 	background-repeat: no-repeat;
 	background-position: 0 0;
 	width:80px;
-	height:40px;
+	height:32px;
 }
 .mode-title {
 	font-family: Arial;
@@ -129,27 +135,50 @@
 .hid {
 	display: none;
 }
+.journey-horizontal {
+	overflow: hidden;
+	overflow: scroll;
+}
+.mode-journey {
+}
+.journey-endtime {
+	font-family: Arial;
+	font-size: 18px;
+	line-height:36px;
+	padding-left:36px;
+}
 </style>
 </head>
 <body>
 <div>
 <?php
-
 ini_set("memory_limit","1024M");
 
 error_reporting(-1);
 
+require_once dirname(__FILE__).'/../../etc/config.php';
+require_once dirname(__FILE__).'/../../plan/class-plan-utils.php';
+require_once dirname(__FILE__).'/../../plan/class-mmhubs.php';
 
+
+$pu = new PlanUtils();
+$mmh = new mmhubs();
+
+echo "<legend>List of MM Hubs</legend>";
+
+
+echo "<table>";
+echo "<tr><th>Location type</th><th>Exchange type</th><th>name</th><th>Location</th></tr>";
+foreach ($mmh->hubs as $mh) {
+
+	echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",$mh->location->type, $mh->type,$mh->location->name,$mh->location->address);
+
+
+}
+echo "</table>";
 
 
 ?>
-
-<legend>Index of the example site</legend>
-<div class='container'>
-<div><a href='planning/plan.php'>Example planning</a> : planning a trip</div>
-<div><a href='geocoding/geocode.php'>Example geocoding</a> : example fo geocoding</div>
-<div><a href='planning/listmmhubs.php'>List of multimodal hubs</a> : list from the project</div>
-</div>
 
 <footer>
 	<p>&copy; Divv presentation 2013</p>
@@ -172,5 +201,11 @@ error_reporting(-1);
 <script src="http://www.glimworm.com/_assets/moock/bootstrap/js/bootstrap-collapse.js"></script>
 <script src="http://www.glimworm.com/_assets/moock/bootstrap/js/bootstrap-carousel.js"></script>
 <script src="http://www.glimworm.com/_assets/moock/bootstrap/js/bootstrap-typeahead.js"></script>
+<!-- http://www.eyecon.ro/bootstrap-datepicker/ -->
+<link rel="stylesheet" href="http://www.glimworm.com/_assets/moock/bootstrap/extras/datepicker/css/datepicker.css" />
+<script src="http://www.glimworm.com/_assets/moock/bootstrap/extras/datepicker/js/bootstrap-datepicker.js"></script>
+<!-- http://jdewit.github.com/bootstrap-timepicker/ -->
+<link rel="stylesheet" href="http://www.glimworm.com/_assets/moock/bootstrap/extras/bootstrap-timepicker-master/css/bootstrap-timepicker.css" />
+<script src="http://www.glimworm.com/_assets/moock/bootstrap/extras/bootstrap-timepicker-master/js/bootstrap-timepicker.js"></script>
 </body>
 </html>

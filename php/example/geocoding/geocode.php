@@ -1,8 +1,6 @@
 <?php
 
-
 ?>
-
 <html>
 
 <!DOCTYPE html>
@@ -30,8 +28,12 @@
       <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
       <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
       <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?&sensor=false"></script>
       <link href="../css/styles.css" rel="stylesheet">
       <script src="plan.js"></script>
+      <script src="../js/json2.js"></script>
+      <!-- http://listjs.com/examples -->
+      <script src="../js/list.js"></script>
 	<script type='text/javascript'>
 		var uvOptions = {};
 		(function() {
@@ -40,95 +42,6 @@
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
 		})();
 	</script>
-<style>
-.journey-horizontal li, .journey-horizontal ul {
-	list-style: none;
-	height :100px;
-}
-.journey-horizontal li {
-	width : 140px;
-	float: left;
-	font-family: monospace;
-	font-size: 12px;
-	line-height: 1.4em;
-	white-space: normal;
-	overflow: hidden;
-	border-right: 1px dotted #666666;
-	padding-right: 5px;
-	padding-left: 5px;	
-}
-.mode-DRIVING {
-	background-image: url('../images/glymphicons/glyphicons_005_car.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-GET_TAXI {
-	background-image: url('../images/glymphicons/glyphicons_005_taxi.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-GET_CONNECTCAR {
-	background-image: url('../images/glymphicons/connectcar.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-BUS {
-	background-image: url('../images/glymphicons/glyphicons_031_bus.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-WALK {
-	background-image: url('../images/glymphicons/walk-icon.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-BICYCLE {
-	background-image: url('../images/glymphicons/bike.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-TRAM {
-	background-image: url('../images/glymphicons/glyphicons_014_train.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-RAIL {
-	background-image: url('../images/glymphicons/train.jpeg');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-FERRY {
-	background-image: url('../images/glymphicons/glyphicons_255_boat.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-
-.mode-PARKING {
-	background-image: url('../images/glymphicons/parking.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mode-PARK_BIKE {
-	background-image: url('../images/glymphicons/parkbike.png');
-	background-repeat: no-repeat;
-	background-position: 5px 0;
-}
-.mmhub {
-	background-image: url('../images/glymphicons/MMHUB.png');
-	background-repeat: no-repeat;
-	background-position: 0 0;
-	width:80px;
-	height:40px;
-}
-.mode-title {
-	font-family: Arial;
-	font-size: 18px;
-	line-height:36px;
-	padding-left:36px;
-}
-.hid {
-	display: none;
-}
 </style>
 </head>
 <body>
@@ -139,18 +52,54 @@ ini_set("memory_limit","1024M");
 
 error_reporting(-1);
 
+require_once dirname(__FILE__).'/../../etc/config.php';
+require_once dirname(__FILE__).'/../../plan/class-plan-utils.php';
+require_once dirname(__FILE__).'/../../plan/class-mmhubs.php';
+
+
+$pu = new PlanUtils();
+$mmh = new mmhubs();
+
+echo "<h1>Geocoding suggestions</h1>";
+
+
+$term = $_GET["term"];
+echo sprintf("<form action='geocode.php'><input type='text' name='term' value='%s'><input type='submit' value='suggest'></form>",$term);
+
+if ($term) {
+	$req = new obj();
+	$req->term = $term;
+
+	$response = $pu->geolookup($req);
+	
+	print_r("<table>");
+
+	echo "<tr><td colspan='9'>MapquestAPI</td></tr>";
+	foreach ($response->mapquestapi as $addr) {
+		echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",$addr->type,$addr->name,$addr->lat,$addr->lng,$addr->street,$addr->postcode);	
+	}
+
+	echo "<tr><td colspan='9'>Suggestions ov9292</td></tr>";
+	foreach ($response->suggestions as $addr) {
+		echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",$addr->type,$addr->name,$addr->lat,$addr->lng,$addr->street,$addr->postcode);	
+	}	
+
+	echo "<tr><td colspan='9'>google maps</td></tr>";
+	foreach ($response->gm as $addr) {
+		echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",$addr->type,$addr->name,$addr->lat,$addr->lng,$addr->street,$addr->postcode);	
+	}	
+	
+	
+	print_r("</table>");
+	
+	echo "Results<pre>";
+	var_dump($response);
+	echo "</pre>";
+}
 
 
 
 ?>
-
-<legend>Index of the example site</legend>
-<div class='container'>
-<div><a href='planning/plan.php'>Example planning</a> : planning a trip</div>
-<div><a href='geocoding/geocode.php'>Example geocoding</a> : example fo geocoding</div>
-<div><a href='planning/listmmhubs.php'>List of multimodal hubs</a> : list from the project</div>
-</div>
-
 <footer>
 	<p>&copy; Divv presentation 2013</p>
 </footer>
@@ -172,5 +121,13 @@ error_reporting(-1);
 <script src="http://www.glimworm.com/_assets/moock/bootstrap/js/bootstrap-collapse.js"></script>
 <script src="http://www.glimworm.com/_assets/moock/bootstrap/js/bootstrap-carousel.js"></script>
 <script src="http://www.glimworm.com/_assets/moock/bootstrap/js/bootstrap-typeahead.js"></script>
+<!-- http://www.eyecon.ro/bootstrap-datepicker/ -->
+<link rel="stylesheet" href="http://www.glimworm.com/_assets/moock/bootstrap/extras/datepicker/css/datepicker.css" />
+<script src="http://www.glimworm.com/_assets/moock/bootstrap/extras/datepicker/js/bootstrap-datepicker.js"></script>
+<!-- http://jdewit.github.com/bootstrap-timepicker/ -->
+<link rel="stylesheet" href="http://www.glimworm.com/_assets/moock/bootstrap/extras/bootstrap-timepicker-master/css/bootstrap-timepicker.css" />
+<script src="http://www.glimworm.com/_assets/moock/bootstrap/extras/bootstrap-timepicker-master/js/bootstrap-timepicker.js"></script>
 </body>
 </html>
+
+

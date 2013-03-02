@@ -70,7 +70,6 @@ class mmhub {
 		$pl = new place($this->location->lat, $this->location->lon,$this->location->name);
 		return $pl;
 	}
-	
 }
 
 /*
@@ -154,6 +153,24 @@ class mmhubs {
 			}
 
 		}
+
+
+		// one connect cat location
+		
+		$hub = new mmhub(52.3398658,4.8718439,"ConnectCar : Zuid WTC","E. van Beinumstraat t.h.v. Wagamama , Amsterdam");
+		$hub->location->type = "CONNECTCAR";
+		$hub->type = "TRANSIT-TO-CONNECTCAR";
+		array_push($this->hubs , $hub);
+		
+		$hub = new mmhub(52.3398658,4.8718439,"ConnectCar : Zuid WTC","E. van Beinumstraat t.h.v. Wagamama , Amsterdam");
+		$hub->location->type = "CAR2GO";
+		$hub->type = "TRANSIT-TO-CAR2GO";
+		array_push($this->hubs , $hub);
+
+		$hub = new mmhub(52.3398658,4.8718439,"ConnectCar : Zuid WTC","E. van Beinumstraat t.h.v. Wagamama , Amsterdam");
+		$hub->location->type = "BIKERNETAL";
+		$hub->type = "TRANSIT-TO-BIKERNETAL";
+		array_push($this->hubs , $hub);
 
 	
 	}
