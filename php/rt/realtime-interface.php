@@ -1,7 +1,9 @@
 <?php
 
-require_once '../classes/class-leg.php';
-require_once '../etc/config.php';
+if (!include_once('../../classes/class-leg.php'))
+	require_once '../classes/class-leg.php';
+if (!include_once('../../etc/config.php'))
+	require_once '../etc/config.php';
 
 class obj {
 }
