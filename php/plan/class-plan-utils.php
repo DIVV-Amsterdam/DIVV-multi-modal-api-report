@@ -329,6 +329,7 @@ class PlanUtils {
 		$lg->to = new Place($request->to->lat, $request->to->lon, $request->to->name);
 		$lg->mode = "DRIVING";
 		$lg->duration = $dur;
+		$lg->rawlegdata = $response;
 		$lg->startTime = $request->options->_datetime;
 		$lg->endTime = new mm_datetime();
 		$lg->endTime->setMMDateTime($request->options->_datetime);
@@ -359,6 +360,9 @@ class PlanUtils {
     public function plan_otp($request) {
     
     	$h = "http://opentripplanner.nl/opentripplanner-api-webapp/ws/plan";
+//    	$h = "http://aws2.glimworm.com:8080/opentripplanner-api-webapp/ws/plan";
+    	
+    	http://aws2.glimworm.com:8080/
     	$h = $h . "?maxTransfers=".$request->options->maxTransfers;
     	$h = $h . "&_dc=1358423838102";
     	$h = $h . "&from=";
@@ -396,13 +400,15 @@ class PlanUtils {
 				$leg = $itinerary->legs[$i];
 //				echo "\n Leg : $i \n";
 //				var_dump($leg);
+
+				$SUMMERTIME = (60*60);
 				
 				$lg = new Leg();
 				$lg->from = new Place($leg->from->lat, $leg->from->lon, $leg->from->name);
 				$lg->to = new Place($leg->to->lat, $leg->to->lon, $leg->to->name);
 				$lg->mode = $leg->mode;
-				$lg->startTime = mm_datetime::createFromDateTime(DateTime::createFromFormat('U',($leg->startTime/1000)+(60*60),new DateTimeZone('Europe/Amsterdam')));
-				$lg->endTime = mm_datetime::createFromDateTime(DateTime::createFromFormat('U',($leg->endTime/1000)+(60*60),new DateTimeZone('Europe/Amsterdam')));
+				$lg->startTime = mm_datetime::createFromDateTime(DateTime::createFromFormat('U',($leg->startTime/1000)+$SUMMERTIME+(60*60),new DateTimeZone('Europe/Amsterdam')));
+				$lg->endTime = mm_datetime::createFromDateTime(DateTime::createFromFormat('U',($leg->endTime/1000)+$SUMMERTIME+(60*60),new DateTimeZone('Europe/Amsterdam')));
 				$last_endtime = $lg->endTime;
 				
 				if ($leg->mode == "BUS") {
@@ -423,6 +429,7 @@ class PlanUtils {
 					$lg->transitinfo->to->lat = $leg->to->lat;
 					$lg->transitinfo->to->lon = $leg->to->lon;
 					$lg->transitinfo->to->scheduled_time_at_stop = $lg->endTime;
+					$lg->transitinfo->legGeometry = $leg->legGeometry;
 
 					
 				} else if ($leg->mode == "TRAM") {
@@ -443,6 +450,7 @@ class PlanUtils {
 					$lg->transitinfo->to->lat = $leg->to->lat;
 					$lg->transitinfo->to->lon = $leg->to->lon;
 					$lg->transitinfo->to->scheduled_time_at_stop = $lg->endTime;
+					$lg->transitinfo->legGeometry = $leg->legGeometry;
 
 				} else if ($leg->mode == "SUBWAY") {
 					$lg->transitinfo = new TransitInfoSubway();
@@ -462,9 +470,39 @@ class PlanUtils {
 					$lg->transitinfo->to->lat = $leg->to->lat;
 					$lg->transitinfo->to->lon = $leg->to->lon;
 					$lg->transitinfo->to->scheduled_time_at_stop = $lg->endTime;
+					$lg->transitinfo->legGeometry = $leg->legGeometry;
 					
+				} else if ($leg->mode == "RAIL") {
+					$lg->transitinfo = new TransitInfoBase();
+					$lg->transitinfo->agency = $leg->agencyName;
+					$lg->transitinfo->line = $leg->route;
+					$lg->transitinfo->lineId = $leg->routeId;
+					$lg->transitinfo->headsign = $leg->headsign;
+
+					$lg->transitinfo->from->stopindex = $leg->from->stopIndex;
+					$lg->transitinfo->from->stopid = $leg->from->stopId->id;
+
+					$lg->transitinfo->to->stopindex = $leg->to->stopIndex;
+					$lg->transitinfo->to->stopid = $leg->to->stopId->id;
+
+					$lg->transitinfo->routeColor = $leg->routeColor;
+					$lg->transitinfo->routeType = $leg->routeType;
+					$lg->transitinfo->tripShortName = $leg->tripShortName;
+					$lg->transitinfo->tripId = $leg->tripId;
+
+					$lg->transitinfo->legGeometry = $leg->legGeometry;
+					$lg->transitinfo->notes = $leg->notes;
+					$lg->transitinfo->alerts = $leg->alerts;
+					$lg->transitinfo->duration = $leg->duration;
+
+					$lg->rawlegdata = $leg;
+				
 				} else {
 					$lg->transitinfo = new TransitInfoBase();
+					$lg->transitinfo->legGeometry = $leg->legGeometry;
+					$lg->rawlegdata = $leg;
+					
+					
 				}
 				
 				array_push($legs , $lg);
@@ -516,15 +554,18 @@ class PlanUtils {
     public function plan($from, $to, $__datetime, $mmh, $options) {
     
     	$routes = array();
+    	
+    	$maxresults = ($options && $options->maxresults && $options->maxresults > 0) ? $options->maxresults : count($mmh->hubs);
     
 //		for ($j=0; $j < 20; $j++) {
-		for ($j=0; $j < count($mmh->hubs); $j++) {
+		for ($j=0; $j < $maxresults; $j++) {
 		
 			$journey = new Journey();
 
 			if ($options->debug) echo sprintf("\n\nREQ3 / HUB %s (%S) (%s) \n\n", $j,$mmh->hubs[$j], $mmh->hubs[$j]->type);
 	
 			if (startsWith($mmh->hubs[$j]->type,"CAR-TO")) {
+				if ($options->startWithCar == "n") continue;
 			
 				$_datetime = new mm_datetime();
 				$_datetime->setMMDateTime($__datetime);
@@ -738,7 +779,7 @@ class PlanUtils {
 			}
 
 
-			if (startsWith($mmh->hubs[$j]->type,"TRANSIT-TO-BIKERNETAL")) {
+			if (startsWith($mmh->hubs[$j]->type,"TRANSIT-TO-BIKERENTAL")) {
 			
 				// transit
 				$_datetime = new mm_datetime();

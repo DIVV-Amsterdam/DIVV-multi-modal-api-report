@@ -129,6 +129,25 @@
 .hid {
 	display: none;
 }
+legend {
+	color : #0088cc;
+}
+body {
+	background-image: url('images/glimworm02_grey.jpg');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+
+}
+.container {
+	background-color: #ffffff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border : 1px solid black;
+	padding : 20px;
+	line-height: 1.4em;
+
+}
 </style>
 </head>
 <body>
@@ -143,16 +162,46 @@ error_reporting(-1);
 
 
 ?>
-
-<legend>Index of the example site</legend>
+<br>
+<br>
+<br>
 <div class='container'>
-<div><a href='planning/plan.php'>Example planning</a> : planning a trip</div>
-<div><a href='geocoding/geocode.php'>Example geocoding</a> : example fo geocoding</div>
-<div><a href='planning/listmmhubs.php'>List of multimodal hubs</a> : list from the project</div>
+<legend>DIVV Multi Modal API Investigation Examples Site</legend>
+<p>This site provides some working examples of the code produced during the commissioning of the DIVV Multi Modal API Investigation project condicted during December 2012 - March 2013 by Jonathan Carter and Paul Manwaring of Glimworm IT, Erik Romijn of SolidLinks, and Jasper Soetendal and Ron van der Lans of Braxwell.  All of the code can be found on Github at https://github.com/DIVV-Amsterdam/DIVV-multi-modal-api-report</p>
+
+<br>
+<div>Demo Pages : </div>
+<br>
+<div>1. <a href='planning/plan.php'>Example planning</a> : Example php script demonstrating the planning of a trip using all multimodal hubs included in the project</div>
+<br>
+<div>2. <a href='geocoding/geocode.php'>Example geocoding</a> : example of 3 different ways to geocode an address </div>
+<br>
+<div>3. <a href='planning/listmmhubs.php'>List of multimodal hubs</a> : List of all the multimodal hubs used in the proejct</div>
+<br>
+<br>
+<h2>Below you will find a set of movies which give explanations of the example website</h2>
+<legend>Introduction to the examples (1/3) - planning a trip</legend>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/u2OqhEvLM4g" frameborder="0" allowfullscreen></iframe>
+<br>
+<legend>Introduction to the examples (2/3) - understanding the results</legend>
+<iframe width="420" height="315" src="http://www.youtube.com/embed/fL6X93jtSow" frameborder="0" allowfullscreen></iframe>
+<br>
+<legend>Introduction to the examples (3/3) - Realtime transit results</legend>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/xqFSe2DYJdI" frameborder="0" allowfullscreen></iframe>
+<br>
+<legend>Geocoding</legend>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/qD36cjIcp8A" frameborder="0" allowfullscreen></iframe>
+<br>
+
+<p>&copy; Divv presentation 2013</p>
 </div>
 
+<!-- 
+<div>
+	<img src='images/glimworm02_grey.jpg'>
+</div>
+-->
 <footer>
-	<p>&copy; Divv presentation 2013</p>
 </footer>
 
 </div>

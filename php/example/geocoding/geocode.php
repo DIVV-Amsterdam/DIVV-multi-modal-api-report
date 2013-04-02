@@ -42,6 +42,39 @@
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
 		})();
 	</script>
+<style>
+body {
+	background-image: url('../images/glimworm02_grey.jpg');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+
+}
+.container {
+	background-color: #ffffff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border : 1px solid black;
+	padding : 20px;
+	line-height: 1.4em;
+}
+.span6 {
+	background-color: #ffffff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border : 1px solid black;
+	padding : 20px;
+	line-height: 1.4em;
+}
+legend {
+	color : #0088cc;
+}
+.hid {
+	display: none;
+}
+
+
 </style>
 </head>
 <body>
@@ -60,43 +93,64 @@ require_once dirname(__FILE__).'/../../plan/class-mmhubs.php';
 $pu = new PlanUtils();
 $mmh = new mmhubs();
 
-echo "<h1>Geocoding suggestions</h1>";
+
+
+echo "<br>";
+echo "<br>";
+echo "<div class='container'>";
+echo "<legend>DIVV Multi Modal API report Example : Different Geocoding methods</legend>";
+echo "<p>This site provides some working examples of the code produced during the commissioning of the DIVV Multi Modal API Investigation project condicted during December 2012 - March 2013 by Jonathan Carter and Paul Manwaring of Glimworm IT, Erik Romijn of SolidLinks, and Jasper Soetendal and Ron van der Lans of Braxwell.  All of the code can be found on Github at https://github.com/DIVV-Amsterdam/DIVV-multi-modal-api-report</p>";
+
+echo "<br>";
 
 
 $term = $_GET["term"];
-echo sprintf("<form action='geocode.php'><input type='text' name='term' value='%s'><input type='submit' value='suggest'></form>",$term);
+echo sprintf("<form action='geocode.php'>Enter a search term to Geocode <input type='text' name='term' value='%s'><input type='submit' value='suggest a location'></form>",$term);
 
 if ($term) {
 	$req = new obj();
 	$req->term = $term;
 
 	$response = $pu->geolookup($req);
-	
-	print_r("<table>");
 
-	echo "<tr><td colspan='9'>MapquestAPI</td></tr>";
+echo "</div>";
+echo "<br>";
+echo "<div class='container'>";
+echo "<legend>Results</legend>";
+echo "<br>";
+	
+	print_r("<table class='table table-bordered'>");
+
+	echo "<tr><td colspan='9'><br><br><h2>1. Suggestions from the MapquestAPI using NOMINATUM</h2><br>* The type of response is always 's' and can be ignored<br></td></tr>";
+	print_r("<tr><th>Type of response</th><th>text of response</th><th>Latitude</th><th>Longitude</th><th>Street</th><th>Postcode</th></tr>");
 	foreach ($response->mapquestapi as $addr) {
 		echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",$addr->type,$addr->name,$addr->lat,$addr->lng,$addr->street,$addr->postcode);	
 	}
 
-	echo "<tr><td colspan='9'>Suggestions ov9292</td></tr>";
+	echo "<tr><td colspan='9'><br><br><h2>2. Suggestions from the ov9292 api (names and not geo locations)</h2><br>* The ov9292 only gives text sugestions and not locations<br><br></td></tr>";
+	print_r("<tr><th>Type of response</th><th>text of response</th><th>Latitude</th><th>Longitude</th><th>Street</th><th>Postcode</th></tr>");
 	foreach ($response->suggestions as $addr) {
 		echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",$addr->type,$addr->name,$addr->lat,$addr->lng,$addr->street,$addr->postcode);	
 	}	
 
-	echo "<tr><td colspan='9'>google maps</td></tr>";
+	echo "<tr><td colspan='9'><br><br><h2>3. Suggestions from the google maps API</h2></td></tr>";
+	print_r("<tr><th>Type of response</th><th>text of response</th><th>Latitude</th><th>Longitude</th><th>Street</th><th>Postcode</th></tr>");
 	foreach ($response->gm as $addr) {
 		echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",$addr->type,$addr->name,$addr->lat,$addr->lng,$addr->street,$addr->postcode);	
 	}	
 	
 	
 	print_r("</table>");
+
+
+	echo "<br><a class='btn' href='javascript:$"."(\"#data\").slideToggle();'>View data in raw format</a>";
 	
-	echo "Results<pre>";
+	echo "Results<pre id='data' class='hid'>";
 	var_dump($response);
 	echo "</pre>";
 }
 
+	echo "</div>";
 
 
 ?>

@@ -167,9 +167,9 @@ class mmhubs {
 		$hub->type = "TRANSIT-TO-CAR2GO";
 		array_push($this->hubs , $hub);
 
-		$hub = new mmhub(52.3398658,4.8718439,"ConnectCar : Zuid WTC","E. van Beinumstraat t.h.v. Wagamama , Amsterdam");
-		$hub->location->type = "BIKERNETAL";
-		$hub->type = "TRANSIT-TO-BIKERNETAL";
+		$hub = new mmhub(52.3398658,4.8718439,"Bike Rental : Zuid WTC","E. van Beinumstraat t.h.v. Wagamama , Amsterdam");
+		$hub->location->type = "BIKERENTAL";
+		$hub->type = "TRANSIT-TO-BIKERENTAL";
 		array_push($this->hubs , $hub);
 
 	

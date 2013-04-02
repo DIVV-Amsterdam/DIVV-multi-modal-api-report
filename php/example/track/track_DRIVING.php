@@ -23,8 +23,22 @@
 $json = $_POST["json"];
 $data = json_decode($json);
 
-echo "<legend>Track options for driving</legend>";
+//echo "<legend>Track options for driving</legend>";
+//echo "<pre>";
+//var_dump($data->rawlegdata->route->shape->shapePoints);
+$points = $data->rawlegdata->route->shape->shapePoints;
 
+$route = ("var myroute = [");
+$split = "";
+for ($i=0; $i < count($points); $i+=2) {
+	$route = $route . ($split . " new google.maps.LatLng(". $points[$i] .", ". $points[$i+1] .")");
+	$split = ",";
+}
+$route = $route . ("];\n");
+//echo $route;
+//echo "</pre>";
+
+/*
 echo "<pre>";
 echo $json;
 echo "</pre>";
@@ -34,8 +48,9 @@ var_dump($data);
 echo "</pre>";
 
 echo "<pre>";
-echo "<div id='map1' style='border: 1px solid black; width: 800px; height: 400px;'></div>";
-
+*/
+echo "The only way we could find to track driving was to overlay the route (black) over the divv data on a msp so that the user can perform a visual check.  This can be improved with computer matching <a href='javascript:divvplan.resizemaprt();'>refresh</a>";
+echo "<div id='map1' style='border: 1px solid black; width: 680px; height: 350px;'></div>";
 echo "<script type='text/javascript'>"
 ?>
      var myLatlng = new google.maps.LatLng(52.36500, 4.90000);
@@ -45,8 +60,22 @@ echo "<script type='text/javascript'>"
         zoom: zoom,
         mapTypeId: google.maps.MapTypeId.TERRAIN
      }
-     var map = new google.maps.Map(document.getElementById("map1"), myOptions);        
-     map.setCenter(myLatlng,zoom);
+     var map1 = new google.maps.Map(document.getElementById("map1"), myOptions);        
+     map1.setCenter(myLatlng,zoom);
+     
+	$("#map1").show();
+	google.maps.event.trigger(map1, 'resize');
+	
+	divvplan.resizemaprt_delegate = function() {
+		try {
+			$("#map1").show();
+			google.maps.event.trigger(map1, 'resize');
+			map1.fitBounds( divvplan.latlngbounds );			
+			
+		} catch (E){
+			console.log(E);
+		}
+	};
 
 
 <?php
@@ -77,6 +106,10 @@ echo "<script type='text/javascript'>"
                 print("google.maps.event.addListener(line". $count .", 'click', function() {alert('". $info ."'); });\n");
             }
 
+echo "</script>";
+echo "<script>";
+echo $route;
+print("var myline = new google.maps.Polyline({map: map1, path: myroute, strokeColor: '#000000', strokeOpacity: 0.8,strokeWeight: 5, title: 'Driving route'});\n");
 echo "</script>";
 echo "</pre>";
 

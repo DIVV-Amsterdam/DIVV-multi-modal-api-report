@@ -147,6 +147,37 @@
 	line-height:36px;
 	padding-left:36px;
 }
+
+body {
+	background-image: url('../images/glimworm02_grey.jpg');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+
+}
+.container {
+	background-color: #ffffff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border : 1px solid black;
+	padding : 20px;
+	line-height: 1.4em;
+}
+.span6 {
+	background-color: #ffffff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border : 1px solid black;
+	padding : 20px;
+	line-height: 1.4em;
+}
+legend {
+	color : #0088cc;
+}
+
+
+
 </style>
 </head>
 <body>
@@ -164,10 +195,15 @@ require_once dirname(__FILE__).'/../../plan/class-mmhubs.php';
 $pu = new PlanUtils();
 $mmh = new mmhubs();
 
-echo "<legend>List of MM Hubs</legend>";
+echo "<br>";
+echo "<br>";
+echo "<div class='container'>";
+echo "<legend>DIVV Multi Modal API report Example : List of Multi Modal Hubs used in toe project</legend>";
+echo "<p>This site provides some working examples of the code produced during the commissioning of the DIVV Multi Modal API Investigation project condicted during December 2012 - March 2013 by Jonathan Carter and Paul Manwaring of Glimworm IT, Erik Romijn of SolidLinks, and Jasper Soetendal and Ron van der Lans of Braxwell.  All of the code can be found on Github at https://github.com/DIVV-Amsterdam/DIVV-multi-modal-api-report</p>";
 
 
-echo "<table>";
+
+echo "<table class='table table-bordered'>";
 echo "<tr><th>Location type</th><th>Exchange type</th><th>name</th><th>Location</th></tr>";
 foreach ($mmh->hubs as $mh) {
 
@@ -176,6 +212,7 @@ foreach ($mmh->hubs as $mh) {
 
 }
 echo "</table>";
+echo "</div>";
 
 
 ?>

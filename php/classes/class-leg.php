@@ -95,11 +95,17 @@ class Leg {
     	try {
     		$dur = ($this->duration && $this->duration > 0) ? "<div>du:".$this->duration . "</div>" : "";
 	    	try {
-	    		$ti = sprintf("<div>ti:%s %s</div>",$this->transitinfo->line,$this->transitinfo->agency);
+	    		$line = ($this->transitinfo && $this->transitinfo->line && $this->transitinfo->line != "") ? $this->transitinfo->line : "";
+	    		$agency = ($this->transitinfo && $this->transitinfo->agency && $this->transitinfo->agency != "") ? $this->transitinfo->agency : "";
+	    		if ($line.$agency != "") {
+		    		$ti = sprintf("<div>ti:%s %s</div>",$this->transitinfo->line,$this->transitinfo->agency);
+		    	} else {
+			    	$ti = "<div>&nbsp;</div>";
+		    	}
 		    } catch(Exception $e) {
-		    	$ti = "";
+		    	$ti = "<div>&nbsp;</div>";
 		    }
-		    $lnk = sprintf("<a href='javascript:track(%s,%s,%s)'>track</a>",$N,$CNT,$CNT1);
+		    $lnk = sprintf("<a class='btn btn-mini' href='javascript:track(%s,%s,%s)'>details</a>",$N,$CNT,$CNT1);
 		    
 	        return sprintf("<li class='mode-%s'><div class='mode-title'>%s</div><div class='mode-times'>%s <i class='icon-arrow-right'></i> %s</div> %s %s %s</li>",$this->mode,$this->mode,$this->startTime->asTime(),$this->endTime->asTime(),$dur, $ti, $lnk, $this->from,$this->to);
 	    } catch(Exception $e) {

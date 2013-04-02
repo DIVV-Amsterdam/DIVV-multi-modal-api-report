@@ -1,5 +1,8 @@
 /*
 	from http://jquery-jsonviewer-plugin.googlecode.com/svn/trunk/demo.html
+	
+	J cartar : I added the level so that only the top level of elements are displayed as default.
+	
 */
 
 (function($) {
@@ -20,14 +23,14 @@
         if (settings) $.extend(config, settings);
 
         this.each(function(key, element) {
-            format_value(element, config['json_name'], config['json_data'], config);
+            format_value(element, config['json_name'], config['json_data'], config, 0);
         });
 
         return this;
 
     };
 
-    function format_value(element, name, data, config) {
+    function format_value(element, name, data, config, level) {
         //debug('name=' + name + "; data=" + data);
         var v = new TypeHandler(data);
         var type_prefix = v.type().charAt(0);
@@ -51,13 +54,15 @@
         if (v.type() == "object" || v.type() == "array") {
             var content = $('<div/>');
             $(content).appendTo(container);
+//	        if (level > 0) $(content).addClass('ui-helper-hidden');
             $(content).addClass('ui-widget-content ui-corner-all')
             .css({ 'overflow': 'hidden', 'white-space': 'nowrap', 'padding': config['inner-padding'] });
-            for (name in data) { format_value(content, name, data[name], config); }
+            for (name in data) { format_value(content, name, data[name], config, level+1); }
         }
         else {
             var content = $('<div/>');
             $(content).appendTo(container);
+//	        if (level > 0) $(content).addClass('ui-helper-hidden');
             $(content).addClass('ui-widget-content ui-corner-all')
             .css({ 'overflow': 'hidden', 'white-space': 'nowrap' });
             $(content).text('' + data);

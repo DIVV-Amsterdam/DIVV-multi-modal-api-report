@@ -42,7 +42,7 @@ class Journey extends BaseClass {
     	foreach ($this->legs as $leg) {
 	    	$endtime = $leg->endTime->asTime();
 		}
-    	$retval = $retval . sprintf("<li class='mode-journey'><div class='mode-title'>Journey</div><div class='journey-endtime'>%s</div></li>",$endtime);
+    	$retval = $retval . sprintf("<li class='mode-journey'><div class='mode-title'>Arrival:</div><div class='journey-endtime'>%s</div></li>",$endtime);
 
     	foreach ($this->legs as $leg) {
 	    	$CNT1 = 0;
@@ -54,11 +54,14 @@ class Journey extends BaseClass {
 	    		}
     			$retval = $retval . sprintf("<li class='mode-%s'><div class='mode-title'>%s</div><div class='mmhub'></div>%s</li>", $leg->mode, $leg->mode,$ad);
     		} else {
-    			$details = "et:".$leg->endTime."<br>dur:".$leg->duration."<br>cost:".$leg->cost."";
+    			$details = "et:".$leg->endTime."<br>";
+    			if ($leg->duration != "") $details = $details . "dur:".$leg->duration; 
+    			$details = $details . "<br>";
+    			if ($leg->cost != "") $details = $details . "cost:".$leg->cost."";
     			
-			    $lnk = sprintf("<a href='javascript:replan(%s,%s)'>re-plan</a>",$N,$CNT);
+			    $lnk = sprintf("<a href='javascript:replan(%s,%s)'>Details</a>",$N,$CNT);
     			
-    			$retval = $retval . sprintf("<li><div class='mode-title'>%s</div> <div>%s</div>%s</li>", $leg->type,$details,$lnk);
+    			$retval = $retval . sprintf("<li class='mode-title-li'><div class='mode-title'>%s</div> <div>%s</div>%s</li>", $leg->type,$details,$lnk);
 		    	foreach ($leg->legs as $leg2) {
 	    			$retval = $retval . $leg2->summary_in_html($N,$CNT,$CNT1);
 				    $CNT1++;

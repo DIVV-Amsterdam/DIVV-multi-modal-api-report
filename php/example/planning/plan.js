@@ -1,23 +1,29 @@
+var divvplan = {};
+
 function replan(journey_index,leg_index) {
 	var data = $("#data_"+journey_index).val();
 	eval("var dta="+data);
 	
 	var leg = dta.legs[leg_index];
+	console.log("leg");
 	console.log(leg);
 	var h = "";
 
-	h += "<ul class='nav nav-tabs'>";
-  	h += "<li><a href='#home' data-toggle='tab'>Narative</a></li>";
+	h += "<ul class='nav nav-tabs' id='nav-tabs'>";
+  	h += "<li><a id='nav-tabs-home' href='#home' data-toggle='tab'>Narative</a></li>";
   	h += "<li><a href='#jsoncode' data-toggle='tab'>JSON explorer</a></li>";
   	h += "<li><a href='#rawcode' data-toggle='tab'>RAW data</a></li>";
-  	h += "<li><a href='#tmap' data-toggle='tab'>MAP</a></li>";
+  	/*
+  	h += "<li><a id='nav-tabs-map' href='#tmap' data-toggle='tab'>MAP</a></li>";
   	h += "<li><a href='#rt' data-toggle='tab'>RT</a></li>";
+  	*/
   	h += "</ul>";
   	
   	
 	h += '<div class="tab-content">';
 	h += '  <div class="tab-pane active" id="home">';
-	h += "  	<div id='narrative'></div>";
+	h += "<legend>Leg Type : "+leg.type+"</legend>";
+	h += "  	<div id='narrative'>Re-loading plan. . . <div><img src='../images/ajax-loader.gif' height='40'></div></div>";
 	h += '  </div>';
 
 	h += '  <div class="tab-pane" id="jsoncode">';
@@ -28,10 +34,13 @@ function replan(journey_index,leg_index) {
 	h += "  	<pre id='fakediv'></pre>";
 	h += '  </div>';
 
+	/*
 	h += '  <div class="tab-pane" id="tmap">';
+	h += '	<div id="map_canvas" style="width:780px; height:350px;"></div>';
 	h += '  </div>';
 	h += '  <div class="tab-pane" id="rt">';
 	h += '  </div>';
+	*/
 	h += '</div>';
   	
 
@@ -51,13 +60,27 @@ function replan(journey_index,leg_index) {
             json_data: dta    // specifies the JSON object data
         });	  
         
-		var narative = renderNarrative(dta);
-		$("#narrative").html(narative);
-		
-		
-		
-		
-		
+		var narrative = "";
+		if (leg.type == "transit/OTP") {
+			narrative += "<h2>This trip had been re-planned to see if the results still match and here are the results:</h2>";
+			narrative += "<table class='table'>";
+			narrative += "<tr><td>Planing tool used for this leg</td><td>"+leg.type+"</td></tr>";
+			narrative += "<tr><td>re-planned End Time</td><td>"+(new Date(dta.plan.itineraries[0].endTime))+"</td></tr>";
+			narrative += "<tr><td>Original end time was planned for </td><td> "+(leg.endTime.hour+":"+leg.endTime.minute)+"</td></tr>";
+			narrative += "</table>";
+		} else {
+			narrative += "<table class='table'>";
+			narrative += "<h2>This trip had been re-planned to see if the results still match and here are the results:</h2>";
+			narrative += "<tr><td>Planing tool used for this leg</td><td>"+leg.type+"</td></tr>";
+			narrative += "<tr><td>The new planning returns a duration of </td><td> "+dta.route.time+"</td></tr>";
+			narrative += "<tr><td>Original duration was planned for  </td><td> "+(leg.duration)+"</td></tr>";
+			narrative += "</table>";
+			narrative += "<br>";
+			narrative += "<h2>The turn by turn narrative is as follows :</h2>"
+			narrative += "<br>";
+			narrative += renderNarrative(dta);
+		}
+		$("#narrative").html(narrative);
 		
 	  
 	});	
@@ -72,6 +95,29 @@ function replan(journey_index,leg_index) {
 //	  $('#fakediv').html(data);
 //	});	
 
+	divvplan.resizemap = function() {
+		console.log("resizemap");
+		try {
+			$("#map_canvas").show();
+			google.maps.event.trigger(map, 'resize');
+			map.setCenter(myLatLng);
+		} catch (E){
+			console.log(E);
+		}
+	};
+	divvplan.popupopen = false;
+
+	$("#modal-window").on('shown', function() {
+		if (divvplan.popupopen == true) return;
+		divvplan.popupopen = true;
+		try {
+			$('#nav-tabs-home').tab('show');
+			$('#nav-tabs-map').on('shown',divvplan.resizemap);
+		} catch (E){
+			console.log(E);
+		}
+	});
+
 	$("#modal-window").modal('show');
 	
 }
@@ -85,20 +131,24 @@ function track(journey_index,leg_index,leg_index_2) {
 	
 	var h = "";
 
-	h += "<ul class='nav nav-tabs'>";
-  	h += "<li><a href='#home' data-toggle='tab'>Narative</a></li>";
-  	h += "<li><a href='#jsoncode' data-toggle='tab'>JSON explorer</a></li>";
-  	h += "<li><a href='#rawcode' data-toggle='tab'>RAW data</a></li>";
-  	h += "<li><a href='#tmap' data-toggle='tab'>MAP</a></li>";
-  	h += "<li><a href='#rt' data-toggle='tab'>RT</a></li>";
+	h += "<ul class='nav nav-tabs' id='nav-tabs'>";
+  	h += "<li><a id='nav-tabs-home' href='#home' data-toggle='tab'>NARRATIVE</a></li>";
+  	h += "<li><a href='#jsoncode' data-toggle='tab'>JSON EXPLORER</a></li>";
+  	h += "<li><a href='#rawcode' data-toggle='tab'>RAW DATA</a></li>";
+  	h += "<li><a id='nav-tabs-map' href='#tmap' data-toggle='tab'>GOOGLE MAP</a></li>";
+  	h += "<li><a id='nav-tabs-rt' href='#rt' data-toggle='tab'>REALTIME</a></li>";
   	h += "</ul>";
   	
   	
 	h += '<div class="tab-content">';
 	h += '  <div class="tab-pane active" id="home">';
-	h += "		<pre>"+leg.type+"</pre>";
-	h += "		<hr>";
-	h += "		<pre>"+leg.mode+"</pre>";
+	if (leg.mode == "WALK") {
+		h += "<legend>Leg Type : "+leg.mode+"</legend>";
+	} else {
+		h += "<legend>Leg Type : "+leg.mode+"</legend>";
+	}
+	
+	h += "		<div id='narrative'></div>";
 	h += '  </div>';
 
 	h += '  <div class="tab-pane" id="jsoncode">';
@@ -109,6 +159,7 @@ function track(journey_index,leg_index,leg_index_2) {
 	h += '  </div>';
 	h += '  <div class="tab-pane" id="tmap">';
 	h += '	<div id="map_canvas" style="width:780px; height:350px;"></div>';
+	h += '  <a href="javascript:divvplan.resizemap();">redraw</a>';
 	h += '  </div>';
 	h += '  <div class="tab-pane" id="rt">';
 	h += "		<pre id='fakediv'></pre>";
@@ -165,24 +216,72 @@ function track(journey_index,leg_index,leg_index_2) {
 	  		map: map
 		});  	
   	
+	  	divvplan.latlngbounds = new google.maps.LatLngBounds();
 		for (var i=0; i < points.length; i++) {
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(points[i].lat,points[i].lng),
 				map: map,
 				title: points[i].title
 			});
+			divvplan.latlngbounds.extend(new google.maps.LatLng(points[i].lat,points[i].lng));
 		}
+		var narrative = "";
+			
+			narrative += "<h2>This type of leg has no specific narrative, for instance turn by turn directions.</h2>";
+			
+		if (leg.mode == "DRIVING") {
+			narrative = renderNarrative(leg.rawlegdata);
+			
+		}
+		$("#narrative").html(narrative);
+		
+		if (leg && leg.transitinfo && leg.transitinfo.legGeometry && leg.transitinfo.legGeometry.points) {
+			var encodedPolyline = leg.transitinfo.legGeometry.points;
+			var decodedPath = google.maps.geometry.encoding.decodePath(encodedPolyline);	// produces type error
+    		var poly = new google.maps.Polyline({
+    			path : decodedPath,
+   			    strokeColor: "#FF0000",
+		        strokeOpacity: 1.0,
+		        strokeWeight: 2
+		    });
+    		poly.setMap(map);
+		}
+		
 	} catch (E){
+		console.log(E);
 	}
 	
-
-	$("#modal-window").modal('show', function() {
+	divvplan.resizemaprt_delegate = function() {}
+	divvplan.resizemaprt = function() {
+		divvplan.resizemaprt_delegate.call(this,{});	
+	};
+	divvplan.resizemap = function() {
+		console.log("resizemap");
 		try {
+			$("#map_canvas").show();
 			google.maps.event.trigger(map, 'resize');
 			map.setCenter(myLatLng);
+			map.fitBounds( divvplan.latlngbounds );			
+			
 		} catch (E){
+			console.log(E);
+		}
+	};
+	divvplan.popupopen = false;
+
+	$("#modal-window").on('shown', function() {
+		console.log("MODAL SHOWN track popupopen:["+divvplan.popupopen+"]");
+		if (divvplan.popupopen == true) return;
+		divvplan.popupopen = true;
+		try {
+			$('#nav-tabs-home').tab('show');
+			$('#nav-tabs-map').on('shown',divvplan.resizemap);
+			$('#nav-tabs-rt').on('shown',divvplan.resizemaprt);
+		} catch (E){
+			console.log(E);
 		}
 	});
+	$("#modal-window").modal('show');
 
 
 //	h += "<iframe name='fake_frame' src='#' style='width:90%;height:90%'></iframe>";
@@ -211,7 +310,7 @@ function show_on_map(journey_index) {
 	$("#modal-window").css("width","800px");
 //	$("#modal-window").html(h);
 	$("#modal-window").html('<legend>Map</legend><div class="well"><div id="map_canvas" style="width:780px; height:350px;"></div></div>');
-	$("#modal-window").modal('show');
+
 	
 	
 	
@@ -265,13 +364,40 @@ function show_on_map(journey_index) {
   		map: map
 	});  	
   	
+  	divvplan.latlngbounds = new google.maps.LatLngBounds();
 	for (var i=0; i < points.length; i++) {
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(points[i].lat,points[i].lng),
 			map: map,
 			title: points[i].title
 		});
+		divvplan.latlngbounds.extend(new google.maps.LatLng(points[i].lat,points[i].lng));
 	}
+	
+	
+	divvplan.resizemap = function() {
+		console.log("resizemap");
+		try {
+			$("#map_canvas").show();
+			google.maps.event.trigger(map, 'resize');
+			map.setCenter(myLatLng);
+			map.fitBounds( divvplan.latlngbounds );			
+			
+		} catch (E){
+			console.log(E);
+		}
+	};
+	divvplan.popupopen2 = false;
+
+	$("#modal-window").on('shown', function() {
+		console.log("MODAL SHOWN show_on_map popupopen2:["+divvplan.popupopen2+"]");
+		if (divvplan.popupopen2 == true) return;
+		divvplan.popupopen2 = true;
+		divvplan.resizemap();
+	});
+	$("#modal-window").modal('show');
+	
+	
 }
 
 function trya(a){
@@ -383,4 +509,5 @@ $(function() {
 
 	var hackerList = new List('hacker-list', options);
 	hackerList.sort('journey-endtime', { asc: true });	
+	$('#loading-div').html("<div><legend>Results are show below sorted into the order of arrival</legend><br><h2>Key</h2><img src='../images/divvexample-legend-32.png'><br></div>");
 });
