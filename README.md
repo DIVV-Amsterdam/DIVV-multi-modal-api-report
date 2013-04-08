@@ -39,3 +39,6 @@ In the [PHP code](php/) you can find our proof of concept implementation of
 the API with a small web frontend. Most individual directories have further
 README files with more details.
 
+In the [report](IVV%20-%20Multimodal%20API%20-%20Report%20v1%200%20130403.pdf) 
+you can find the result of our project as presented to DIVV.
+
